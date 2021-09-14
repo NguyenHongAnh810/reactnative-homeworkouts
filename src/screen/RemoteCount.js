@@ -6,7 +6,6 @@ import {decrease, increase} from '../Redux/action'
 
 const RemoteCount = props => {
   const counter = useSelector((state) => state.count);
-  console.log(counter)
   const dispatch = useDispatch();
   return (
     (

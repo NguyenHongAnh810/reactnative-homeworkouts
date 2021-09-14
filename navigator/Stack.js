@@ -3,9 +3,11 @@ import {StyleSheet, Dimensions} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 /* icon */
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icon1 from 'react-native-vector-icons/AntDesign'
 
 import RemoteCount from '../src/screen/RemoteCount';
 import Count from '../src/screen/Count';
+import Rate from '../src/screen/Rate';
 
 const Bottom = () => {
   const Tab = createBottomTabNavigator();
@@ -22,6 +24,16 @@ const Bottom = () => {
           borderTopColor: 'rgba(225,225,225,0.2)',
         },
       }}>
+        <Tab.Screen
+        name="Rate"
+        options={{
+          title: 'Rate',
+          tabBarIcon: ({color, size}) => (
+            <Icon1 name="areachart" color={color} size={size} />
+          ),
+        }}
+        component={Rate}
+      />
       <Tab.Screen
         name="Home"
         options={{
@@ -42,6 +54,7 @@ const Bottom = () => {
         }}
         component={Count}
       />
+      
     </Tab.Navigator>
   );
 };
