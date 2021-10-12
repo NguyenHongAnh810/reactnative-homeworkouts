@@ -9,22 +9,27 @@ import {
 
 import Icon from 'react-native-vector-icons/Feather';
 
-const InputPass = ({value, type, changeValue, typeRegister}) => {
+const InputPass = ({value, type, changeValue, typeRegister, isValid}) => {
   const [placeholder, setPlaceholder] = useState('Địa chỉ email');
   const [notseen, setNotSeen] = useState(true);
-  const [iconName, setIconName] = useState('eye-off');
+  const [iconName, setIconName] = useState('eye');
+  const [isVal, setIsVal] = useState("true")
+  const [err, setErr] = useState("")
   useEffect(() => {
-    switch (type) {
-      case 'email':
-        setPlaceholder('Địa chỉ email');
-        break;
-      case 'pass':
-        setPlaceholder('Mật khẩu');
-        break;
-      case 'name':
-        setPlaceholder('Tên');
-        break;
-    }
+    switch(type){
+      case "email":
+          setPlaceholder("Địa chỉ email");
+          setErr("Email không hợp lệ!")
+          break;
+      case "pass":
+          setPlaceholder("Mật khẩu");
+          setErr("Mật khẩu không hợp lệ!")
+          break;
+      case "name":
+          setPlaceholder("Tên");
+          setErr("Tên không hợp lệ!")
+          break;
+}
   }, []);
 
   return (
@@ -36,11 +41,15 @@ const InputPass = ({value, type, changeValue, typeRegister}) => {
           value={value}
           placeholder={placeholder}
           secureTextEntry={notseen}
-          underlineColorAndroid="#00000000"></TextInput>
+          underlineColorAndroid="#00000000"
+          onEndEditing = {()=>{
+            setIsVal(isValid)
+          }}
+          ></TextInput>
        <TouchableOpacity
             onPress={() => {
               setNotSeen(!notseen);
-              setIconName(notseen ? 'eye' : 'eye-off');
+              setIconName(notseen ? 'eye-off' : 'eye');
             }}>
             <Icon
               style={styles.icon}
@@ -49,6 +58,7 @@ const InputPass = ({value, type, changeValue, typeRegister}) => {
               color={'#000000'}></Icon>
           </TouchableOpacity>
       </View>
+      {isVal ? <View/>: <Text style ={styles.err}>{err}</Text>}
       <Text style={styles.note}>
         {typeRegister ? 'Vui lòng điền mật khẩu có ít nhất 6 kí tự' : ''}
       </Text>
@@ -75,6 +85,12 @@ const styles = StyleSheet.create({
     color: '#707070',
     marginLeft: 20,
   },
+  err: {
+    fontSize: 10,
+    marginLeft: 20,
+    color: 'red',
+    marginTop: 0
+  }
 });
 
 export default InputPass;

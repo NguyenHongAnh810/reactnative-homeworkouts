@@ -1,6 +1,6 @@
-const nameRegex = /((09|03|07|08|05)+([0-9]{8})\b)/;
+const nameRegex = /.+/;
 const emailRegex = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{6,}$/;
+const passwordRegex = /.{6,}/;
 
 
 export const validateName = (name) => {

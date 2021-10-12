@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const LoginNode = ({navigation, nameNode, isValid, isDone}) => {
+const LoginNode = ({navigation, nameNode, isValid, isDone, onPress}) => {
   return (
     <View>
       <TouchableOpacity
@@ -13,12 +13,16 @@ const LoginNode = ({navigation, nameNode, isValid, isDone}) => {
           justifyContent: 'center',
           borderRadius: 5,
         }}
-        onPress={() => {
-          navigation.navigate({name: 'Launch'});
-        }}>
+        // onPress={
+          // navigation.navigate({name: 'Launch'});
+          // (e)=>{onPress} && onPress()}
+          onPress = {
+            (e)=>onPress && onPress()
+        }
+          >
         <Text style={{
           // color: '#9E9E9E'
-          color: '#555555'
+          color: '#363636'
       }}>{nameNode}</Text>
       </TouchableOpacity>
     </View>

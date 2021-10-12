@@ -3,14 +3,13 @@ import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import Launch from '../src/Screens/Auth/Launch.js';
-import Login from '../src/Screens/Auth/Login';
-import Register from '../src/Screens/Auth/Register';
-
+import MainButtonTabStack from './MainButtonTabStack';
+import FoodDetails from '../src/Screens/Main/Home/FoodDetails';
+import Login from '../src/Screens/Auth/Login'
 
 const Stack = createNativeStackNavigator();
 
-const AuthStack = () => {
+const MainStack = () => {
   return (
     <NavigationContainer>
       <StatusBar hidden={true} />
@@ -18,12 +17,13 @@ const AuthStack = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Launch" component={Launch} />
+        <Stack.Screen name="HomeTabs" component={MainButtonTabStack} />
+        <Stack.Screen name="FoodDetails" component={FoodDetails} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default AuthStack;
+export default MainStack;
