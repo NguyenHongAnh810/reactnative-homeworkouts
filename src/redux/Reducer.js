@@ -1,23 +1,21 @@
-import {
-    Login_u,
-    Logout_u
-  } from './Action';
-  
-  export const initalState = {
-    isLogin: false
-  };
-  
-  function myReducer(state = initalState, action) {
-    switch (action.type) {
-      case Login_u:
-        state.isLogin = true;
-        return state;
-      case Logout_u:
-        state.isLogin = false;
-        return state;
-      default:
-        return state;
-    }
+import {TYPES} from './Action';
+
+export const initalState = {
+  isLogin: false,
+  // content: ['','']
+};
+
+function myReducer(state = initalState, action) {
+  switch (action.type) {
+    case TYPES.LOGIN_SUCCESS:
+      state.isLogin = true;
+      return {...state};
+    case TYPES.LOGOUT_SUCCESS:
+      state.isLogin = false;
+      return {...state};
+    default:
+      return state;
   }
-  
-  export default myReducer;
+}
+
+export default myReducer;

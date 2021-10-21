@@ -7,7 +7,9 @@ const FoodList = ({title, data, navigation}) => {
   return (
     <View>
       <Text style={styles.title}>{title}</Text>
-      <ScrollView horizontal={true}>
+      <ScrollView
+        horizontal={true}
+        contentContainerStyle={{paddingHorizontal: 20}}>
         {data.map((e, index) => {
           return (
             <FoodHome
@@ -25,8 +27,8 @@ const FoodList = ({title, data, navigation}) => {
 const styles = StyleSheet.create({
   contrain: {},
   title: {
-    fontSize: 20,
-    margin: 10,
+    fontSize: 18,
+    margin: 20,
     marginEnd: 40,
     fontWeight: '300',
   },

@@ -41,7 +41,7 @@ const InputPass = ({value, type, changeValue, typeRegister, isValid}) => {
           value={value}
           placeholder={placeholder}
           secureTextEntry={notseen}
-          underlineColorAndroid="#00000000"
+          underlineColorAndroid="#F6F5F1"
           onEndEditing = {()=>{
             setIsVal(isValid)
           }}

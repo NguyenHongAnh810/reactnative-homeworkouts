@@ -10,15 +10,15 @@ const Reaction = ({reaction}) => {
             <TouchableOpacity style = {styles.button} onPress={()=>{
                 reaction.heart = reaction.heart + 1;
             }}>
-                <Icon name="heart" color = 'red' size = {14}></Icon>
+                <Icon name="heart" color = 'red' size = {12}></Icon>
                 <Text> {reaction.heart.num}</Text>
             </TouchableOpacity>
             <TouchableOpacity style = {styles.button}>
-                <Icon1 name="smile-beam" color = '#EC870E' size = {14}></Icon1>
+                <Icon1 name="smile-beam" color = '#EC870E' size = {12}></Icon1>
                 <Text> {reaction.haha.num}</Text>
             </TouchableOpacity>
             <TouchableOpacity style = {styles.button}>
-                <Icon1 name="sad-tear" color = '#38044B' size = {14}></Icon1>
+                <Icon1 name="sad-tear" color = '#38044B' size = {12}></Icon1>
                 <Text> {reaction.sad.num}</Text>
             </TouchableOpacity>
         </View>
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
         
     },
     button: {
-        height: 24 ,
-        width: 44,
+        height: 20 ,
+        width: 40,
         alignItems: 'center',
         justifyContent: 'center',
         margin: 4,

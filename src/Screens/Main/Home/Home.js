@@ -26,9 +26,9 @@ export const Data = [
         }
     },
     {
-        idFood: 1,
+        idFood: 2,
         idUser: 1,
-        name: 'Chè Khoai Dẻo',
+        name: 'Bánh tráng trộn',
         ingredients: ['đường', 'bột mì'],
         repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
         image: require('../../../assets/image/backgroundLaunch.jpg'),
@@ -47,9 +47,9 @@ export const Data = [
             },
         }
     },{
-        idFood: 1,
+        idFood: 3,
         idUser: 1,
-        name: 'Chè Khoai Dẻo',
+        name: 'Bít tết',
         ingredients: ['đường', 'bột mì'],
         repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
         image: require('../../../assets/image/backgroundLaunch.jpg'),
@@ -68,9 +68,9 @@ export const Data = [
             },
         }
     },{
-        idFood: 1,
+        idFood: 4,
         idUser: 1,
-        name: 'Chè Khoai Dẻo',
+        name: 'Xúc xích rán',
         ingredients: ['đường', 'bột mì'],
         repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
         image: require('../../../assets/image/backgroundLaunch.jpg'),
@@ -89,9 +89,9 @@ export const Data = [
             },
         }
     },{
-        idFood: 1,
+        idFood: 5,
         idUser: 1,
-        name: 'Chè Khoai Dẻo',
+        name: 'Cháo',
         ingredients: ['đường', 'bột mì'],
         repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
         image: require('../../../assets/image/backgroundLaunch.jpg'),
@@ -110,9 +110,9 @@ export const Data = [
             },
         }
     },{
-        idFood: 1,
+        idFood: 6,
         idUser: 1,
-        name: 'Chè Khoai Dẻo',
+        name: 'Bánh mì kẹp trứng',
         ingredients: ['đường', 'bột mì'],
         repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
         image: require('../../../assets/image/backgroundLaunch.jpg'),
@@ -133,13 +133,48 @@ export const Data = [
     },
 ]
 
+export const User = [
+    {
+        id: 1,
+        name: "Nguyễn Hồng Ánh",
+        gmail: "honganh08102000@gmail.com",
+        pass: "12345",
+        status: true,
+        myFood: [1,3],
+        foodSave: [2,6],
+        avata: 'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo'
+    },
+    {
+        id: 2,
+        name: "Nguyễn Văn Bắc",
+        gmail: "Bacnv@gmail.com",
+        pass: "12346",
+        status: true,
+        myFood: [1,3],
+        foodSave: [2,6],
+        avata: 'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo'
+    },
+    {
+        id: 3,
+        name: "Lương Ngọc Thuyết",
+        gmail: "Thuyetln@gmail.com",
+        pass: "12347",
+        status: true,
+        myFood: [1,3],
+        foodSave: [2,6],
+        avata: 'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo'
+    },
+]
+
 
 const Home = ({navigation}) => {
 
     return (
-        <View>
-            <ScrollView> 
+        <View style = {styles.contrain}>
+            <View style = {styles.viewTitle}>
             <Text style = {styles.title}>Kho cảm hứng</Text>
+            </View>
+            <ScrollView style={{flex: 0.9}}> 
             <FoodList title="Món mới nhất" data = {Data} navigation = {navigation}/>
             <FoodList title="Trổ tài với các món đặc sắc" data = {Data} navigation = {navigation}/>
             <FoodList title="Khám phá xem thứ gì đang trong mùa nhé!" data = {Data} navigation = {navigation}/>
@@ -151,12 +186,21 @@ const Home = ({navigation}) => {
 
 const styles = StyleSheet.create({
     contrain: {
-
+        backgroundColor: '#ECECEC',
+        flex: 1
     },
     title: {
-        fontSize: 24,
-        margin: 20,
-        fontWeight: 'bold'
+        fontSize: 18,
+        marginVertical: 8,
+        fontWeight: 'bold',
+        marginLeft: 10
+    },
+    viewTitle: {
+        borderBottomWidth: 2,
+        marginHorizontal: 10,
+        borderBottomColor: '#EC7E5D',
+        flex: 0.06,
+        justifyContent: 'center'
     }
 })
 

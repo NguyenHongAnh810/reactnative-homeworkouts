@@ -8,8 +8,6 @@ import {
   Image
 } from 'react-native';
 
-// import Icon from 'react-native-vector-icons/MaterialIcons';
-
 const Launch = ({navigation}) => {
   return (
     <ImageBackground
@@ -29,11 +27,6 @@ const Launch = ({navigation}) => {
           }}
           style={styles.Node}>
           <Text style={styles.textNode}>Continue </Text>
-          {/* <Icon
-              style={styles.icon}
-              name= "navigate-next"
-              size={16}
-              color={'#fff'}></Icon>         */}
         </TouchableOpacity>
     </View>
     </ImageBackground>
@@ -72,9 +65,6 @@ const styles = StyleSheet.create({
     height: 50,
     marginTop: 40,
     borderRadius: 100
-  },
-  icon: {
-    // margin: 12
   },
 });
 export default Launch;

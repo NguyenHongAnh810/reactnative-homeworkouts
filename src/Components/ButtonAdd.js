@@ -1,30 +1,31 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const LoginNode = ({navigation, nameNode, isValid, isDone, onPress}) => {
+const ButtonAdd = ({nameNode, isValid, onPress, border, marginEnd}) => {
   return (
     <View>
       <TouchableOpacity
         style={{
-          backgroundColor: isValid ? '#EC7E5D' : '#CECCCD',
-          height: 34,
-          width: 100,
+        borderWidth: border? 0.4 : 0,
+          height: 30,
+          width: 50,
           alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 5,
-          marginHorizontal: 10
+          marginHorizontal: 10,
+          marginEnd: marginEnd? marginEnd : 0 
         }}
           onPress = {
             ()=>onPress && onPress()
         }
           >
+            {isValid ? 
         <Text style={{
-          // color: '#9E9E9E'
-          color: '#555555',
-          fontWeight: '600',
-          fontSize: 16
-        
+        //   color: 'red'
+          color: 'red'
       }}>{nameNode}</Text>
+      : <View/>
+    }
       </TouchableOpacity>
     </View>
   );
@@ -38,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginNode;
+export default ButtonAdd;

@@ -1,14 +1,17 @@
-export const Login_u = "LOGIN"
-export const Logout_u = "LOGOUT"
+export const TYPES = {
+  LOGIN_REQUEST: 'ACCOUNT_LOGIN_REQUEST',
+  LOGIN_SUCCESS: 'ACCOUNT_LOGIN_SUCCESS',
 
-export function login(){
-    return {
-        type: Login_u
-    }
-}
+  LOGOUT_REQUEST: 'ACCOUNT_LOGOUT_REQUEST',
+  LOGOUT_SUCCESS: 'ACCOUNT_LOGOUT_SUCCESS',
+};
 
-export function logout() {
-    return {
-        type: Logout_u
-    }
-}
+export function loginSuccess () {
+  return{
+    type: TYPES.LOGIN_REQUEST
+  }
+};
+
+export const logoutSuccess = (params) =>{
+  type: TYPES.LOGOUT_SUCCESS
+};

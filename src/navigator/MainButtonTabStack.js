@@ -6,11 +6,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 
-import Home from '../src/Screens/Main/Home/Home.js';
-import Search from '../src/Screens/Main/Search';
-import AddCookRecipe from '../src/Screens/Main/AddCookRecipe';
-import Me from '../src/Screens/Main/Me';
-import Chat from '../src/Screens/Main/Chat';
+import Home from '../Screens/Main/Home/Home';
+import Search from '../Screens/Main/Search/Search';
+import AddCookRecipe from '../Screens/Main/AddCookRecipe/AddCookRecipe';
+import Me from '../Screens/Main/Me/Me';
+import Chat from '../Screens/Main/Chat/Chat';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,21 +19,10 @@ const MainButtonTabStack = () => {
   return (
     <Tab.Navigator
       initialRouteName="HomeTab"
-      // tabBarOptions={{
-      //     activeTintColor: '#3249ed',
-      //     inactiveTintColor: '#7f8087',
-
-      //     style: {
-      //         backgroundColor: "#fff",
-      //         borderTopColor: 'rgba(225,225,225,0.2)'
-      //     },
-
-      // }}
       screenOptions={{
-        activeTintColor: '#3249ed',
-        inactiveTintColor: '#7f8087',
         headerShown: false,
-
+        tabBarActiveTintColor: '#EC7E5D',
+        tabBarInactiveTintColor: 'gray',
         style: {
           backgroundColor: '#fff',
           borderTopColor: 'rgba(225,225,225,0.2)',
@@ -69,7 +58,7 @@ const MainButtonTabStack = () => {
         }}
         component={AddCookRecipe}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Chat"
         options={{
           title: 'Chat',
@@ -78,7 +67,7 @@ const MainButtonTabStack = () => {
           ),
         }}
         component={Chat}
-      />
+      /> */}
       <Tab.Screen
         name="Me"
         options={{
