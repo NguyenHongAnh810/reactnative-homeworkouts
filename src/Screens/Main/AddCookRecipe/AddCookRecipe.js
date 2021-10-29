@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,  useCallback, useMemo} from 'react';
 import {
   View,
   Text,
@@ -9,10 +9,14 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import BottomSheet from '@gorhom/bottom-sheet';
+
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 import LoginNode from '../../../Components/LoginNode';
 import ButtonAdd from '../../../Components/ButtonAdd';
 import ListContents from '../../../Components/ListContents';
+
 
 const AddCookRecipe = () => {
   const [nameFood, setNameFood] = useState('');
@@ -77,9 +81,34 @@ const AddCookRecipe = () => {
     arr_new[index] = value
     setMaking(arr_new)
   }
+  // ref
+  // const bottomSheetRef = useRef<BottomSheet>(null);
+
+  // variables
+  // const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+  // // callbacks
+  // const handleSheetChanges = useCallback((index) => {
+  //   console.log('handleSheetChanges', index);
+  // }, []);
+
+
+  // const takePhotoFromCamera = () => {
+  //   alert("open camera")
+  // }
 
   return (
     <View style={styles.contrainer}>
+      {/* <BottomSheet
+        ref={'BottomShet'}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+      > */}
+      {/* <View style={styles.contentContainer}>
+          <Text>Awesome 🎉</Text>
+        </View>
+      </BottomSheet> */}
       <View style={styles.headers}>
         <LoginNode nameNode="Lên sóng" isValid={isValid} onPress={() => {
           console.log("content", content, making)
@@ -93,7 +122,7 @@ const AddCookRecipe = () => {
       </View>
       <ScrollView style={{flex: 1, width: '100%'}}>
         <View style={styles.image}>
-          <TouchableOpacity style={styles.buttonImage}>
+          <TouchableOpacity style={styles.buttonImage} onPress={takePhotoFromCamera}>
             <Image
               style={styles.logoCamera}
               source={require('../../../assets/image/logoCamera.png')}
@@ -168,6 +197,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 5,
     fontWeight: '700',
+  },
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: 'grey',
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
 });
 
