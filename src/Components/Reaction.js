@@ -8,7 +8,7 @@ const Reaction = ({reaction}) => {
     return (
         <View style = {{flexDirection : 'row'}}>
             <TouchableOpacity style = {styles.button} onPress={()=>{
-                reaction.heart = reaction.heart + 1;
+                reaction.heart.num = reaction.heart.num + 1;
             }}>
                 <Icon name="heart" color = 'red' size = {12}></Icon>
                 <Text> {reaction.heart.num}</Text>

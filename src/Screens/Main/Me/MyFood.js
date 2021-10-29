@@ -8,7 +8,7 @@ import {Data} from '../Home/Home';
 const MyFood = ({navigation}) => {
     return (
       <View style={{flex:1}}>
-        <FoodList2 value={Data} navigation = {navigation} screen = "Me"/>
+        <FoodList2 data={Data} navigation = {navigation} screen = "Me"/>
       </View>
     );
   };

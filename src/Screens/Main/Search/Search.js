@@ -72,7 +72,7 @@ const Search = ({navigation}) => {
         </View>
       </View>
       {search ? (
-        <FoodList2 value = {key} navigation = {navigation} screen = 'Search'/>
+        <FoodList2 value = {key} data = {Data} navigation = {navigation} screen = 'Search'/>
       ) : (
         <View>
           <Text style={styles.title}>Món tìm kiếm phổ biến hôm nay</Text>

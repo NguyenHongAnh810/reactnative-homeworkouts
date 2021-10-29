@@ -122,7 +122,7 @@ const AddCookRecipe = () => {
       </View>
       <ScrollView style={{flex: 1, width: '100%'}}>
         <View style={styles.image}>
-          <TouchableOpacity style={styles.buttonImage} onPress={takePhotoFromCamera}>
+          <TouchableOpacity style={styles.buttonImage} >
             <Image
               style={styles.logoCamera}
               source={require('../../../assets/image/logoCamera.png')}
