@@ -9,13 +9,16 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
 
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 import LoginNode from '../../../Components/LoginNode';
 import ButtonAdd from '../../../Components/ButtonAdd';
 import ListContents from '../../../Components/ListContents';
+
+
+
 
 
 const AddCookRecipe = () => {
@@ -81,34 +84,57 @@ const AddCookRecipe = () => {
     arr_new[index] = value
     setMaking(arr_new)
   }
-  // ref
-  // const bottomSheetRef = useRef<BottomSheet>(null);
 
-  // variables
-  // const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const sheetRef = React.useRef(null);
+  const fall = new Animated.Value(1)
 
-  // // callbacks
-  // const handleSheetChanges = useCallback((index) => {
-  //   console.log('handleSheetChanges', index);
-  // }, []);
-
-
-  // const takePhotoFromCamera = () => {
-  //   alert("open camera")
-  // }
+  const renderContent = () => (
+    <View style={styles.panel}>
+      <View style={{alignItems: 'center'}}>
+        <Text style={styles.panelTitle}>Đăng ảnh</Text>
+        <Text style={styles.panelSubtitle}>Đăng tải hình đại diện món ăn</Text>
+      </View>
+      <TouchableOpacity style={styles.panelButton} onPress={takePhotoFromCamera}>
+        <Text style={styles.panelButtonTitle}>Chụp ảnh</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.panelButton} onPress={choosePhotoFromLibrary}>
+        <Text style={styles.panelButtonTitle}>Thư viện</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.panelButton}
+        onPress={() => sheetRef.current.snapTo(1)}>
+        <Text style={styles.panelButtonTitle}>Hủy</Text>
+      </TouchableOpacity>
+    </View>
+  );
+  const renderHeader = () => (
+    <View style={styles.header}>
+    <View style={styles.panelHeader}>
+      <View style={styles.panelHandle} />
+    </View>
+  </View>
+  );
+  
+  const takePhotoFromCamera = () => {
+    alert("open camera")
+  }
+  const choosePhotoFromLibrary = () => {
+    alert("open library")
+  }
 
   return (
+    
     <View style={styles.contrainer}>
-      {/* <BottomSheet
-        ref={'BottomShet'}
-        index={1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-      > */}
-      {/* <View style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
-        </View>
-      </BottomSheet> */}
+       <BottomSheet
+        ref={sheetRef}
+        snapPoints={[330, 0]}
+        borderRadius={10}
+        renderContent={renderContent}
+        initialSnap={1}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+        renderHeader={renderHeader}
+      />
       <View style={styles.headers}>
         <LoginNode nameNode="Lên sóng" isValid={isValid} onPress={() => {
           console.log("content", content, making)
@@ -122,7 +148,7 @@ const AddCookRecipe = () => {
       </View>
       <ScrollView style={{flex: 1, width: '100%'}}>
         <View style={styles.image}>
-          <TouchableOpacity style={styles.buttonImage} >
+          <TouchableOpacity style={styles.buttonImage} onPress={() => sheetRef.current.snapTo(0)}>
             <Image
               style={styles.logoCamera}
               source={require('../../../assets/image/logoCamera.png')}
@@ -160,7 +186,7 @@ const AddCookRecipe = () => {
           onchange={changeMaking}
         />
       </ScrollView>
-    </View>
+      </View>
   );
 };
 
@@ -206,6 +232,70 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
+  },
+  header: {
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#333333',
+    shadowOffset: {width: -1, height: -3},
+    shadowRadius: 2,
+    shadowOpacity: 0.4,
+    // elevation: 5,
+    paddingTop: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  panelHeader: {
+    alignItems: 'center',
+  },
+  panelHandle: {
+    width: 40,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#00000040',
+    marginBottom: 10,
+  },
+  panelHeader: {
+    alignItems: 'center',
+  },
+  panelHandle: {
+    width: 40,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#00000040',
+    marginBottom: 10,
+  },
+  panelTitle: {
+    fontSize: 27,
+    height: 35,
+  },
+  panelSubtitle: {
+    fontSize: 14,
+    color: 'gray',
+    height: 30,
+    marginBottom: 10,
+  },
+  panelButton: {
+    padding: 12,
+    borderRadius: 10,
+    backgroundColor: '#EC7E5D',
+    alignItems: 'center',
+    marginVertical: 8,
+    marginHorizontal: 16
+  },
+  panelButtonTitle: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: 'white',
+  },panel: {
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+    paddingTop: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    // shadowColor: '#000000',
+    // shadowOffset: {width: 0, height: 0},
+    // shadowRadius: 5,
+    // shadowOpacity: 0.4,
   },
 });
 
