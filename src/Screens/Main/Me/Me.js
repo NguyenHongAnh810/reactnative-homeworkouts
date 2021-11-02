@@ -28,7 +28,10 @@ const Me = ({navigation}) => {
             source={{
               uri: User[0].avata,
             }}></Image>
+            <View>
           <Text style={styles.name}>{User[0].name}</Text>
+          <Text style={styles.mail}>{User[0].gmail}</Text>
+          </View>
         </TouchableOpacity>
       </View>
       <View style={{flex: 0.9}}>
@@ -55,6 +58,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  mail: {
+    marginLeft: 10,
+    fontSize: 10,
+    color: '#555555'
+  }
 });
 
 export default Me;

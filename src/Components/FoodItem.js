@@ -13,7 +13,9 @@ export default function FoodItem({food, navigation, screen}) {
         }}>
         <Image style={styles.image} source={food.image}></Image>
         <Text style={styles.textName}>{food.name}</Text>
-        <Reaction reaction={food.reaction} style={{margin: 10}} />
+        <View style={{marginLeft: 11}}>
+        <Reaction reaction={food.reaction} />
+        </View>
       </TouchableOpacity>
     )
 }
@@ -21,17 +23,16 @@ export default function FoodItem({food, navigation, screen}) {
 const styles = StyleSheet.create({
     button: {
       height: height*0.25,
-      width: 320,
+      width: 360,
       justifyContent: 'center',
       backgroundColor: 'white',
       // backgroundColor: 'green',
-      marginVertical: 10,
+      marginVertical: 5,
       borderRadius: 10,
       paddingBottom: 20,
-      marginRight: 12,
     },
     image: {
-      width: 320,
+      width: '100%',
       height: height * 0.15,
       borderRadius: 10,
       alignItems: 'center',
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     },
     textName: {
       margin: 8,
+      marginLeft: 16,
       fontSize: 14,
       fontWeight: '700',
     },

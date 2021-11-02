@@ -5,8 +5,10 @@ import FoodHome from './FoodHome';
 
 const FoodList = ({title, data, navigation}) => {
   return (
-    <View>
-      <Text style={styles.title}>{title}</Text>
+    <View style = {styles.contrain}>
+      <View style = {styles.viewTitle}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
       <ScrollView
         horizontal={true}
         contentContainerStyle={{paddingHorizontal: 20}}>
@@ -25,12 +27,21 @@ const FoodList = ({title, data, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  contrain: {},
+  contrain: {
+    marginTop: 20
+  },
   title: {
     fontSize: 18,
-    margin: 20,
-    marginEnd: 40,
-    fontWeight: '300',
+    marginVertical: 8,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  viewTitle: {
+    borderBottomWidth: 0.8,
+    marginLeft: 20,
+    borderBottomColor: '#EC7E5D',
+    flex: 0.06,
+    justifyContent: 'center',
   },
 });
 

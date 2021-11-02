@@ -11,7 +11,7 @@ const FoodList2 = ({value, navigation, screen, data}) => {
     return <FoodItem food ={item} navigation = {navigation} screen = {screen} key={`food-item-${item.idFood}`}/>;
   };
   return (
-    <View style={{alignItems: 'center', flex: 1, marginTop: 10}}>
+    <View style={{alignItems: 'center', flex: 1, marginTop: 10, width: '100%'}}>
       <FlatList
         data={data}
         renderItem={renderItem}

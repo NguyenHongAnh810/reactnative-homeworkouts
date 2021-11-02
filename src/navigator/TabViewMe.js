@@ -4,7 +4,7 @@ import {TabView, TabBar} from 'react-native-tab-view';
 
 import MyFood from '../Screens/Main/Me/MyFood';
 import FoodSave from '../Screens/Main/Me/FoodSave';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Color } from '../assets/color';
 
 const TabViewMe = ({navigation}) => {
   const layout = useWindowDimensions();
@@ -59,7 +59,7 @@ const TabViewMe = ({navigation}) => {
 
   const styles = StyleSheet.create({
     activeLable: {
-      color: Colors.gray_text,
+      color: Color.gray_text,
       fontWeight: '800'
       
     },

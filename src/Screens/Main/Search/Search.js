@@ -21,8 +21,8 @@ const Search = ({navigation}) => {
   const [search, setSearch] = useState(false);
 
   useEffect(() => {
-    if(key == '') setSearch(false)
-  }, [key])
+    if (key == '') setSearch(false);
+  }, [key]);
 
   const renderItem = ({item}) => {
     return (
@@ -39,40 +39,68 @@ const Search = ({navigation}) => {
   return (
     <View style={styles.contrain}>
       <View style={styles.header}>
-        <View style={styles.headerInput}>
-          <Feather
-            name="search"
-            size={18}
-            style={styles.icon}
-            color="#363636"
-          />
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setKey}
-            value={key}
-            placeholder="Tìm tên món, nguyên liệu"
-            underlineColorAndroid="#00000000"
-            onEndEditing={() => {
-              if(key != '')
-              setSearch(true);
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 36,
+            marginLeft: 20,
+            marginVertical: 20,
+          }}>
+          Search
+        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <View style={styles.headerInput}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={setKey}
+              value={key}
+              placeholder="Tìm tên món, nguyên liệu"
+              underlineColorAndroid="#00000000"
+              onEndEditing={() => {
+                if (key != '') setSearch(true);
+              }}
+            />
+            {key != '' ? (
+              <TouchableOpacity
+                style={styles.clear}
+                onPress={() => {
+                  setKey('');
+                  setSearch(false);
+                }}>
+                <Feather name="x" size={8} color="white" />
+              </TouchableOpacity>
+            ) : (
+              <View />
+            )}
+          </View>
+          <TouchableOpacity
+            style={{
+              height: 32,
+              width: '10%',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
-          />
-          {key != '' ? (
-            <TouchableOpacity
-              style={styles.clear}
-              onPress={() => {
-                setKey('');
-                setSearch(false)
-              }}>
-              <Feather name="x" size={8} color="white" />
-            </TouchableOpacity>
-          ) : (
-            <View />
-          )}
+            onPress={()=>{
+              if(key != ''){
+              setSearch(true)
+              }
+            }}>
+            <Feather
+              name="search"
+              size={20}
+              style={styles.icon}
+              color="#363636"
+            />
+          </TouchableOpacity>
         </View>
       </View>
       {search ? (
-        <FoodList2 value = {key} data = {Data} navigation = {navigation} screen = 'Search'/>
+        <FoodList2
+          value={key}
+          data={Data}
+          navigation={navigation}
+          screen="Search"
+        />
       ) : (
         <View>
           <Text style={styles.title}>Món tìm kiếm phổ biến hôm nay</Text>
@@ -97,31 +125,29 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: 'white',
-    height: 60,
+    height: 150,
     width: wigth,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   headerInput: {
-    width: '92%',
+    width: '86%',
     height: 32,
-    backgroundColor: 'red',
-    borderRadius: 20,
+    borderRadius: 10,
     flexDirection: 'row',
     borderWidth: 0.3,
     borderColor: '#707070',
-    backgroundColor: '#ECECEC',
+    // backgroundColor: '#ECECEC',
     alignItems: 'center',
+    marginLeft: 20,
   },
   icon: {
-    marginLeft: 8,
-    marginRight: 4,
-    marginVertical: 5,
-    width: '5%',
+    marginBottom: 5,
+    marginRight: 5,
   },
   textInput: {
     height: 40,
-    width: '86%',
+    width: '94%',
     fontSize: 12,
     // marginVertical: 6,
   },

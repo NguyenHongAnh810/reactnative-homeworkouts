@@ -11,7 +11,7 @@ import {
 const Launch = ({navigation}) => {
   return (
     <ImageBackground
-    source={require('./../../assets/image/backgroundLaunch.jpg')}
+    source={require('./../../assets/image/bg2.jpg')}
     resizeMode="cover"
     style={styles.image}>
     <View style={styles.contrain}>
@@ -19,7 +19,7 @@ const Launch = ({navigation}) => {
         <Text style={styles.title}>MyCooking-MyLife</Text>
         <Image
         style={styles.tinyLogo}
-        source={require('../../assets/image/logo.png')}
+        source={require('../../assets/image/logo2.png')}
       />
         <TouchableOpacity
           onPress={() => {
@@ -61,10 +61,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tinyLogo: {
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     marginTop: 40,
-    borderRadius: 100
   },
 });
 export default Launch;
