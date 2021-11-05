@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -8,21 +8,26 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
-  Header,
   Alert,
+  TextInput,
 } from 'react-native';
-import {Button, Menu, Divider, Provider} from 'react-native-paper';
+import {Menu, Divider, Provider} from 'react-native-paper';
+import Swiper from 'react-native-swiper';
 
 import Reaction from '../../../Components/Reaction';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const {height, wigth} = Dimensions.get('window');
+
+import {User} from './Home';
 
 const FoodDetails = ({route, navigation}) => {
   const {food} = route.params;
   const {screen} = route.params;
   const [visible, setVisible] = React.useState(false);
+  const [comment, setComment] = useState('');
 
   const openMenu = () => setVisible(true);
 
@@ -30,93 +35,195 @@ const FoodDetails = ({route, navigation}) => {
 
   return (
     <Provider>
-    <View>
-      
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate(screen);
-          }}>
-          <Ionicons
-            name="md-return-up-back"
-            size={24}
-            color={'white'}
-            style={{margin: 10}}
-          />
-        </TouchableOpacity>
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={
-            <TouchableOpacity onPress={openMenu}>
-              <Entypo
-                name="dots-three-vertical"
-                size={22}
-                color={'white'}
-                style={{margin: 10}}
-              />
+      <View style={{flex: 1}}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(screen, {food: food});
+            }}>
+            <Ionicons
+              name="md-return-up-back"
+              size={28}
+              color={'black'}
+              style={{margin: 10}}
+            />
+          </TouchableOpacity>
+          <Menu
+            visible={visible}
+            onDismiss={closeMenu}
+            anchor={
+              <TouchableOpacity onPress={openMenu}>
+                <Entypo
+                  name="dots-three-vertical"
+                  size={22}
+                  color={'black'}
+                  style={{margin: 10}}
+                />
+              </TouchableOpacity>
+            }>
+            <Menu.Item
+              onPress={() => {
+                Alert.alert('Thông báo', 'Lưu thành công món ăn!');
+                closeMenu();
+              }}
+              title="Lưu"
+              contentStyle={{color: 'red'}}
+            />
+            <Divider />
+            <Menu.Item
+              onPress={() => {
+                closeMenu();
+              }}
+              title="Hủy"
+            />
+          </Menu>
+        </View>
+        <ScrollView style={{flex: 0.9}}>
+          <View style={styles.image}>
+            <Swiper showsButtons={true}>
+              <View>
+                <ImageBackground
+                  style={styles.image}
+                  source={food.image}></ImageBackground>
+              </View>
+              <View>
+                <ImageBackground
+                  style={styles.image}
+                  source={food.image}></ImageBackground>
+              </View>
+              <View>
+                <ImageBackground
+                  style={styles.image}
+                  source={food.image}></ImageBackground>
+              </View>
+              <View>
+                <ImageBackground
+                  style={styles.image}
+                  source={food.image}></ImageBackground>
+              </View>
+            </Swiper>
+          </View>
+          <Text style={styles.name}>{food.name}</Text>
+          <View>
+            <TouchableOpacity
+              style={styles.infor}
+              onPress={() => {
+                navigation.navigate('ProfileScreen', {
+                  food: food,
+                  screen: screen,
+                });
+              }}>
+              <Image
+                style={styles.avata}
+                source={{
+                  uri: User[0].avata,
+                }}></Image>
+              <View>
+                <Text style={styles.names}>{User[0].name}</Text>
+                <Text style={styles.mail}>{User[0].gmail}</Text>
+              </View>
             </TouchableOpacity>
-          }>
-          <Menu.Item onPress={() => {
-            Alert.alert("Thông báo", "Lưu thành công món ăn!")
-            closeMenu();
-          }} title="Lưu" contentStyle={{color: 'red'}}/>
-          <Divider />
-          <Menu.Item onPress={() => {
-            closeMenu()
-          }} title="Hủy" />
-        </Menu>
-        {/* <TouchableOpacity onPress = {()=>{
-            navigation.navigate(screen)
-          }}>
-            <Entypo name="dots-three-vertical" size={22} color={'white'} style = {{margin: 10}}/>
-          </TouchableOpacity> */}
-      </View>
-      <ScrollView>
-        <ImageBackground
-          style={styles.image}
-          source={food.image}></ImageBackground>
-
-        <Text style={styles.name}>{food.name}</Text>
-        <View style={styles.borderTitle}>
-          <Text style={styles.title}>Nguyên Liệu</Text>
-          {food.ingredients.map((e, index) => {
-            return (
-              <View
-                style={{
-                  borderStyle: 'dotted',
-                  borderBottomWidth: 0.5,
-                  borderBottomColor: '#B7B7B7',
-                }}
-                key={`food-item-${index}`}>
-                <Text style={styles.include1}>{e}</Text>
-              </View>
-            );
-          })}
-        </View>
-        <View style={styles.borderTitle}>
-          <Text style={styles.title}>Các bước làm</Text>
-          {food.repice.map((e, index) => {
-            return (
-              <View
-                style={{flexDirection: 'row', alignItems: 'center'}}
-                key={`food-item-${index}`}>
-                <View style={styles.viewIndex}>
-                  <Text style={styles.index}>{index + 1}</Text>
+          </View>
+          <View style={styles.borderTitle}>
+            <Text style={styles.title}>Nguyên Liệu</Text>
+            {food.ingredients.map((e, index) => {
+              return (
+                <View
+                  style={{
+                    borderStyle: 'dotted',
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: '#B7B7B7',
+                  }}
+                  key={`food-item-${index}`}>
+                  <Text style={styles.include1}>{e}</Text>
                 </View>
-                <Text style={styles.include}>{e}</Text>
+              );
+            })}
+          </View>
+          <View style={styles.borderTitle}>
+            <Text style={styles.title}>Các bước làm</Text>
+            {food.repice.map((e, index) => {
+              return (
+                <View
+                  style={{flexDirection: 'row', alignItems: 'center'}}
+                  key={`food-item-${index}`}>
+                  <View style={styles.viewIndex}>
+                    <Text style={styles.index}>{index + 1}</Text>
+                  </View>
+                  <Text style={styles.include}>{e}</Text>
+                </View>
+              );
+            })}
+          </View>
+          <View style={styles.reaction}>
+            <Reaction reaction={food.reaction} />
+            <Text style={styles.textReact}>
+              {food.reaction.heart.user[0]} và{' '}
+              {food.reaction.heart.num +
+                food.reaction.sad.num +
+                food.reaction.haha.num}{' '}
+              người khác đã thả cảm xúc
+            </Text>
+          </View>
+          <View style={styles.borderTitle}>
+            <Text style={styles.title}>Bình luận</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Image
+                style={{width: 32, height: 32, borderRadius: 100}}
+                source={{
+                  uri: User[0].avata,
+                }}></Image>
+              <View style={styles.headerInput}>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={setComment}
+                  value={comment}
+                  placeholder="Thêm bình luận"
+                  underlineColorAndroid="#00000000"
+                  onEndEditing={() => {}}
+                  numberOfLines={2}
+                />
               </View>
-            );
-          })}
-        </View>
-        <View style={styles.reaction}>
-          <Reaction reaction={food.reaction} />
-          <Text style={styles.textReact}>
-            {food.reaction.heart.user} và x người khác đã thả cảm xúc
-          </Text>
-        </View>
-      </ScrollView>
-    </View>
+              <TouchableOpacity
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: 10,
+                }}>
+                <FontAwesome
+                  name="send"
+                  size={22}
+                  color={'#EC7E5D'}></FontAwesome>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                marginTop: 40,
+                borderTopWidth: 1,
+                borderTopColor: '#B7B7B7',
+                paddingBottom: 20,
+              }}>
+              {food.comment.map((e, index) => {
+                return (
+                  <View style={{flexDirection: 'row', marginTop: 20}}>
+                    <Image
+                      style={{width: 32, height: 32, borderRadius: 100}}
+                      source={{
+                        uri: User[index].avata,
+                      }}></Image>
+                    <View style={{marginHorizontal: 10, marginRight: 20}}>
+                      <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+                        {User[index].name}
+                      </Text>
+                      <Text style={{fontSize: 14}}>{e.content}</Text>
+                    </View>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     </Provider>
   );
 };
@@ -137,7 +244,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     // marginLeft: 24,
-    marginVertical: 10,
+    marginVertical: 20,
+    marginTop: 32,
   },
   include: {
     fontSize: 12,
@@ -147,7 +255,7 @@ const styles = StyleSheet.create({
   include1: {
     fontSize: 12,
     marginLeft: 4,
-    marginVertical: 8,
+    marginVertical: 10,
   },
   index: {
     fontSize: 12,
@@ -174,13 +282,61 @@ const styles = StyleSheet.create({
   borderTitle: {
     borderTopWidth: 1,
     marginHorizontal: 24,
-    marginVertical: 20,
+    marginTop: 20,
     borderTopColor: '#B7B7B7',
+    paddingBottom: 20,
   },
+  // comment: {
+  //   borderTopWidth: 1,
+  //   marginHorizontal: 24,
+  //   marginTop: 20,
+  //   borderTopColor: '#B7B7B7',
+  //   paddingBottom: 20,
+  //   flexDirection: 'row'
+  // },
   header: {
     flexDirection: 'row',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     justifyContent: 'space-between',
+    flex: 0.06,
+  },
+  avata: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    backgroundColor: '#ccc',
+  },
+  names: {
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  infor: {
+    marginLeft: 20,
+    marginVertical: 16,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  mail: {
+    marginLeft: 10,
+    fontSize: 10,
+    color: '#555555',
+  },
+  textInput: {
+    height: 40,
+    width: '92%',
+    fontSize: 14,
+    marginLeft: 8,
+    fontWeight: '600',
+  },
+  headerInput: {
+    width: '82%',
+    height: 32,
+    borderRadius: 10,
+    flexDirection: 'row',
+    borderWidth: 0.3,
+    borderColor: '#707070',
+    alignItems: 'center',
+    marginLeft: 10,
   },
 });
 export default FoodDetails;

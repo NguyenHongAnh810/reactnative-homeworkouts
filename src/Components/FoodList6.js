@@ -1,14 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet, FlatList, Dimensions} from 'react-native';
 
-import FoodItem from './FoodItem';
+import FoodItem1 from './FoodItem1';
 
 
 const {height, wigth} = Dimensions.get('window');
 
-const FoodList2 = ({value, navigation, screen, data}) => {
+const FoodList6 = ({value, navigation, screen, data}) => {
   const renderItem = ({item}) => {
-    return <FoodItem food ={item} navigation = {navigation} screen = {screen} key={`food-item-${item.idFood}`}/>;
+    return <FoodItem1 food ={item} navigation = {navigation} screen = {screen} key={`food-item-${item.idFood}`}/>;
   };
   return (
     <View style={{alignItems: 'center', flex: 1, marginTop: 10, width: '100%'}}>
@@ -24,4 +24,4 @@ const FoodList2 = ({value, navigation, screen, data}) => {
 
 const styles = StyleSheet.create({});
 
-export default FoodList2;
+export default FoodList6;

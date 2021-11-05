@@ -4,7 +4,9 @@ import Reaction from './Reaction';
 
 const {height, wigth} = Dimensions.get('window');
 
-export default function FoodItem({food, navigation, screen}) {
+import { User } from '../Screens/Main/Home/Home';
+
+export default function FoodItem1({food, navigation, screen}) {
     return (
         <TouchableOpacity
         style={styles.button}
@@ -16,6 +18,16 @@ export default function FoodItem({food, navigation, screen}) {
         <Text style={styles.textName}>{food.name}</Text>
         <View style={{marginLeft: 11}}>
         <Reaction reaction={food.reaction} />
+        <View style={styles.infor}>
+          <Image
+            style={styles.avata}
+            source={{
+              uri: User[0].avata,
+            }}></Image>
+          <View>
+            <Text style={styles.names}>{User[0].name}</Text>
+          </View>
+          </View>
         </View>
         </View>
       </TouchableOpacity>
@@ -26,9 +38,6 @@ const styles = StyleSheet.create({
     button: {
       height: height*0.15,
       width: 360,
-      // justifyContent: 'center',
-      // backgroundColor: 'white',
-      // backgroundColor: 'green',
       marginVertical: 5,
       borderRadius: 10,
       paddingBottom: 20,
@@ -46,5 +55,21 @@ const styles = StyleSheet.create({
       marginLeft: 16,
       fontSize: 14,
       fontWeight: '700',
+    },
+    avata: {
+      width: 24,
+      height: 24,
+      borderRadius: 100,
+      backgroundColor: '#ccc',
+    },
+    names: {
+      fontWeight: 'bold',
+      marginLeft: 10,
+      fontSize: 12
+    },
+    infor: {
+      marginVertical: 12,
+      alignItems: 'center',
+      flexDirection: 'row',
     },
   });

@@ -99,6 +99,7 @@ const AddCookRecipe = () => {
         note="Đăng tải hình đại diện món ăn"
         title="Đăng ảnh"
         setImage={setImage}
+        multiple= {true}
       />
       <Animated.View
         style={{
@@ -138,9 +139,7 @@ const AddCookRecipe = () => {
                 <Image
                   style={{height: 220, width: '100%'}}
                   source={
-                    image
-                      ? {uri: image}
-                      : require('../../../assets/image/logoCamera.png')
+                       {uri: image}
                   }
                 />
               ) : (
@@ -148,9 +147,7 @@ const AddCookRecipe = () => {
                   <Image
                     style={styles.logoCamera}
                     source={
-                      image
-                        ? {uri: image}
-                        : require('../../../assets/image/logoCamera.png')
+                     require('../../../assets/image/logoCamera.png')
                     }
                   />
                   <Text

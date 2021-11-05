@@ -76,25 +76,26 @@ const InforScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('../../../assets/image/bg5.jpg')} style={{flex:1}}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          backgroundColor: 'white',
+          // backgroundColor: 'white',
         }}>
         <TouchableOpacity
           style={{marginLeft: 10, marginVertical: 10}}
           onPress={() => {
             navigation.navigate('Me');
           }}>
-          <Ionicons name="arrow-back" color={'black'} size={28} />
+          <Ionicons name="arrow-back" color={'white'} size={28} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{marginRight: 10, marginVertical: 10}}
           onPress={() => {
             navigation.navigate('EditProfileScreen');
           }}>
-          <AntDesign name="edit" color={'black'} size={28} />
+          <AntDesign name="edit" color={'white'} size={28} />
         </TouchableOpacity>
       </View>
       <View style={{margin: 20}}>
@@ -171,6 +172,7 @@ const InforScreen = ({navigation}) => {
           <Text style={styles.textLogout}>Đăng xuất</Text>
         </TouchableOpacity>
       </View>
+      </ImageBackground>
     </View>
   );
 };

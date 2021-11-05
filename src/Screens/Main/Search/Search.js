@@ -12,9 +12,12 @@ import {
 
 import Feather from 'react-native-vector-icons/Feather';
 import SuggestSearch from '../../../Components/SuggestSearch';
-import FoodList2 from '../../../Components/FoodList2';
+import FoodList6 from '../../../Components/FoodList6';
 import {Data} from './../Home/Home';
 const {height, wigth} = Dimensions.get('window');
+
+const DataSuggestFood = ['Cơm', 'Cháo','Phở', 'Bánh mì', 'Ốc xào', 'Trà sữa', 'Bít tết', 'Sushi']
+
 
 const Search = ({navigation}) => {
   const [key, setKey] = useState('');
@@ -29,7 +32,7 @@ const Search = ({navigation}) => {
       <SuggestSearch
         foodSuggest={item}
         onPress={() => {
-          setKey(item.name);
+          setKey(item);
           setSearch(true);
         }}
         // key={`food-item-${item}`}
@@ -95,7 +98,7 @@ const Search = ({navigation}) => {
         </View>
       </View>
       {search ? (
-        <FoodList2
+        <FoodList6
           value={key}
           data={Data}
           navigation={navigation}
@@ -103,14 +106,14 @@ const Search = ({navigation}) => {
         />
       ) : (
         <View>
-          <Text style={styles.title}>Món tìm kiếm phổ biến hôm nay</Text>
+          <Text style={styles.title}>Món tìm kiếm phổ biến</Text>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <FlatList
               key={2}
-              data={Data}
+              data={DataSuggestFood}
               renderItem={renderItem}
               keyExtractor={item => item.idFood}
-              numColumns={2}></FlatList>
+              numColumns={4}></FlatList>
           </View>
         </View>
       )}
@@ -120,15 +123,13 @@ const Search = ({navigation}) => {
 
 const styles = StyleSheet.create({
   contrain: {
-    backgroundColor: '#ECECEC',
+    backgroundColor: 'white',
     flex: 1,
   },
   header: {
     backgroundColor: 'white',
     height: 150,
     width: wigth,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   headerInput: {
     width: '86%',
@@ -137,7 +138,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 0.3,
     borderColor: '#707070',
-    // backgroundColor: '#ECECEC',
     alignItems: 'center',
     marginLeft: 20,
   },
@@ -147,8 +147,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    width: '94%',
-    fontSize: 12,
+    width: '92%',
+    fontSize: 14,
+    marginLeft: 8,
+    fontWeight: 'bold'
     // marginVertical: 6,
   },
   clear: {

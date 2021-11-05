@@ -9,6 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FoodList from '../../../Components/FoodList';
+import FoodList3 from '../../../Components/FoodList3';
+import FoodList4 from '../../../Components/FoodList4';
+import FoodList5 from '../../../Components/FoodList5';
 
 export const Data = [
   {
@@ -32,6 +35,10 @@ export const Data = [
         user: ['Khoa Phạm', 'Hồng Ánh'],
       },
     },
+    comment: [
+      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
+      {content: 'Món ăn chẳng ngon đi làm mệt còn nấu nướng gì!, cảm ơn tác giả', userId: 2},
+    ],
   },
   {
     idFood: 2,
@@ -54,6 +61,10 @@ export const Data = [
         user: ['Khoa Phạm', 'Hồng Ánh'],
       },
     },
+    comment: [
+      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
+      {content: 'Món ăn rất ngon lắm nhé!, cảm ơn tác giả', userId: 2},
+    ],
   },
   {
     idFood: 3,
@@ -76,6 +87,10 @@ export const Data = [
         user: ['Khoa Phạm', 'Hồng Ánh'],
       },
     },
+    comment: [
+      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
+      {content: 'Món ăn rất ngon lắm luôn!, cảm ơn tác giả', userId: 2},
+    ],
   },
   {
     idFood: 4,
@@ -98,6 +113,10 @@ export const Data = [
         user: ['Khoa Phạm', 'Hồng Ánh'],
       },
     },
+    comment: [
+      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
+      {content: 'Món ăn rất ngon ngon cực kì á!, cảm ơn tác giả', userId: 2},
+    ],
   },
   {
     idFood: 5,
@@ -120,6 +139,10 @@ export const Data = [
         user: ['Khoa Phạm', 'Hồng Ánh'],
       },
     },
+    comment: [
+      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
+      {content: 'Món ăn rất ngon mới là lạ!, cảm ơn tác giả', userId: 2},
+    ],
   },
   {
     idFood: 6,
@@ -142,6 +165,10 @@ export const Data = [
         user: ['Khoa Phạm', 'Hồng Ánh'],
       },
     },
+    comment: [
+      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
+      {content: 'Món ăn chẳng ngon gì mệt vch còn bắt nấu cơm!, cảm ơn tác giả', userId: 2},
+    ],
   },
 ];
 
@@ -184,35 +211,20 @@ export const User = [
 const Home = ({navigation}) => {
   return (
     <View style={styles.contrain}>
-      {/* <View style = {styles.viewTitle}>
-            <Text style = {styles.title}>Kho cảm hứng</Text>
-            </View> */}
-      <View
-        style={{
-          backgroundColor: 'white',
-          height: 60,
-          justifyContent: 'center',
-          // borderBottomWidth: 1,
-          borderBottomColor: 'black',
-          justifyContent: 'center',
-        }}>
-        <Text style={{fontSize: 36, fontWeight: 'bold', marginLeft: 20}}>
-          Home
-        </Text>
-      </View>
-      <ScrollView style={{flex: 0.9}}>
+      <ScrollView style={{flex: 0.9}} showsVerticalScrollIndicator={false}>
         <FoodList title="Món mới nhất" data={Data} navigation={navigation} />
-        <FoodList
-          title="Trổ tài với các món đặc sắc"
-          data={Data}
-          navigation={navigation}
-        />
-        <FoodList
+        <FoodList3
           title="Khám phá xem thứ gì đang trong mùa nhé!"
           data={Data}
           navigation={navigation}
         />
-        <FoodList
+        <FoodList5
+          title="Trổ tài với các món đặc sắc"
+          data={Data}
+          navigation={navigation}
+        />
+
+        <FoodList4
           title="Chúc mừng top 3 món ăn"
           data={Data}
           navigation={navigation}

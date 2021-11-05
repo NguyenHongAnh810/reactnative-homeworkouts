@@ -1,14 +1,14 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-import FoodList2 from '../../../Components/FoodList2';
+import FoodList6 from '../../../Components/FoodList6';
 
 import { Data } from '../Home/Home';
 
 const FoodSave = ({navigation}) => {
   return (
     <View style={{flex:1}}>
-        <FoodList2 data = {Data} navigation = {navigation} screen = "Me"/>
+        <FoodList6 data = {Data} navigation = {navigation} screen = "Me"/>
       </View>
   );
 };

@@ -3,16 +3,17 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
+  StyleSheet,NativeModules
 } from 'react-native';
 
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 
 import ImagePicker from 'react-native-image-crop-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { Color } from '../assets/color';
 
-export default function BottomSheetUpdateImage({bs, fall, setImage, title, note}) {
+export default function BottomSheetUpdateImage({bs, fall, setImage, title, note, multiple}) {
 
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
@@ -29,14 +30,9 @@ export default function BottomSheetUpdateImage({bs, fall, setImage, title, note}
 
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
-      width: 300,
-      height: 300,
-      cropping: true,
-      compressImageQuality: 0.7,
+      multiple: true
     }).then(images => {
       console.log(images);
-      setImage(images.path);
-      bs.current.snapTo(1);
     });
   };
 
