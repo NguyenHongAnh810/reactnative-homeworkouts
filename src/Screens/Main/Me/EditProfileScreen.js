@@ -20,7 +20,7 @@ import {Color} from '../../../assets/color';
 import BottomSheetUpdateImage from '../../../Components/BottomSheetUpdateImage';
 
 const EditProfileScreen = ({navigation}) => {
-  const [image, setImage] = useState(User[0].avata);
+  const [image, setImage] = useState([User[0].avata]);
   const [name, setName] = useState('');
   const [mail, setMail] = useState('');
   const [pass, setPass] = useState('');
@@ -72,7 +72,7 @@ const EditProfileScreen = ({navigation}) => {
                 }}>
                 <ImageBackground
                   source={{
-                    uri: image,
+                    uri: image[0],
                   }}
                   style={{height: 100, width: 100, marginTop: 32}}
                   imageStyle={{borderRadius: 15}}>
@@ -86,7 +86,6 @@ const EditProfileScreen = ({navigation}) => {
               </View>
             </TouchableOpacity>
           </View>
-
           <View style={styles.action}>
             <FontAwesome name="user-o" color={'black'} size={20} />
             <TextInput

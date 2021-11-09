@@ -20,7 +20,7 @@ const FoodHome = ({food, navigation}) => {
       onPress={() => {
         navigation.navigate('FoodDetails', {food: food, screen: 'Home'});
       }}>
-      <Image style={styles.image} source={food.image}></Image>
+      <Image style={styles.image} source={food.image[0]}></Image>
       <Text style={styles.textName}>{food.name}</Text>
       <Reaction reaction={food.reaction} style={{margin: 10}} />
     </TouchableOpacity>

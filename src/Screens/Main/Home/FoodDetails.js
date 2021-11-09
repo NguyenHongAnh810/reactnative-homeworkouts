@@ -81,26 +81,15 @@ const FoodDetails = ({route, navigation}) => {
         <ScrollView style={{flex: 0.9}}>
           <View style={styles.image}>
             <Swiper showsButtons={true}>
-              <View>
-                <ImageBackground
-                  style={styles.image}
-                  source={food.image}></ImageBackground>
-              </View>
-              <View>
-                <ImageBackground
-                  style={styles.image}
-                  source={food.image}></ImageBackground>
-              </View>
-              <View>
-                <ImageBackground
-                  style={styles.image}
-                  source={food.image}></ImageBackground>
-              </View>
-              <View>
-                <ImageBackground
-                  style={styles.image}
-                  source={food.image}></ImageBackground>
-              </View>
+              {food.image.map((e, index) => {
+                return (
+                  <View>
+                    <ImageBackground
+                      style={styles.image}
+                      source={e}></ImageBackground>
+                  </View>
+                );
+              })}
             </Swiper>
           </View>
           <Text style={styles.name}>{food.name}</Text>
@@ -201,11 +190,19 @@ const FoodDetails = ({route, navigation}) => {
                 marginTop: 40,
                 borderTopWidth: 1,
                 borderTopColor: '#B7B7B7',
-                paddingBottom: 20,
+                // alignItems: 'center',
+                justifyContent: 'center',
+                paddingTop: 20,
               }}>
               {food.comment.map((e, index) => {
                 return (
-                  <View style={{flexDirection: 'row', marginTop: 20}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: 10,
+                      borderBottomWidth: 0.3,
+                      paddingBottom: 10,
+                    }}>
                     <Image
                       style={{width: 32, height: 32, borderRadius: 100}}
                       source={{
@@ -221,6 +218,13 @@ const FoodDetails = ({route, navigation}) => {
                 );
               })}
             </View>
+            {/* <View
+              style={{
+                marginTop: 40,
+                borderTopWidth: 1,
+                borderTopColor: '#B7B7B7',
+                paddingBottom: 20,
+              }}></View> */}
           </View>
         </ScrollView>
       </View>

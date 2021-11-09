@@ -9,8 +9,10 @@ import {
   Image,
   TextInput,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
+import Swiper from 'react-native-swiper';
 
 import LoginNode from '../../../Components/LoginNode';
 import ButtonAdd from '../../../Components/ButtonAdd';
@@ -23,7 +25,9 @@ const AddCookRecipe = () => {
   const [making, setMaking] = useState(['', '']);
   const [isValid, setIsValid] = useState(false);
   const [isClear, setIsClear] = useState(false);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(['']);
+
+  console.log('images', image);
 
   const checkContent = () => {
     var check = false;
@@ -99,7 +103,7 @@ const AddCookRecipe = () => {
         note="Đăng tải hình đại diện món ăn"
         title="Đăng ảnh"
         setImage={setImage}
-        multiple= {true}
+        multiple={true}
       />
       <Animated.View
         style={{
@@ -135,20 +139,23 @@ const AddCookRecipe = () => {
             <TouchableOpacity
               style={styles.buttonImage}
               onPress={() => sheetRef.current.snapTo(0)}>
-              {image ? (
-                <Image
-                  style={{height: 220, width: '100%'}}
-                  source={
-                       {uri: image}
-                  }
-                />
+              {image[0] != '' ? (
+                <Swiper showsButtons={true}>
+                  {image.map((e, index) => {
+                    return (
+                      <View>
+                        <ImageBackground
+                          style={styles.image}
+                          source={{uri: e}}></ImageBackground>
+                      </View>
+                    );
+                  })}
+                </Swiper>
               ) : (
                 <View style={styles.buttonImage}>
                   <Image
                     style={styles.logoCamera}
-                    source={
-                     require('../../../assets/image/logoCamera.png')
-                    }
+                    source={require('../../../assets/image/logoCamera.png')}
                   />
                   <Text
                     style={{fontSize: 20, fontWeight: '700', color: '#898989'}}>
@@ -205,7 +212,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   image: {
-    flex: 1,
+    height: 250,
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   buttonImage: {
     height: 240,

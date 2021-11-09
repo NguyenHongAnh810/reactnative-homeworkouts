@@ -21,7 +21,7 @@ const FoodList = ({title, data, navigation}) => {
             onPress={() => {
               navigation.navigate('FoodDetails', {food: e, screen: 'Home'});
             }}>
-            <Image style={styles.image} source={e.image}></Image>
+            <Image style={styles.image} source={e.image[0]}></Image>
             <Text style={styles.textName}>{e.name}</Text>
             <Reaction reaction={e.reaction} style={{margin: 10}} />
           </TouchableOpacity>

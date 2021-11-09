@@ -28,7 +28,7 @@ const FoodList = ({title, data, navigation}) => {
           onPress={()=>{
               
           }}>
-          <Image source={data[0].image} style={styles.image}></Image>
+          <Image source={data[0].image[0]} style={styles.image}></Image>
         </TouchableOpacity>
       </View>
       <ScrollView

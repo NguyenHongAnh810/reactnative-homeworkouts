@@ -20,7 +20,11 @@ export const Data = [
     name: 'Chè Khoai Dẻo',
     ingredients: ['đường', 'bột mì'],
     repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: require('../../../assets/image/backgroundLaunch.jpg'),
+    image: [
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+    ],
     reaction: {
       heart: {
         num: 2,
@@ -37,7 +41,11 @@ export const Data = [
     },
     comment: [
       {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
-      {content: 'Món ăn chẳng ngon đi làm mệt còn nấu nướng gì!, cảm ơn tác giả', userId: 2},
+      {
+        content:
+          'Món ăn chẳng ngon đi làm mệt còn nấu nướng gì!, cảm ơn tác giả',
+        userId: 2,
+      },
     ],
   },
   {
@@ -46,7 +54,11 @@ export const Data = [
     name: 'Bánh tráng trộn',
     ingredients: ['đường', 'bột mì'],
     repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: require('../../../assets/image/backgroundLaunch.jpg'),
+    image: [
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+    ],
     reaction: {
       heart: {
         num: 2,
@@ -72,7 +84,11 @@ export const Data = [
     name: 'Bít tết',
     ingredients: ['đường', 'bột mì'],
     repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: require('../../../assets/image/backgroundLaunch.jpg'),
+    image: [
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+    ],
     reaction: {
       heart: {
         num: 2,
@@ -98,7 +114,11 @@ export const Data = [
     name: 'Xúc xích rán',
     ingredients: ['đường', 'bột mì'],
     repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: require('../../../assets/image/backgroundLaunch.jpg'),
+    image: [
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+    ],
     reaction: {
       heart: {
         num: 2,
@@ -124,7 +144,11 @@ export const Data = [
     name: 'Cháo',
     ingredients: ['đường', 'bột mì'],
     repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: require('../../../assets/image/backgroundLaunch.jpg'),
+    image: [
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+    ],
     reaction: {
       heart: {
         num: 2,
@@ -150,7 +174,11 @@ export const Data = [
     name: 'Bánh mì kẹp trứng',
     ingredients: ['đường', 'bột mì'],
     repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: require('../../../assets/image/backgroundLaunch.jpg'),
+    image: [
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+      require('../../../assets/image/backgroundLaunch.jpg'),
+    ],
     reaction: {
       heart: {
         num: 2,
@@ -167,7 +195,11 @@ export const Data = [
     },
     comment: [
       {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
-      {content: 'Món ăn chẳng ngon gì mệt vch còn bắt nấu cơm!, cảm ơn tác giả', userId: 2},
+      {
+        content:
+          'Món ăn chẳng ngon gì mệt vch còn bắt nấu cơm!, cảm ơn tác giả',
+        userId: 2,
+      },
     ],
   },
 ];

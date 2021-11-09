@@ -11,7 +11,7 @@ export default function FoodItem({food, navigation, screen}) {
         onPress={() => {
           navigation.navigate('FoodDetails', {food: food, screen: screen});
         }}>
-        <Image style={styles.image} source={food.image}></Image>
+        <Image style={styles.image} source={food.image[0]}></Image>
         <View>
         <Text style={styles.textName}>{food.name}</Text>
         <View style={{marginLeft: 11}}>
