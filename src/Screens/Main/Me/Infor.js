@@ -57,7 +57,7 @@ import {
 import {useDispatch} from 'react-redux';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {TYPES} from '../../../redux/Action';
+import {TYPES} from '../../../redux/actions/Action';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';

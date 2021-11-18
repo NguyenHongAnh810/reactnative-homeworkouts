@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, Dimensions} from 'react-native';
 
 import Reaction from './Reaction';
+import { BASE_URL } from '../api/Common';
 const {height, wigth} = Dimensions.get('window');
 
 const FoodList = ({title, data, navigation}) => {
@@ -17,11 +18,12 @@ const FoodList = ({title, data, navigation}) => {
         {data.map((e, index) => {
           return (
             <TouchableOpacity
+            key={`food-item-${index}`}
             style={styles.button}
             onPress={() => {
               navigation.navigate('FoodDetails', {food: e, screen: 'Home'});
             }}>
-            <Image style={styles.image} source={e.image[0]}></Image>
+            <Image style={styles.image} source={{uri: BASE_URL + e.image[0]}}></Image>
             <Text style={styles.textName}>{e.name}</Text>
             <Reaction reaction={e.reaction} style={{margin: 10}} />
           </TouchableOpacity>
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
     margin: 8,
     fontSize: 14,
     fontWeight: '700',
+    height: 40
   },
 });
 

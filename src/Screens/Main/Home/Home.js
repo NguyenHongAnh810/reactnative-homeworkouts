@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   ScrollView,
   Dimensions,
+  Button,
   StyleSheet,
   TouchableOpacityBase,
   TouchableOpacity,
@@ -12,6 +13,7 @@ import FoodList from '../../../Components/FoodList';
 import FoodList3 from '../../../Components/FoodList3';
 import FoodList4 from '../../../Components/FoodList4';
 import FoodList5 from '../../../Components/FoodList5';
+
 
 export const Data = [
   {
@@ -240,25 +242,41 @@ export const User = [
   },
 ];
 
+import { GetListFoodApi } from '../../../api/GetListFoodApi';
+
 const Home = ({navigation}) => {
+  const [listFood, setListFood] = useState([])
+  useEffect(() => {
+    const fetchProductList = async () => {
+      try {
+      const params = null;
+      console.log('ok');
+      const response = await GetListFoodApi(params);
+      setListFood(response)
+      } catch (error) {
+      console.log('Failed to fetch listfood list: ', error);
+      }
+      }
+      fetchProductList();
+  }, [])
   return (
     <View style={styles.contrain}>
       <ScrollView style={{flex: 0.9}} showsVerticalScrollIndicator={false}>
-        <FoodList title="Món mới nhất" data={Data} navigation={navigation} />
+        <FoodList title="Món mới nhất" data={listFood} navigation={navigation} />
         <FoodList3
           title="Khám phá xem thứ gì đang trong mùa nhé!"
-          data={Data}
+          data={listFood}
           navigation={navigation}
         />
         <FoodList5
           title="Trổ tài với các món đặc sắc"
-          data={Data}
+          data={listFood}
           navigation={navigation}
         />
 
         <FoodList4
           title="Chúc mừng top 3 món ăn"
-          data={Data}
+          data={listFood}
           navigation={navigation}
         />
       </ScrollView>

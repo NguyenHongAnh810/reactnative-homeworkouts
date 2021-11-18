@@ -1,8 +1,8 @@
-import {TYPES} from './Action';
+import {TYPES} from './../actions/Action';
 
 export const initalState = {
   isLogin: false,
-  // content: ['','']
+  loading: false,
 };
 
 function myReducer(state = initalState, action) {
@@ -13,8 +13,14 @@ function myReducer(state = initalState, action) {
     case TYPES.LOGOUT_SUCCESS:
       state.isLogin = false;
       return {...state};
+    case TYPES.LOADING:
+      state.loading = true;
+      return {...state};
+    case TYPES.LOADED:
+      state.loading = false;
+      return {...state};
     default:
-      return state;
+      return {...state};
   }
 }
 

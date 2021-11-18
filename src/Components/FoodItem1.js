@@ -4,6 +4,8 @@ import Reaction from './Reaction';
 
 const {height, wigth} = Dimensions.get('window');
 
+import { BASE_URL } from '../api/Common';
+
 import { User } from '../Screens/Main/Home/Home';
 
 export default function FoodItem1({food, navigation, screen}) {
@@ -13,7 +15,7 @@ export default function FoodItem1({food, navigation, screen}) {
         onPress={() => {
           navigation.navigate('FoodDetails', {food: food, screen: screen});
         }}>
-        <Image style={styles.image} source={food.image[0]}></Image>
+        <Image style={styles.image} source={{uri: BASE_URL + food.image[0]}}></Image>
         <View>
         <Text style={styles.textName}>{food.name}</Text>
         <View style={{marginLeft: 11}}>

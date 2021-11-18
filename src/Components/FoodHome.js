@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import Reaction from './Reaction';
+import { BASE_URL } from '../api/Common';
 
 
 const {height, wigth} = Dimensions.get('window');
@@ -20,9 +21,12 @@ const FoodHome = ({food, navigation}) => {
       onPress={() => {
         navigation.navigate('FoodDetails', {food: food, screen: 'Home'});
       }}>
-      <Image style={styles.image} source={food.image[0]}></Image>
+      <Image style={styles.image} source={{uri: BASE_URL + food.image[0]}}></Image>
+      
       <Text style={styles.textName}>{food.name}</Text>
-      <Reaction reaction={food.reaction} style={{margin: 10}} />
+      <View style={{height: 20}}>
+      <Reaction reaction={food.reaction} />
+      </View>
     </TouchableOpacity>
   );
 };
@@ -50,6 +54,7 @@ const styles = StyleSheet.create({
     margin: 8,
     fontSize: 14,
     fontWeight: '700',
+    height: 40
   },
 });
 

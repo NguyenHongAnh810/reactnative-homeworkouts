@@ -22,6 +22,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const {height, wigth} = Dimensions.get('window');
 
 import {User} from './Home';
+import { BASE_URL } from '../../../api/Common';
 
 const FoodDetails = ({route, navigation}) => {
   const {food} = route.params;
@@ -86,7 +87,7 @@ const FoodDetails = ({route, navigation}) => {
                   <View>
                     <ImageBackground
                       style={styles.image}
-                      source={e}></ImageBackground>
+                      source={{uri: BASE_URL +  e}}></ImageBackground>
                   </View>
                 );
               })}
@@ -124,7 +125,7 @@ const FoodDetails = ({route, navigation}) => {
                     borderBottomColor: '#B7B7B7',
                   }}
                   key={`food-item-${index}`}>
-                  <Text style={styles.include1}>{e}</Text>
+                  <Text style={styles.include1}>{e.content}</Text>
                 </View>
               );
             })}
@@ -134,12 +135,14 @@ const FoodDetails = ({route, navigation}) => {
             {food.repice.map((e, index) => {
               return (
                 <View
-                  style={{flexDirection: 'row', alignItems: 'center'}}
+                  style={{flexDirection: 'row', 
+                  // alignItems: 'center'
+                }}
                   key={`food-item-${index}`}>
                   <View style={styles.viewIndex}>
                     <Text style={styles.index}>{index + 1}</Text>
                   </View>
-                  <Text style={styles.include}>{e}</Text>
+                  <Text style={styles.include}>{e.making}</Text>
                 </View>
               );
             })}
@@ -250,14 +253,15 @@ const styles = StyleSheet.create({
     // marginLeft: 24,
     marginVertical: 20,
     marginTop: 32,
+    fontWeight: "600"
   },
   include: {
-    fontSize: 12,
+    fontSize: 14,
     marginLeft: 8,
     marginVertical: 12,
   },
   include1: {
-    fontSize: 12,
+    fontSize: 14,
     marginLeft: 4,
     marginVertical: 10,
   },
@@ -273,6 +277,7 @@ const styles = StyleSheet.create({
     width: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 12
   },
   reaction: {
     alignItems: 'center',

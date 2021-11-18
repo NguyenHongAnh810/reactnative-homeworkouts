@@ -107,6 +107,7 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
+  Alert
 } from 'react-native';
 
 import {useSelector, useDispatch} from 'react-redux';
@@ -121,9 +122,7 @@ import {
   validatePassword,
 } from '../../Utils/Validate';
 
-import {TYPES, loginSuccess, logoutSuccess} from '../../redux/Action';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RegisterApi } from '../../api/RegisterApi';
 
 const Register = ({navigation}) => {
     const [name, setName] = useState('');
@@ -140,17 +139,26 @@ const Register = ({navigation}) => {
     }
   }, [email, pass, name]);
 
-  const checkLogin = async () => {
+  const register = async () => {
     try {
-      if (true) {
-        dispatch({
-          type: TYPES.LOGIN_SUCCESS,
-        });
-        await AsyncStorage.setItem('isLogin', JSON.stringify(true));
-      }
+      const data = {
+        username: name,
+        email: email,
+        password: pass
+      };
+      const response = await RegisterApi(data);
+      console.log('register successfully: ', response);
+      Alert.alert("Thông báo", "Đăng kí tài khoản thành công",  [
+        {
+          text: "Đăng nhập",
+          onPress: () =>  navigation.navigate({name: 'Login'}),
+        },
+        { text: "Thoát"}
+      ])
     } catch (error) {
-      // Error saving data
-      console.log(error, 'err');
+      alert("Đăng ký không thành công")
+      console.log('register failted: ', error);
+      
     }
   };
 
@@ -201,7 +209,7 @@ const Register = ({navigation}) => {
             <View style={styles.node}>
               <LoginButton
                 nameNode={'Register'}
-                onPress={checkLogin}></LoginButton>
+                onPress={register}></LoginButton>
             </View>
           </View>
         </View>

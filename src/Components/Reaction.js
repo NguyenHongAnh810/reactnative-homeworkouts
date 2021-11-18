@@ -10,16 +10,16 @@ const Reaction = ({reaction}) => {
             <TouchableOpacity style = {styles.button} onPress={()=>{
                 reaction.heart.num = reaction.heart.num + 1;
             }}>
-                <Icon name="heart" color = 'red' size = {12}></Icon>
-                <Text> {reaction.heart.num}</Text>
+                <Icon name="heart" color = 'red' size = {10}></Icon>
+                <Text style={styles.text}> {reaction.heart.num}</Text>
             </TouchableOpacity>
             <TouchableOpacity style = {styles.button}>
-                <Icon1 name="smile-beam" color = '#EC870E' size = {12}></Icon1>
-                <Text> {reaction.haha.num}</Text>
+                <Icon1 name="smile-beam" color = '#EC870E' size = {10}></Icon1>
+                <Text style={styles.text}> {reaction.haha.num}</Text>
             </TouchableOpacity>
             <TouchableOpacity style = {styles.button}>
-                <Icon1 name="sad-tear" color = '#38044B' size = {12}></Icon1>
-                <Text> {reaction.sad.num}</Text>
+                <Icon1 name="sad-tear" color = '#38044B' size = {10}></Icon1>
+                <Text style={styles.text}> {reaction.sad.num}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
     button: {
         height: 20 ,
-        width: 40,
+        width: 32,
         alignItems: 'center',
         justifyContent: 'center',
         margin: 4,
@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#D7D7D7',
         borderRadius: 15
     },
+    text: {
+        fontSize: 12
+    }
 
 })
 export default Reaction;

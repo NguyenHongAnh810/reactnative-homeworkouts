@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -8,24 +9,52 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
+  Button
 } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather';
 import SuggestSearch from '../../../Components/SuggestSearch';
 import FoodList6 from '../../../Components/FoodList6';
-import {Data} from './../Home/Home';
+import { GetListFoodApi } from '../../../api/GetListFoodApi';
+import { isFulfilled } from '@reduxjs/toolkit';
+import {useSelector, useDispatch} from 'react-redux';
 const {height, wigth} = Dimensions.get('window');
 
 const DataSuggestFood = ['Cơm', 'Cháo','Phở', 'Bánh mì', 'Ốc xào', 'Trà sữa', 'Bít tết', 'Sushi']
 
 
 const Search = ({navigation}) => {
-  const [key, setKey] = useState('');
+  const [key, setKey] = useState("");
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState(false);
+  const loading = useSelector(state => state.auth.loading);
+  const dispatch = useDispatch();
+
+  const fetchProductList = async () => {
+    console.log(key)
+    try {
+    const params = {
+      name_contains: key
+    }
+    console.log('start');
+    const response = await GetListFoodApi(params);
+    console.log('end');
+    setData(response)
+    // console.log('Fetch listfood successfully: ', response);
+    setData(response)
+    } catch (error) {
+    console.log('Failed to fetch listfood list: ', error);
+    }
+    }
+
+    useEffect(() => {
+      if (key == '') setSearch(false);
+    }, [key]);
 
   useEffect(() => {
     if (key == '') setSearch(false);
-  }, [key]);
+      if(search) {fetchProductList()}
+  }, [search]);
 
   const renderItem = ({item}) => {
     return (
@@ -35,13 +64,22 @@ const Search = ({navigation}) => {
           setKey(item);
           setSearch(true);
         }}
-        // key={`food-item-${item}`}
+        key={`food-item-${item}`}
       />
     );
   };
   return (
     <View style={styles.contrain}>
       <View style={styles.header}>
+      <Button title="loading" onPress={() => {
+        dispatch({
+        type: 'LOADING',
+      });
+      setTimeout(()=>{
+        dispatch({
+          type: 'LOADED',
+      })}, 2000);
+      }}/>
         <Text
           style={{
             fontWeight: 'bold',
@@ -86,6 +124,7 @@ const Search = ({navigation}) => {
             onPress={()=>{
               if(key != ''){
               setSearch(true)
+              fetchProductList()
               }
             }}>
             <Feather
@@ -100,7 +139,7 @@ const Search = ({navigation}) => {
       {search ? (
         <FoodList6
           value={key}
-          data={Data}
+          data={data}
           navigation={navigation}
           screen="Search"
         />

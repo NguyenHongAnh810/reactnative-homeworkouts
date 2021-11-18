@@ -142,6 +142,7 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
+  Alert,
 } from 'react-native';
 
 import {useSelector, useDispatch} from 'react-redux';
@@ -150,41 +151,50 @@ import LoginNode from '../../Components/LoginNode';
 import LoginButton from '../../Components/LoginButton';
 import InputPass from '../../Components/InputPass';
 import {Color} from '../../assets/color';
-import {
-  validateEmail,
-  validateName,
-  validatePassword,
-} from '../../Utils/Validate';
+import Loading from '../../Components/Loading';
+import {validateName, validatePassword} from '../../Utils/Validate';
 
-import {TYPES, loginSuccess, logoutSuccess} from '../../redux/Action';
+import {TYPES} from './../../redux/actions/Action';
+import {LoginApi} from '../../api/LoginApi';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [isValid, setIsVaid] = useState(false);
+  const [check, setCheck] = useState(false);
+  const loading = useSelector(state => state.auth.loading);
+  console.log('loading', loading)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (validateEmail(email) && validatePassword(pass)) {
+    if (loading) return <Loading />;
+  }, [loading]);
+
+
+  useEffect(() => {
+    if (validateName(username) && validatePassword(password)) {
       setIsVaid(true);
     } else {
       setIsVaid(false);
     }
-  }, [email, pass]);
+  }, [username, password]);
 
+ 
   const checkLogin = async () => {
     try {
-      if (true) {
-        dispatch({
-          type: TYPES.LOGIN_SUCCESS,
-        });
-        await AsyncStorage.setItem('isLogin', JSON.stringify(true));
-      }
+      const data = {
+        identifier: username,
+        password: password,
+      };
+      dispatch({
+        type: TYPES.LOGIN_REQUEST,
+        params: data,
+      });
+      await AsyncStorage.setItem('isLogin', JSON.stringify(true));
     } catch (error) {
-      // Error saving data
-      console.log(error, 'err');
+      console.log('Login failted: ', error);
     }
   };
 
@@ -210,21 +220,21 @@ const Login = ({navigation}) => {
                 }}>
                 <Text style={styles.textNode}>Đăng kí</Text>
               </TouchableOpacity>
-              </View>
+            </View>
           </View>
           <View>
             <Input
-              value={email}
-              type={'email'}
-              changeValue={setEmail}
-              isValid={validateEmail(email)}
+              value={username}
+              type={'name'}
+              changeValue={setUsername}
+              isValid={validateName(username)}
             />
             <InputPass
-              value={pass}
+              value={password}
               type={'pass'}
-              changeValue={setPass}
+              changeValue={setPassword}
               typeRegister={false}
-              isValid={validatePassword(pass)}
+              isValid={validatePassword(password)}
             />
             <View style={styles.node}>
               <LoginButton
@@ -286,7 +296,7 @@ const styles = StyleSheet.create({
   node: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 38
-  }
+    marginTop: 38,
+  },
 });
 export default Login;

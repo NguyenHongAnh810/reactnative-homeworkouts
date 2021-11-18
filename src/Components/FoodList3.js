@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import FoodHome from './FoodHome';
+import {BASE_URL} from './../api/Common'
 
 const FoodList = ({title, data, navigation}) => {
   return (
@@ -28,7 +29,7 @@ const FoodList = ({title, data, navigation}) => {
           onPress={()=>{
               
           }}>
-          <Image source={data[0].image[0]} style={styles.image}></Image>
+          <Image source={{uri: BASE_URL + data[0]?.image[0]}} style={styles.image}></Image>
         </TouchableOpacity>
       </View>
       <ScrollView

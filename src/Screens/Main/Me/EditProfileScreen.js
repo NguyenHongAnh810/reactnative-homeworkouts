@@ -28,6 +28,21 @@ const EditProfileScreen = ({navigation}) => {
 
   const bs = React.createRef();
   const fall = new Animated.Value(1);
+
+  const EditProfileProcess = () =>{
+    try {
+      const data = {
+       
+      };
+      // const response = await RegisterApi(data);
+      Alert.alert("Thông báo", "Lưu thông tin thành công")
+    } catch (error) {
+      alert("Lưu thông tin không thành công")
+      console.log('register failted: ', error);
+      
+    }
+    Alert.alert('Thông báo', 'Lưu thông tin thành công');
+  }
   return (
     <View style={styles.container}>
       <BottomSheetUpdateImage
@@ -155,9 +170,7 @@ const EditProfileScreen = ({navigation}) => {
           </View>
           <TouchableOpacity
             style={styles.commandButton}
-            onPress={() => {
-              Alert.alert('Thông báo', 'Lưu thông tin thành công');
-            }}>
+            onPress={EditProfileProcess}>
             <Text style={styles.panelButtonTitle}>Lưu</Text>
           </TouchableOpacity>
         </Animated.View>

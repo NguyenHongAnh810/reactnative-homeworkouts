@@ -3,6 +3,7 @@ import {View, Text, ScrollView, StyleSheet, FlatList, TouchableOpacity, Image, D
 
 import FoodHome from './FoodHome';
 import Reaction from './Reaction';
+import { BASE_URL } from '../api/Common';
 
 const {height, wigth} = Dimensions.get('window');
 
@@ -11,11 +12,12 @@ const FoodList = ({title, data, navigation}) => {
     const renderItem = ({item}) => {
         return (
             <TouchableOpacity
+            key={`food-item-${item}`}
             style={styles.button}
             onPress={() => {
               navigation.navigate('FoodDetails', {food: item, screen: 'Home'});
             }}>
-            <Image style={styles.image} source={item.image[0]}></Image>
+            <Image style={styles.image} source={{uri: BASE_URL + item.image[0]}}></Image>
             <Text style={styles.textName}>{item.name}</Text>
             <Reaction reaction={item.reaction} style={{margin: 10}} />
           </TouchableOpacity>
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
     margin: 8,
     fontSize: 14,
     fontWeight: '700',
+    height: 40
   },
 });
 

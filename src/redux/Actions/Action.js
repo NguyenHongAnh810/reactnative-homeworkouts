@@ -4,6 +4,9 @@ export const TYPES = {
 
   LOGOUT_REQUEST: 'ACCOUNT_LOGOUT_REQUEST',
   LOGOUT_SUCCESS: 'ACCOUNT_LOGOUT_SUCCESS',
+
+  LOADING: 'LOADING',
+  LOADED: 'LOADED',
 };
 
 export function loginSuccess () {
