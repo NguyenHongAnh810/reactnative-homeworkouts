@@ -13,9 +13,10 @@ export default function Loading() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    ...StyleSheet.absoluteFill,
     zIndex: 9999,
     justifyContent: 'center',
+    backgroundColor: '#00000044'
   },
   horizontal: {
     flexDirection: 'row',

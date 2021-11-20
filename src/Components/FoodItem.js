@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native'
 import Reaction from './Reaction';
+import { BASE_URL } from '../api/Common';
 
 const {height, wigth} = Dimensions.get('window');
 
@@ -11,7 +12,7 @@ export default function FoodItem({food, navigation, screen}) {
         onPress={() => {
           navigation.navigate('FoodDetails', {food: food, screen: screen});
         }}>
-        <Image style={styles.image} source={food.image[0]}></Image>
+        <Image style={styles.image} source={{uri: BASE_URL + food.image[0]}}></Image>
         <View>
         <Text style={styles.textName}>{food.name}</Text>
         <View style={{marginLeft: 11}}>

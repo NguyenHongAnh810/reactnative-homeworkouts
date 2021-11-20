@@ -20,17 +20,7 @@ export default function FoodItem1({food, navigation, screen}) {
         <Text style={styles.textName}>{food.name}</Text>
         <View style={{marginLeft: 11}}>
         <Reaction reaction={food.reaction} />
-        <View style={styles.infor}>
-          <Image
-            style={styles.avata}
-            source={{
-              uri: User[0].avata,
-            }}></Image>
-          <View>
-            <Text style={styles.names}>{User[0].name}</Text>
-          </View>
-          </View>
-        </View>
+        </View> 
         </View>
       </TouchableOpacity>
     )

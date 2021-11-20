@@ -2,12 +2,10 @@ import { call } from 'react-native-reanimated';
 import { put, takeEvery, takeLatest } from 'redux-saga/effects'
 import {LoginApi} from '../../api/LoginApi'
 import {RegisterApi} from '../../api/RegisterApi'
-import {TYPES} from './../actions/Action'
+import {TYPES} from './../actions/AddFoodAction'
 
-function* fetchUser(action) {
+function* addFood(action) {
    try {
-      yield put({type: TYPES.LOADING});
-
       const response = yield LoginApi(action.params)
       yield put({type: TYPES.LOGIN_SUCCESS, response: response});
       yield put({type: TYPES.LOADED});
@@ -18,7 +16,7 @@ function* fetchUser(action) {
    }
 }
 
-function* CallRegister(action) {
+function* uploadImages(action) {
    try {
       yield put({type: TYPES.LOADING});
       const response = yield RegisterApi(action.params)
@@ -34,8 +32,8 @@ function* CallRegister(action) {
 
 export default 
 [
-   takeLatest(TYPES.LOGIN_REQUEST, fetchUser),
-   takeLatest(TYPES.REGISTER_REQUEST, CallRegister),
+   takeLatest(TYPES.ADDFOOD_REQUEST, addFood),
+   takeLatest(TYPES.UPLOAD_IMAGE_REQUEST, uploadImages),
 
 ]
 // mySaga;

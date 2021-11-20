@@ -20,7 +20,7 @@ import { isFulfilled } from '@reduxjs/toolkit';
 import {useSelector, useDispatch} from 'react-redux';
 const {height, wigth} = Dimensions.get('window');
 
-const DataSuggestFood = ['Cơm', 'Cháo','Phở', 'Bánh mì', 'Ốc xào', 'Trà sữa', 'Bít tết', 'Sushi']
+const DataSuggestFood = ['Cơm', 'Cháo', 'Phở', 'Bánh mì', 'Ốc xào', 'Trà sữa', 'Bít tết', 'Sushi']
 
 
 const Search = ({navigation}) => {
@@ -71,15 +71,15 @@ const Search = ({navigation}) => {
   return (
     <View style={styles.contrain}>
       <View style={styles.header}>
-      <Button title="loading" onPress={() => {
+      {/* <Button title="loading" onPress={() => {
         dispatch({
         type: 'LOADING',
-      });
-      setTimeout(()=>{
+      }); */}
+      {/* setTimeout(()=>{
         dispatch({
           type: 'LOADED',
       })}, 2000);
-      }}/>
+      }}/> */}
         <Text
           style={{
             fontWeight: 'bold',

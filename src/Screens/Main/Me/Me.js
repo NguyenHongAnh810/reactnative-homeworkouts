@@ -9,12 +9,19 @@ import {
   Image,
 } from 'react-native';
 
+import { useSelector } from 'react-redux';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import TabViewMe from '../../../navigator/TabViewMe';
+import { BASE_URL } from '../../../api/Common';
 
-import {User} from '../Home/Home';
+// import {User} from '../Home/Home';
 
 const Me = ({navigation}) => {
+  const User = useSelector(state => state.auth.user.infor)
+  const isLogin = useSelector(state => state.auth.user.isLogin)
+  console.log("islogin", isLogin)
+  console.log("infor", User)
   return (
     <View style={{backgroundColor: '#F8F8F7', padding: 5, flex: 1}}>
       <View style={{flex: 0.1, backgroundColor: 'white'}}>
@@ -26,16 +33,16 @@ const Me = ({navigation}) => {
           <Image
             style={styles.avata}
             source={{
-              uri: User[0].avata,
+              uri: BASE_URL + User.avata?.url,
             }}></Image>
             <View>
-          <Text style={styles.name}>{User[0].name}</Text>
-          <Text style={styles.mail}>{User[0].gmail}</Text>
+          <Text style={styles.name}>{User.username}</Text>
+          <Text style={styles.mail}>{User.email}</Text>
           </View>
         </TouchableOpacity>
       </View>
       <View style={{flex: 0.9}}>
-        <TabViewMe navigation={navigation} />
+        <TabViewMe navigation={navigation}/>
       </View>
     </View>
   );

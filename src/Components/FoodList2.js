@@ -8,7 +8,7 @@ const {height, wigth} = Dimensions.get('window');
 
 const FoodList2 = ({value, navigation, screen, data}) => {
   const renderItem = ({item}) => {
-    return <FoodItem food ={item} navigation = {navigation} screen = {screen} key={`food-item-${item.idFood}`}/>;
+    return <FoodItem food ={item} navigation = {navigation} screen = {screen} key={`food-item-${item.id}`}/>;
   };
   return (
     <View style={{alignItems: 'center', flex: 1, marginTop: 10, width: '100%'}}>

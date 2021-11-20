@@ -15,12 +15,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Animated from 'react-native-reanimated';
 
-import {User} from '../Home/Home';
+import {BASE_URL} from '../../../api/Common'
+import {useDispatch, useSelector} from 'react-redux';
 import {Color} from '../../../assets/color';
 import BottomSheetUpdateImage from '../../../Components/BottomSheetUpdateImage';
 
 const EditProfileScreen = ({navigation}) => {
-  const [image, setImage] = useState([User[0].avata]);
+  const User = useSelector(state => state.auth.user.infor)
+  const [image, setImage] = useState([BASE_URL + User.avata.url]);
   const [name, setName] = useState('');
   const [mail, setMail] = useState('');
   const [pass, setPass] = useState('');
@@ -104,7 +106,7 @@ const EditProfileScreen = ({navigation}) => {
           <View style={styles.action}>
             <FontAwesome name="user-o" color={'black'} size={20} />
             <TextInput
-              placeholder={User[0].name}
+              placeholder={User.username}
               placeholderTextColor="#666666"
               autoCorrect={false}
               value={name}
@@ -120,7 +122,7 @@ const EditProfileScreen = ({navigation}) => {
           <View style={styles.action}>
             <FontAwesome name="envelope-o" color={'black'} size={20} />
             <TextInput
-              placeholder={User[0].gmail}
+              placeholder={User.email}
               placeholderTextColor="#666666"
               keyboardType="email-address"
               autoCorrect={false}

@@ -11,6 +11,7 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux'
 import Animated from 'react-native-reanimated';
 import Swiper from 'react-native-swiper';
 
@@ -18,6 +19,9 @@ import LoginNode from '../../../Components/LoginNode';
 import ButtonAdd from '../../../Components/ButtonAdd';
 import ListContents from '../../../Components/ListContents';
 import BottomSheetUpdateImage from '../../../Components/BottomSheetUpdateImage';
+import {TYPES} from '../../../redux/actions/AddFoodAction'
+import {TYPES as TYPES1} from '../../../redux/actions/Action'
+import Loading from '../../../Components/Loading';
 
 const AddCookRecipe = () => {
   const [nameFood, setNameFood] = useState('');
@@ -26,6 +30,7 @@ const AddCookRecipe = () => {
   const [isValid, setIsValid] = useState(false);
   const [isClear, setIsClear] = useState(false);
   const [image, setImage] = useState(['']);
+  const dispatch = useDispatch()
 
   console.log('images', image);
 
@@ -95,6 +100,36 @@ const AddCookRecipe = () => {
   const sheetRef = React.useRef(null);
   const fall = new Animated.Value(1);
 
+  const UploadReacipe = () => {
+
+    if (true) {
+      try{
+
+      dispatch({
+        type: TYPES1.LOADING
+      })
+      // dispatch({
+      //   type: TYPES.ADDFOOD_REQUEST
+      // })
+      dispatch({
+        type: TYPES1.LOADED
+      })
+    } catch(e) {
+      dispatch({
+        type: TYPES1.LOADED
+      })
+      console.log('add recipe failted: ', e)
+    }
+  }
+      // Alert.alert('Thông báo', 'Đăng món ăn thành công', [
+      //   {
+      //     text: 'OK',
+      //     onPress: () => {},
+      //   },
+      // ]);
+    
+  }
+
   return (
     <View style={{flex: 1}}>
       <BottomSheetUpdateImage
@@ -116,16 +151,7 @@ const AddCookRecipe = () => {
           <LoginNode
             nameNode="Lên sóng"
             isValid={isValid}
-            onPress={() => {
-              if (isValid) {
-                Alert.alert('Thông báo', 'Đăng món ăn thành công', [
-                  {
-                    text: 'OK',
-                    onPress: () => {},
-                  },
-                ]);
-              }
-            }}
+            onPress={UploadReacipe}
           />
           <ButtonAdd
             nameNode="Xóa"
