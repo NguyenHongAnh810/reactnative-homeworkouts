@@ -1,6 +1,12 @@
-import axiosClient from "./AxiosClient";
+import axios from "axios";
+import { BASE_URL } from "./Common";
 
-export const UploadImageApi = (params)=> {
-    const url = '/auth/local/register';
-    return axiosClient.post(url, params);
+export const UploadImageApi = (imageData)=> {
+    const url = '/upload';
+    return axios.post(url, imageData, {
+        baseURL: BASE_URL,
+        headers: {
+            'Content-Type': 'mutipart/form-data'
+        }
+    });
 }

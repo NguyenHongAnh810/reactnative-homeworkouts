@@ -150,10 +150,10 @@ const FoodDetails = ({route, navigation}) => {
           <View style={styles.reaction}>
             <Reaction reaction={food.reaction} />
             <Text style={styles.textReact}>
-              {food.reaction.heart.user[0]} và{' '}
-              {food.reaction.heart.num +
-                food.reaction.sad.num +
-                food.reaction.haha.num}{' '}
+              {food.reaction?.heart.user[0]} và{' '}
+              {food.reaction?.heart.num +
+                food.reaction?.sad.num +
+                food.reaction?.haha.num}{' '}
               người khác đã thả cảm xúc
             </Text>
           </View>

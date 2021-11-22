@@ -36,7 +36,7 @@ function* fetchFoodSave(action) {
  function* fetchNewFood(action) {
     try {
        const response = yield GetListFoodApi(action.params)
-       yield put({type: TYPES.FETCH_MYFOODLIST_SUCCESS, response: response});
+       yield put({type: TYPES.FETCH_NEWFOODLIST_SUCCESS, response: response});
     } catch (e) {
        alert("Tải dữ liệu thất bại")
        console.log('fetch list new food failted: ', e);
@@ -46,7 +46,7 @@ function* fetchFoodSave(action) {
  function* fetchSetFood(action) {
     try {
        const response = yield GetListFoodApi(action.params)
-       yield put({type: TYPES.FETCH_MYFOODLIST_SUCCESS, response: response});
+       yield put({type: TYPES.FETCH_SETFOODLIST_SUCCESS, response: response});
     } catch (e) {
        alert("Tải dữ liệu thất bại")
        console.log('fetch list set food failted: ', e);
@@ -56,7 +56,7 @@ function* fetchFoodSave(action) {
  function* fetchSpecialFood(action) {
     try {
        const response = yield GetListFoodApi(action.params)
-       yield put({type: TYPES.FETCH_MYFOODLIST_SUCCESS, response: response});
+       yield put({type: TYPES.FETCH_SPECIALFOODLIST_SUCCESS, response: response});
     } catch (e) {
        alert("Tải dữ liệu thất bại")
        console.log('fetch list special food failted: ', e);
@@ -66,7 +66,7 @@ function* fetchFoodSave(action) {
  function* fetchTopFood(action) {
     try {
        const response = yield GetListFoodApi(action.params)
-       yield put({type: TYPES.FETCH_MYFOODLIST_SUCCESS, response: response});
+       yield put({type: TYPES.FETCH_TOPFOODLIST_SUCCESS, response: response});
     } catch (e) {
        alert("Tải dữ liệu thất bại")
        console.log('fetch list top food failted: ', e);

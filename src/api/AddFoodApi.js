@@ -1,6 +1,6 @@
 import axiosClient from "./AxiosClient";
 
 export const AddFoodApi = (params)=> {
-    const url = '/auth/local/register';
+    const url = '/foods';
     return axiosClient.post(url, params);
 }

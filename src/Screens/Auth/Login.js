@@ -30,8 +30,6 @@ const Login = ({navigation}) => {
   const [isValid, setIsVaid] = useState(false);
   const [check, setCheck] = useState(false);
   const loading = useSelector(state => state.auth.loading);
-  const user = useSelector(state => state.auth.infor);
-  console.log(user);
   console.log('loading', loading)
   const dispatch = useDispatch();
 
@@ -47,7 +45,6 @@ const Login = ({navigation}) => {
       setIsVaid(false);
     }
   }, [username, password]);
-
  
   const checkLogin = async () => {
     try {
@@ -59,7 +56,8 @@ const Login = ({navigation}) => {
         type: TYPES.LOGIN_REQUEST,
         params: data,
       });
-      await AsyncStorage.setItem('idUser', JSON.stringify(response.user.id));
+      // const User = useSelector(state => state.auth.user.infor)
+      // await AsyncStorage.setItem('idUser', JSON.stringify(User.id));
     } catch (error) {
       console.log('Login failted: ', error);
     }

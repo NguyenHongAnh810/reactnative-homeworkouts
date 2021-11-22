@@ -242,17 +242,47 @@ export const User = [
   },
 ];
 
-import { GetListFoodApi } from '../../../api/GetListFoodApi';
+import {TYPES} from '../../../redux/actions/Action'
+import {TYPES as TYPESGETLIST} from '../../../redux/actions/ActionFetchList'
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const Home = ({navigation}) => {
-  const [listFood, setListFood] = useState([])
+  const newFood = useSelector(state => state.product.newFood)
+  console.log(newFood)
+  const setFood = useSelector(state => state.product.setFood)
+  const specialFood = useSelector(state => state.product.specialFood)
+  const topFood = useSelector(state => state.product.topFood)
+  const dispatch = useDispatch()
   useEffect(() => {
     const fetchProductList = async () => {
       try {
       const params = null;
-      console.log('ok');
-      const response = await GetListFoodApi(params);
-      setListFood(response)
+     
+        dispatch({
+          type: TYPES.LOADING
+        })
+        dispatch({
+          type: TYPESGETLIST.FETCH_NEWFOODLIST_REQUEST,
+          params: params
+        })
+        dispatch({
+          type: TYPESGETLIST.FETCH_SETFOODLIST_REQUEST,
+          params: params
+        })
+        dispatch({
+          type: TYPESGETLIST.FETCH_SPECIALFOODLIST_REQUEST,
+          params: params
+        })
+        dispatch({
+          type: TYPESGETLIST.FETCH_TOPFOODLIST_REQUEST,
+          params: params
+        })
+        setTimeout(()=>{
+          dispatch({
+            type: TYPES.LOADED
+          })
+        }, 1500)
       } catch (error) {
       console.log('Failed to fetch listfood list: ', error);
       }
@@ -262,21 +292,21 @@ const Home = ({navigation}) => {
   return (
     <View style={styles.contrain}>
       <ScrollView style={{flex: 0.9}} showsVerticalScrollIndicator={false}>
-        <FoodList title="Món mới nhất" data={listFood} navigation={navigation} />
+        <FoodList title="Món mới nhất" data={newFood} navigation={navigation} />
         <FoodList3
           title="Khám phá xem thứ gì đang trong mùa nhé!"
-          data={listFood}
+          data={setFood}
           navigation={navigation}
         />
         <FoodList5
           title="Trổ tài với các món đặc sắc"
-          data={listFood}
+          data={specialFood}
           navigation={navigation}
         />
 
         <FoodList4
           title="Chúc mừng top 3 món ăn"
-          data={listFood}
+          data={topFood}
           navigation={navigation}
         />
       </ScrollView>

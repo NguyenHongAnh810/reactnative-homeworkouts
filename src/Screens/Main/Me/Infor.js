@@ -124,7 +124,7 @@ const InforScreen = ({navigation}) => {
             dispatch({
               type: TYPES.LOGOUT_SUCCESS,
             });
-            await AsyncStorage.setItem('isLogin', JSON.stringify(false));
+            await AsyncStorage.setItem('idUser', 0);
           }}>
           <Text style={styles.textLogout}>Đăng xuất</Text>
         </TouchableOpacity>

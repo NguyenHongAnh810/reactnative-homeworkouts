@@ -21,6 +21,7 @@ const Me = ({navigation}) => {
   const User = useSelector(state => state.auth.user.infor)
   const isLogin = useSelector(state => state.auth.user.isLogin)
   console.log("islogin", isLogin)
+  console.log()
   console.log("infor", User)
   return (
     <View style={{backgroundColor: '#F8F8F7', padding: 5, flex: 1}}>

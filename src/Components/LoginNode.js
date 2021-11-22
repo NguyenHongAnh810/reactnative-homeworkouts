@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const LoginNode = ({navigation, nameNode, isValid, isDone, onPress}) => {
+const LoginNode = ({nameNode, isValid, onPress}) => {
   return (
     <View>
       <TouchableOpacity
@@ -21,7 +21,7 @@ const LoginNode = ({navigation, nameNode, isValid, isDone, onPress}) => {
         <Text style={{
           // color: '#9E9E9E'
           color: '#555555',
-          fontWeight: '600',
+          fontWeight: '700',
           fontSize: 16
         
       }}>{nameNode}</Text>

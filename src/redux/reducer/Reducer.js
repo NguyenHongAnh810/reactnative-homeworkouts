@@ -12,8 +12,9 @@ export const initalState = {
 function myReducer(state = initalState, action) {
   switch (action.type) {
     case TYPES.LOGIN_SUCCESS:
+      console.log("reducer login success", action.response)
       state.user.isLogin = true;
-      state.user.infor = action.response.user;
+      state.user.infor = action.response;
       return {...state};
     case TYPES.LOGOUT_SUCCESS:
       state.user.isLogin = false;

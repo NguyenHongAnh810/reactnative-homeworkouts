@@ -8,18 +8,18 @@ const Reaction = ({reaction}) => {
     return (
         <View style = {{flexDirection : 'row'}}>
             <TouchableOpacity style = {styles.button} onPress={()=>{
-                reaction.heart.num = reaction.heart.num + 1;
+                // reaction?.heart?.num = reaction?.heart?.num + 1;
             }}>
                 <Icon name="heart" color = 'red' size = {10}></Icon>
-                <Text style={styles.text}> {reaction.heart.num}</Text>
+                <Text style={styles.text}> {reaction?.heart?.num}</Text>
             </TouchableOpacity>
             <TouchableOpacity style = {styles.button}>
                 <Icon1 name="smile-beam" color = '#EC870E' size = {10}></Icon1>
-                <Text style={styles.text}> {reaction.haha.num}</Text>
+                <Text style={styles.text}> {reaction?.haha?.num}</Text>
             </TouchableOpacity>
             <TouchableOpacity style = {styles.button}>
                 <Icon1 name="sad-tear" color = '#38044B' size = {10}></Icon1>
-                <Text style={styles.text}> {reaction.sad.num}</Text>
+                <Text style={styles.text}> {reaction?.sad?.num}</Text>
             </TouchableOpacity>
         </View>
     )

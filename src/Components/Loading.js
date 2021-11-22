@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     justifyContent: 'center',
     backgroundColor: '#00000044'
+    // backgroundColor: 'white'
   },
   horizontal: {
     flexDirection: 'row',

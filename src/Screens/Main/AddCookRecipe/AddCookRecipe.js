@@ -11,7 +11,7 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux';
 import Animated from 'react-native-reanimated';
 import Swiper from 'react-native-swiper';
 
@@ -19,18 +19,26 @@ import LoginNode from '../../../Components/LoginNode';
 import ButtonAdd from '../../../Components/ButtonAdd';
 import ListContents from '../../../Components/ListContents';
 import BottomSheetUpdateImage from '../../../Components/BottomSheetUpdateImage';
-import {TYPES} from '../../../redux/actions/AddFoodAction'
-import {TYPES as TYPES1} from '../../../redux/actions/Action'
+import {TYPES} from '../../../redux/actions/AddFoodAction';
+import {TYPES as TYPES1} from '../../../redux/actions/Action';
 import Loading from '../../../Components/Loading';
 
-const AddCookRecipe = () => {
+import {UploadImageApi} from '../../../api/UploadImageApi';
+import {AddFoodApi} from '../../../api/AddFoodApi';
+import {GetListFoodApi} from '../../../api/GetListFoodApi'
+import { NavigationContainer } from '@react-navigation/native';
+
+const AddCookRecipe = ({navigation}) => {
   const [nameFood, setNameFood] = useState('');
   const [content, setContent] = useState(['', '']);
   const [making, setMaking] = useState(['', '']);
   const [isValid, setIsValid] = useState(false);
   const [isClear, setIsClear] = useState(false);
   const [image, setImage] = useState(['']);
-  const dispatch = useDispatch()
+  const [upload, setUpload] = useState(false);
+  const User = useSelector(state => state.auth.user.infor)
+  console.log(User.id)
+  const dispatch = useDispatch();
 
   console.log('images', image);
 
@@ -56,7 +64,7 @@ const AddCookRecipe = () => {
   };
 
   useEffect(() => {
-    if (nameFood != '' && checkContent() && checkMaking()) {
+    if (nameFood != '' && checkContent() && checkMaking() && image[0]) {
       setIsValid(true);
     } else {
       setIsValid(false);
@@ -90,44 +98,77 @@ const AddCookRecipe = () => {
     setMaking(arr_new);
   };
   const clear = () => {
+    let images = ['']
     let nameF = '';
     let content = ['', ''];
     let making = ['', ''];
     setNameFood(nameF);
     setContent([...content]);
     setMaking([...making]);
+    setImage([...images])
   };
   const sheetRef = React.useRef(null);
   const fall = new Animated.Value(1);
 
-  const UploadReacipe = () => {
-
-    if (true) {
-      try{
-
+  const UploadReacipe = async () => {
+    try {
+      if (isValid) {
+        dispatch({
+          type: TYPES1.LOADING,
+        });
+        console.log(image);
+        const formData = new FormData();
+        image.forEach ( element => {
+          formData.append('files', {
+              uri: element,
+              name: 'file',
+              type: 'image/jpg'
+            });
+        });
+        const res = await UploadImageApi(formData)
+        console.log(res);
+        let ids = res.data.map(e => { return e.id }) 
+        console.log(ids);
+        let images = ids.map(e=>{
+          return {
+            id: e
+          }
+        })
+        let recipe = making.map((e, index)=>{
+          return {
+            order: index,
+            making: e
+          }
+        })
+        let ingredients = content.map((e, index)=>{
+          return {
+            order: index,
+            content: e
+          }
+        })
+        const params = {
+          idUser: User.id,
+          name: nameFood,
+          image: images,
+          recipe: recipe,
+          ingredients: ingredients
+        }
+        const response = await AddFoodApi(params)
+        console.log(response)
+        clear()
+        navigation.navigate('AddCookSuccess', {food: response})
+        // Alert.alert("Thông báo","Chúc mừng bạn đã chia sẻ món này!,  Các bếp khác sẽ tìm thấy, nấu theo, và thưởng thức món của bạn đó")
+        dispatch({
+          type: TYPES1.LOADED,
+        });
+        
+      }
+    } catch (e) {
       dispatch({
-        type: TYPES1.LOADING
-      })
-      // dispatch({
-      //   type: TYPES.ADDFOOD_REQUEST
-      // })
-      dispatch({
-        type: TYPES1.LOADED
-      })
-    } catch(e) {
-      dispatch({
-        type: TYPES1.LOADED
-      })
-      console.log('add recipe failted: ', e)
+        type: TYPES1.LOADED,
+      });
+      console.log('add recipe failted: ', e);
     }
-  }
-      // Alert.alert('Thông báo', 'Đăng món ăn thành công', [
-      //   {
-      //     text: 'OK',
-      //     onPress: () => {},
-      //   },
-      // ]);
-    
   }
 
   return (
@@ -151,7 +192,9 @@ const AddCookRecipe = () => {
           <LoginNode
             nameNode="Lên sóng"
             isValid={isValid}
-            onPress={UploadReacipe}
+            onPress={() => {
+              UploadReacipe()
+            }}
           />
           <ButtonAdd
             nameNode="Xóa"

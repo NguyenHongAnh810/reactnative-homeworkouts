@@ -15,29 +15,24 @@ const ControlStack = props => {
   const isLogin = useSelector(state => state.auth.user.isLogin);
   const dispatch = useDispatch();
 
-  // useEffect(async () => {
-  //   const id = JSON.parse(await AsyncStorage.getItem('idUser'));
-  //   console.log('idUser', id);
-  //   const fetchMe = async () => {
-  //     const params = {
-  //       id: id,
-  //     };
-  //     const response = await GetMeApi(params);
-  //     console.log(response)
-  //     if (id) {
-  //       dispatch({
-  //         type: TYPES.LOGIN_SUCCESS,
-  //         response: response,
-  //       });
-  //     }
-  //   };
-  //   fetchMe();
-  //   // if (value)
-  //   //   dispatch({
-  //   //     type: TYPES.LOGIN_SUCCESS,
-  //   //     response: response
-  //   //   });
-  // }, []);
+  useEffect(async () => {
+    const id = JSON.parse(await AsyncStorage.getItem('idUser'));
+    console.log('idUser', id);
+    const fetchMe = async () => {
+      const params = {
+        id: id,
+      };
+      const response = await GetMeApi(params);
+      console.log("infor", response[0])
+      if (id) {
+        dispatch({
+          type: TYPES.LOGIN_SUCCESS,
+          response: response[0],
+        });
+      }
+    };
+    fetchMe();
+  }, []);
 
   return (
     <React.Fragment>
