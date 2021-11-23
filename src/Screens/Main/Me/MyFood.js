@@ -4,6 +4,7 @@ import {View, Text} from 'react-native';
 import FoodList2 from '../../../Components/FoodList2';
 import {useSelector, useDispatch} from 'react-redux';
 import {TYPES} from '../../../redux/actions/ActionFetchList';
+import FoodList6 from '../../../Components/FoodList6';
 
 const MyFood = ({navigation}) => {
   const User = useSelector(state => state.auth.user.infor);
@@ -21,7 +22,7 @@ const MyFood = ({navigation}) => {
   }, []);
   return (
     <View style={{flex: 1}}>
-      <FoodList2 data={Data} navigation={navigation} screen="Me" />
+      <FoodList6 data={Data} navigation={navigation} screen="Me" type="MyFood"/>
     </View>
   );
 };

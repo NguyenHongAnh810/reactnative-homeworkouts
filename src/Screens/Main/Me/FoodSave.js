@@ -25,7 +25,7 @@ const FoodSave = ({navigation}) => {
   }, [])
   return (
     <View style={{flex:1}}>
-        <FoodList6 data = {Data} navigation = {navigation} screen = "Me"/>
+        <FoodList6 data = {Data} navigation = {navigation} screen = "Me" type="FoodSave"/>
       </View>
   );
 };

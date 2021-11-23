@@ -19,27 +19,123 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const {height, wigth} = Dimensions.get('window');
 
 import {User} from './Home';
-import { BASE_URL } from '../../../api/Common';
-import {SaveFoodApi} from '../../../api/SaveFoodApi'
-import { TYPES } from '../../../redux/actions/ActionFetchList';
+import {BASE_URL} from '../../../api/Common';
+import {SaveFoodApi} from '../../../api/SaveFoodApi';
+import { DeleteFoodApi } from '../../../api/DeleteFoodApi';
+import { GetIdSaveApi } from '../../../api/GetIdSaveApi';
+import { DeleteFoodSaveApi } from '../../../api/DeleteFoodSaveApi';
+import {TYPES} from '../../../redux/actions/ActionFetchList';
 
 const FoodDetails = ({route, navigation}) => {
   const {food} = route.params;
   const {screen} = route.params;
+  const {type} = route.params;
   const [visible, setVisible] = React.useState(false);
   const [comment, setComment] = useState('');
 
-  const User = useSelector(state => state.auth.user.infor)
-  const dispatch = useDispatch()
+  const User = useSelector(state => state.auth.user.infor);
+  const dispatch = useDispatch();
 
   const openMenu = () => setVisible(true);
 
   const closeMenu = () => setVisible(false);
+  const [option, setOption] = useState(0);
+  const renderMenu = () => {
+    if (type == 'MyFood') {
+      return (
+        <Menu.Item
+        onPress={async() => {
+          try{
+          const params = null
+          const res = await DeleteFoodApi(params, food.id)
+          navigation.navigate('Me')
+          const params1 = {
+            idUser: User.id,
+          }
+          dispatch({
+            type: TYPES.FETCH_MYFOODLIST_REQUEST,
+            params: params1
+          })
+          Alert.alert('Thông báo', 'Xóa thành công món ăn!');
+          closeMenu();
+          }catch(e){
+            Alert.alert('Lỗi', 'Xóa món ăn thất bại!');
+            console.log(`Delete Food faiteddd`, e)
+          }
+        }}
+          title="Xóa món"
+          titleStyle={{color: 'red', fontWeight: 'bold'}}
+          icon="cup-off"
+        />
+      );
+    } else if(type == 'FoodSave') {
+      return (
+        <Menu.Item
+        onPress={async() => {
+          try{
+
+          const params = {
+            idFoodsave: food.id,
+            idUser: User.id
+          }
+          const res = await GetIdSaveApi(params)
+          const res1 = await DeleteFoodSaveApi(null, res[0].id )
+          console.log('SaveFood', res)
+          navigation.navigate('Me')
+          const params1 = {
+            idUser: User.id,
+          }
+          dispatch({
+            type: TYPES.FETCH_FOODSAVELIST_REQUEST,
+            params: params1
+          })
+          Alert.alert('Thông báo', 'Bỏ lưu món ăn thành công!');
+          closeMenu();
+          }catch(e){
+            Alert.alert('Lỗi', 'Bỏ lưu món ăn thất bại!');
+            console.log(`Save Food faiteddd`, e)
+          }
+        }}
+          title="Bỏ lưu"
+          titleStyle={{color: 'red', fontWeight: 'bold'}}
+          icon="content-save"
+        />
+      );
+    } else return (
+      <Menu.Item
+           onPress={async() => {
+                  try{
+                  const params = {
+                      idFoodsave: food.id,
+                      idUser: User.id
+                    }
+                  const res = await SaveFoodApi(params)
+                  console.log('resSaveFood', res)
+                  const params1 = {
+                    idUser: User.id,
+                  }
+                  dispatch({
+                    type: TYPES.FETCH_FOODSAVELIST_REQUEST,
+                    params: params1
+                  })
+                  Alert.alert('Thông báo', 'Lưu thành công món ăn!');
+                  closeMenu();
+                  }catch(e){
+                    Alert.alert('Lỗi', 'Lưu món ăn thất bại!');
+                    console.log(`Save Food faiteddd`, e)
+                  }
+                }}
+        title="Lưu món"
+        titleStyle={styles.textMenu}
+        icon="content-save"
+      />
+    );
+  };
 
   return (
     <Provider>
@@ -57,6 +153,7 @@ const FoodDetails = ({route, navigation}) => {
             />
           </TouchableOpacity>
           <Menu
+          style={{width: 150, marginTop: 36}}
             visible={visible}
             onDismiss={closeMenu}
             anchor={
@@ -69,38 +166,15 @@ const FoodDetails = ({route, navigation}) => {
                 />
               </TouchableOpacity>
             }>
-            <Menu.Item
-              onPress={async() => {
-                try{
-                const params = {
-                    idFoodsave: food.id,
-                    idUser: User.id
-                  }
-                const res = await SaveFoodApi(params)
-                console.log('resSaveFood', res)
-                const params1 = {
-                  idUser: User.id,
-                }
-                dispatch({
-                  type: TYPES.FETCH_FOODSAVELIST_REQUEST,
-                  params: params1
-                })
-                Alert.alert('Thông báo', 'Lưu thành công món ăn!');
-                closeMenu();
-                }catch(e){
-                  Alert.alert('Lỗi', 'Lưu món ăn thất bại!');
-                  console.log(`Save Food faiteddd`, e)
-                }
-              }}
-              title="Lưu"
-              contentStyle={{color: 'red'}}
-            />
-            <Divider />
+            {renderMenu()}
+              <Divider />
             <Menu.Item
               onPress={() => {
                 closeMenu();
               }}
               title="Hủy"
+              titleStyle={{fontWeight: 'bold'}}
+              icon="close-box"
             />
           </Menu>
         </View>
@@ -112,7 +186,7 @@ const FoodDetails = ({route, navigation}) => {
                   <View>
                     <ImageBackground
                       style={styles.image}
-                      source={{uri: BASE_URL +  e}}></ImageBackground>
+                      source={{uri: BASE_URL + e}}></ImageBackground>
                   </View>
                 );
               })}
@@ -160,9 +234,10 @@ const FoodDetails = ({route, navigation}) => {
             {food.repice.map((e, index) => {
               return (
                 <View
-                  style={{flexDirection: 'row', 
-                  // alignItems: 'center'
-                }}
+                  style={{
+                    flexDirection: 'row',
+                    // alignItems: 'center'
+                  }}
                   key={`food-item-${index}`}>
                   <View style={styles.viewIndex}>
                     <Text style={styles.index}>{index + 1}</Text>
@@ -271,7 +346,7 @@ const styles = StyleSheet.create({
     // marginLeft: 24,
     marginVertical: 20,
     marginTop: 32,
-    fontWeight: "600"
+    fontWeight: '600',
   },
   include: {
     fontSize: 14,
@@ -295,7 +370,7 @@ const styles = StyleSheet.create({
     width: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 12
+    marginTop: 12,
   },
   reaction: {
     alignItems: 'center',
@@ -313,14 +388,6 @@ const styles = StyleSheet.create({
     borderTopColor: '#B7B7B7',
     paddingBottom: 20,
   },
-  // comment: {
-  //   borderTopWidth: 1,
-  //   marginHorizontal: 24,
-  //   marginTop: 20,
-  //   borderTopColor: '#B7B7B7',
-  //   paddingBottom: 20,
-  //   flexDirection: 'row'
-  // },
   header: {
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -365,5 +432,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
   },
+  textMenu: {
+    fontWeight: 'bold'
+  }
 });
 export default FoodDetails;

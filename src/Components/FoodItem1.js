@@ -8,12 +8,12 @@ import { BASE_URL } from '../api/Common';
 
 import { User } from '../Screens/Main/Home/Home';
 
-export default function FoodItem1({food, navigation, screen}) {
+export default function FoodItem1({food, navigation, screen, type}) {
     return (
         <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          navigation.navigate('FoodDetails', {food: food, screen: screen});
+          navigation.navigate('FoodDetails', {food: food, screen: screen, type: type});
         }}>
         <Image style={styles.image} source={{uri: BASE_URL + food.image[0]}}></Image>
         <View>
