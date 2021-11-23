@@ -22,7 +22,7 @@ import BottomSheetUpdateImage from '../../../Components/BottomSheetUpdateImage';
 
 const EditProfileScreen = ({navigation}) => {
   const User = useSelector(state => state.auth.user.infor)
-  const [image, setImage] = useState([BASE_URL + User.avata.url]);
+  const [image, setImage] = useState([BASE_URL + User.avata?.url || 'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo']);
   const [name, setName] = useState('');
   const [mail, setMail] = useState('');
   const [pass, setPass] = useState('');

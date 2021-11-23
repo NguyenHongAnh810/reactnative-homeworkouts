@@ -19,9 +19,8 @@ import LoginNode from '../../../Components/LoginNode';
 import ButtonAdd from '../../../Components/ButtonAdd';
 import ListContents from '../../../Components/ListContents';
 import BottomSheetUpdateImage from '../../../Components/BottomSheetUpdateImage';
-import {TYPES} from '../../../redux/actions/AddFoodAction';
 import {TYPES as TYPES1} from '../../../redux/actions/Action';
-import Loading from '../../../Components/Loading';
+import { TYPES } from '../../../redux/actions/ActionFetchList';
 
 import {UploadImageApi} from '../../../api/UploadImageApi';
 import {AddFoodApi} from '../../../api/AddFoodApi';
@@ -154,10 +153,16 @@ const AddCookRecipe = ({navigation}) => {
           ingredients: ingredients
         }
         const response = await AddFoodApi(params)
+        const params1 = {
+          idUser: User.id,
+        };
+        dispatch({
+          type: TYPES.FETCH_MYFOODLIST_REQUEST,
+          params: params1,
+        });
         console.log(response)
         clear()
         navigation.navigate('AddCookSuccess', {food: response})
-        // Alert.alert("Thông báo","Chúc mừng bạn đã chia sẻ món này!,  Các bếp khác sẽ tìm thấy, nấu theo, và thưởng thức món của bạn đó")
         dispatch({
           type: TYPES1.LOADED,
         });

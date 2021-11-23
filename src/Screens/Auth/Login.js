@@ -17,7 +17,7 @@ import LoginButton from '../../Components/LoginButton';
 import InputPass from '../../Components/InputPass';
 import {Color} from '../../assets/color';
 import Loading from '../../Components/Loading';
-import {validateName, validatePassword} from '../../Utils/Validate';
+import {validateName, validatePassword, validateEmail} from '../../Utils/Validate';
 
 import {TYPES} from './../../redux/actions/Action';
 import {LoginApi} from '../../api/LoginApi';
@@ -25,7 +25,7 @@ import {LoginApi} from '../../api/LoginApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValid, setIsVaid] = useState(false);
   const [check, setCheck] = useState(false);
@@ -34,30 +34,23 @@ const Login = ({navigation}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (loading) return <Loading />;
-  }, [loading]);
-
-
-  useEffect(() => {
-    if (validateName(username) && validatePassword(password)) {
+    if (validateEmail(email) && validatePassword(password)) {
       setIsVaid(true);
     } else {
       setIsVaid(false);
     }
-  }, [username, password]);
+  }, [email, password]);
  
   const checkLogin = async () => {
     try {
       const data = {
-        identifier: username,
+        identifier: email,
         password: password,
       };
       dispatch({
         type: TYPES.LOGIN_REQUEST,
         params: data,
       });
-      // const User = useSelector(state => state.auth.user.infor)
-      // await AsyncStorage.setItem('idUser', JSON.stringify(User.id));
     } catch (error) {
       console.log('Login failted: ', error);
     }
@@ -89,10 +82,10 @@ const Login = ({navigation}) => {
           </View>
           <View>
             <Input
-              value={username}
-              type={'name'}
-              changeValue={setUsername}
-              isValid={validateName(username)}
+              value={email}
+              type={'email'}
+              changeValue={setEmail}
+              isValid={validateEmail(email)}
             />
             <InputPass
               value={password}

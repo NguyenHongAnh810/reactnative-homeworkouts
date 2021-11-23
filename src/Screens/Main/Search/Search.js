@@ -53,7 +53,7 @@ const Search = ({navigation}) => {
 
   useEffect(() => {
     if (key == '') setSearch(false);
-      if(search) {fetchProductList()}
+      if(search) {fetchProductList()};
   }, [search]);
 
   const renderItem = ({item}) => {
@@ -68,6 +68,7 @@ const Search = ({navigation}) => {
       />
     );
   };
+
   return (
     <View style={styles.contrain}>
       <View style={styles.header}>

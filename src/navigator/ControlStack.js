@@ -17,13 +17,11 @@ const ControlStack = props => {
 
   useEffect(async () => {
     const id = JSON.parse(await AsyncStorage.getItem('idUser'));
-    console.log('idUser', id);
     const fetchMe = async () => {
       const params = {
         id: id,
       };
       const response = await GetMeApi(params);
-      console.log("infor", response[0])
       if (id) {
         dispatch({
           type: TYPES.LOGIN_SUCCESS,

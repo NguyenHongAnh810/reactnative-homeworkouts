@@ -21,6 +21,8 @@
     "AsyncStorage": "^0.1.5",
     "StatusBar": "^1.0.0",
     "axios": "^0.24.0",
+    "lottie-ios": "3.2.3",
+    "lottie-react-native": "^5.0.0",
     "react": "17.0.2",
     "react-native": "0.65.1",
     "react-native-gesture-handler": "^1.10.3",

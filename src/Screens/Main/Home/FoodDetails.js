@@ -19,16 +19,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 const {height, wigth} = Dimensions.get('window');
 
 import {User} from './Home';
 import { BASE_URL } from '../../../api/Common';
+import {SaveFoodApi} from '../../../api/SaveFoodApi'
+import { TYPES } from '../../../redux/actions/ActionFetchList';
 
 const FoodDetails = ({route, navigation}) => {
   const {food} = route.params;
   const {screen} = route.params;
   const [visible, setVisible] = React.useState(false);
   const [comment, setComment] = useState('');
+
+  const User = useSelector(state => state.auth.user.infor)
+  const dispatch = useDispatch()
 
   const openMenu = () => setVisible(true);
 
@@ -63,9 +70,27 @@ const FoodDetails = ({route, navigation}) => {
               </TouchableOpacity>
             }>
             <Menu.Item
-              onPress={() => {
+              onPress={async() => {
+                try{
+                const params = {
+                    idFoodsave: food.id,
+                    idUser: User.id
+                  }
+                const res = await SaveFoodApi(params)
+                console.log('resSaveFood', res)
+                const params1 = {
+                  idUser: User.id,
+                }
+                dispatch({
+                  type: TYPES.FETCH_FOODSAVELIST_REQUEST,
+                  params: params1
+                })
                 Alert.alert('Thông báo', 'Lưu thành công món ăn!');
                 closeMenu();
+                }catch(e){
+                  Alert.alert('Lỗi', 'Lưu món ăn thất bại!');
+                  console.log(`Save Food faiteddd`, e)
+                }
               }}
               title="Lưu"
               contentStyle={{color: 'red'}}
@@ -106,11 +131,11 @@ const FoodDetails = ({route, navigation}) => {
               <Image
                 style={styles.avata}
                 source={{
-                  uri: User[0].avata,
+                  uri: BASE_URL + User.avata?.url,
                 }}></Image>
               <View>
-                <Text style={styles.names}>{User[0].name}</Text>
-                <Text style={styles.mail}>{User[0].gmail}</Text>
+                <Text style={styles.names}>{User.name}</Text>
+                <Text style={styles.mail}>{User.email}</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -163,7 +188,7 @@ const FoodDetails = ({route, navigation}) => {
               <Image
                 style={{width: 32, height: 32, borderRadius: 100}}
                 source={{
-                  uri: User[0].avata,
+                  uri: BASE_URL + User.avata?.url,
                 }}></Image>
               <View style={styles.headerInput}>
                 <TextInput
@@ -209,11 +234,11 @@ const FoodDetails = ({route, navigation}) => {
                     <Image
                       style={{width: 32, height: 32, borderRadius: 100}}
                       source={{
-                        uri: User[index].avata,
+                        uri: BASE_URL + User.avata?.url,
                       }}></Image>
                     <View style={{marginHorizontal: 10, marginRight: 20}}>
                       <Text style={{fontSize: 14, fontWeight: 'bold'}}>
-                        {User[index].name}
+                        {User.name}
                       </Text>
                       <Text style={{fontSize: 14}}>{e.content}</Text>
                     </View>
@@ -221,13 +246,6 @@ const FoodDetails = ({route, navigation}) => {
                 );
               })}
             </View>
-            {/* <View
-              style={{
-                marginTop: 40,
-                borderTopWidth: 1,
-                borderTopColor: '#B7B7B7',
-                paddingBottom: 20,
-              }}></View> */}
           </View>
         </ScrollView>
       </View>

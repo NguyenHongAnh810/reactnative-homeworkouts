@@ -18,15 +18,14 @@ function* fetchFoodSave(action) {
     try {
 
       const response = yield GetIdFoodSaveApi(action.params)
-
+      console.log(`idFoodSave`, response)
+      if(response[0]) {
       const subParams = response.map(element => {
          return `id_in=${element.idFoodsave}`
       }).join("&");
-      console.log("Thuyetln", response);
-      console.log("LNT params FoodSave", subParams);
-
        const response1 = yield GetListFoodApi(null, subParams)
        yield put({type: TYPES.FETCH_FOODSAVELIST_SUCCESS, response: response1});
+   }
     } catch (e) {
        alert("Tải dữ liệu thất bại")
        console.log('fetch list save food failted: ', e);
