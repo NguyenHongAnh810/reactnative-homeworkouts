@@ -33,9 +33,6 @@ const ControlStack = props => {
       }
     };
     fetchMe();
-    dispatch({
-      type: TYPES.LOADED
-    })
   }, []);
 
   return (

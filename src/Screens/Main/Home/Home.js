@@ -282,7 +282,7 @@ const Home = ({navigation}) => {
           dispatch({
             type: TYPES.LOADED
           })
-        }, 1500)
+        }, 1000)
       } catch (error) {
       console.log('Failed to fetch listfood list: ', error);
       }

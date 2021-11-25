@@ -62,7 +62,7 @@ const FoodDetails = ({route, navigation}) => {
     
     console.log('resUserFood', food)
    setUserFood(response[0]);
-  }, [food]);
+  }, []);
 
   const renderMenu = () => {
     if (type == 'MyFood') {
