@@ -20,23 +20,54 @@ import ButtonAdd from '../../../Components/ButtonAdd';
 import ListContents from '../../../Components/ListContents';
 import BottomSheetUpdateImage from '../../../Components/BottomSheetUpdateImage';
 import {TYPES as TYPES1} from '../../../redux/actions/Action';
-import { TYPES } from '../../../redux/actions/ActionFetchList';
+import {TYPES} from '../../../redux/actions/ActionFetchList';
 
 import {UploadImageApi} from '../../../api/UploadImageApi';
+import {UpdateFoodApi} from '../../../api/UpdateFoodApi';
 import {AddFoodApi} from '../../../api/AddFoodApi';
-import {GetListFoodApi} from '../../../api/GetListFoodApi'
-import { NavigationContainer } from '@react-navigation/native';
+import {BASE_URL} from '../../../api/Common';
 
-const AddCookRecipe = ({navigation}) => {
+const AddCookRecipe = ({navigation, route}) => {
+  const food = route?.params?.food || '';
+  console.log('food', food);
+  const User = useSelector(state => state.auth.user.infor);
+
   const [nameFood, setNameFood] = useState('');
   const [content, setContent] = useState(['', '']);
   const [making, setMaking] = useState(['', '']);
   const [isValid, setIsValid] = useState(false);
   const [isClear, setIsClear] = useState(false);
   const [image, setImage] = useState(['']);
-  const [upload, setUpload] = useState(false);
-  const User = useSelector(state => state.auth.user.infor)
-  console.log(User.id)
+  const [isUpdate, setIsUpdate] = useState(false)
+
+  useEffect(() => {
+    if (food != '') {
+      setIsUpdate(true)
+      let makings = [];
+      let contents = [];
+      let images = [];
+      let nameFoods;
+
+      nameFoods = food.name;
+      food.repice.map(e => {
+        makings.push(e.making);
+      });
+      food.ingredients.map(e => {
+        contents.push(e.content);
+      });
+      food.image.map(e => {
+        images.push(BASE_URL + e);
+      });
+      setNameFood(nameFoods);
+      setContent([...contents]);
+      setMaking([...makings]);
+      setImage([...images]);
+      console.log(`nameFood`, nameFood);
+      console.log(`making`, making);
+    }
+  }, [food]);
+
+  console.log(User.id);
   const dispatch = useDispatch();
 
   console.log('images', image);
@@ -97,14 +128,15 @@ const AddCookRecipe = ({navigation}) => {
     setMaking(arr_new);
   };
   const clear = () => {
-    let images = ['']
+    setIsUpdate(false)
+    let images = [''];
     let nameF = '';
     let content = ['', ''];
     let making = ['', ''];
     setNameFood(nameF);
     setContent([...content]);
     setMaking([...making]);
-    setImage([...images])
+    setImage([...images]);
   };
   const sheetRef = React.useRef(null);
   const fall = new Animated.Value(1);
@@ -117,42 +149,53 @@ const AddCookRecipe = ({navigation}) => {
         });
         console.log(image);
         const formData = new FormData();
-        image.forEach ( element => {
+        image.forEach(element => {
           formData.append('files', {
-              uri: element,
-              name: 'file',
-              type: 'image/jpg'
-            });
+            uri: element,
+            name: 'file',
+            type: 'image/jpg',
+          });
         });
-        const res = await UploadImageApi(formData)
+        const res = await UploadImageApi(formData);
         console.log(res);
-        let ids = res.data.map(e => { return e.id }) 
+        let ids = res.data.map(e => {
+          return e.id;
+        });
         console.log(ids);
-        let images = ids.map(e=>{
+        let images = ids.map(e => {
           return {
-            id: e
-          }
-        })
-        let recipe = making.map((e, index)=>{
-          return {
-            order: index,
-            making: e
-          }
-        })
-        let ingredients = content.map((e, index)=>{
+            id: e,
+          };
+        });
+        let recipe = making.map((e, index) => {
           return {
             order: index,
-            content: e
-          }
-        })
+            making: e,
+          };
+        });
+        let ingredients = content.map((e, index) => {
+          return {
+            order: index,
+            content: e,
+          };
+        });
         const params = {
           idUser: User.id,
           name: nameFood,
           image: images,
           recipe: recipe,
-          ingredients: ingredients
+          ingredients: ingredients,
+        };
+        if (isUpdate == false) {
+          const response = await AddFoodApi(params);
+          console.log('AddFood', response);
+          navigation.navigate('AddCookSuccess', {food: response});
+        } else {
+          const response = await UpdateFoodApi(params, food.id);
+          console.log('UpdateFood', response);
+          navigation.navigate('AddCookSuccess', {food: response});
         }
-        const response = await AddFoodApi(params)
+
         const params1 = {
           idUser: User.id,
         };
@@ -160,13 +203,10 @@ const AddCookRecipe = ({navigation}) => {
           type: TYPES.FETCH_MYFOODLIST_REQUEST,
           params: params1,
         });
-        console.log(response)
-        clear()
-        navigation.navigate('AddCookSuccess', {food: response})
+        clear();
         dispatch({
           type: TYPES1.LOADED,
         });
-        
       }
     } catch (e) {
       dispatch({
@@ -174,7 +214,7 @@ const AddCookRecipe = ({navigation}) => {
       });
       console.log('add recipe failted: ', e);
     }
-  }
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -198,11 +238,11 @@ const AddCookRecipe = ({navigation}) => {
             nameNode="Lên sóng"
             isValid={isValid}
             onPress={() => {
-              UploadReacipe()
+              UploadReacipe();
             }}
           />
           <ButtonAdd
-            nameNode="Xóa"
+            nameNode="Hủy"
             isValid={isClear}
             border={false}
             onPress={clear}
@@ -214,7 +254,7 @@ const AddCookRecipe = ({navigation}) => {
               style={styles.buttonImage}
               onPress={() => sheetRef.current.snapTo(0)}>
               {image[0] != '' ? (
-                <Swiper showsButtons={true}>
+                <Swiper autoplay={true} activeDotColor={'white'}>
                   {image.map((e, index) => {
                     return (
                       <View>

@@ -4,11 +4,15 @@ import {View, Text, StyleSheet, TextInput} from 'react-native';
 export default function AddMaking({value, index, onchange }) {
   return (
     <View>
-      <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 12}}>
+      <View style={{
+        flexDirection: 'row', 
+      // alignItems: 'center',
+       marginTop: 12}}>
         <View style={styles.viewIndex}>
           <Text style={styles.index}>{index + 1}</Text>
         </View>
         <TextInput
+          multiline={true}
           style={styles.textInputContent}
           onChangeText={txt => onchange(index, txt)}
           value={value}
@@ -23,7 +27,7 @@ export default function AddMaking({value, index, onchange }) {
 
 const styles = StyleSheet.create({
   textInputContent: {
-    height: 40,
+    // height: 40,
     width: '83%',
     fontSize: 16,
     padding: 5,
@@ -53,6 +57,7 @@ const styles = StyleSheet.create({
     width: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 20
+    marginLeft: 20,
+    marginTop: 10
   },
 });

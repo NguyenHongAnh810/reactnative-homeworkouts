@@ -1,6 +1,6 @@
 import axiosClient from "./AxiosClient";
 
-export const EditProfileApi = (params, id)=> {
-    const url = '/auth/users/' + id;
+export const UpdateFoodApi = (params, id)=> {
+    const url = '/foods/' + id;
     return axiosClient.put(url, params);
 }

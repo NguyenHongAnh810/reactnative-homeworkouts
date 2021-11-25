@@ -292,21 +292,21 @@ const Home = ({navigation}) => {
   return (
     <View style={styles.contrain}>
       <ScrollView style={{flex: 0.9}} showsVerticalScrollIndicator={false}>
-        <FoodList title="Món mới nhất" data={newFood} navigation={navigation} />
+        <FoodList title="Trổ tài với các món đặc sắc" data={specialFood} navigation={navigation} />
         <FoodList3
           title="Khám phá xem thứ gì đang trong mùa nhé!"
           data={setFood}
           navigation={navigation}
         />
         <FoodList5
-          title="Trổ tài với các món đặc sắc"
-          data={specialFood}
+          title="Chúc mừng top các món ăn"
+          data={topFood}
           navigation={navigation}
         />
 
         <FoodList4
-          title="Chúc mừng top 3 món ăn"
-          data={topFood}
+          title="Món mới nhất"
+          data={newFood}
           navigation={navigation}
         />
       </ScrollView>

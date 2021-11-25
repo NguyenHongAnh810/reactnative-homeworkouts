@@ -13,7 +13,7 @@ export default function AddCookSuccess({route, navigation}) {
       <Text style={styles.text}>Chúc mừng bạn đã chia sẻ món này!</Text>
       <View style={{ alignItems: 'center',
     justifyContent: 'center',}}>
-        <Image style={styles.image} source = {{uri: BASE_URL + food.image[0].url}}></Image>
+        <Image style={styles.image} source = {{uri: BASE_URL + food.image[0]?.url}}></Image>
         <Text style = {styles.text}>{food.name}</Text>
       </View>
       <View style={{width: 360, alignItems: 'center',

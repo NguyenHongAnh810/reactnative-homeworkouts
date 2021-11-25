@@ -46,7 +46,10 @@ const Register = ({navigation}) => {
       const data = {
         username: name,
         email: email,
-        password: pass
+        password: pass,
+        avata: {
+          id: 2,
+        }
       };
       dispatch({
         type: TYPES.REGISTER_REQUEST,

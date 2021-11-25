@@ -16,6 +16,9 @@ const ControlStack = props => {
   const dispatch = useDispatch();
 
   useEffect(async () => {
+    dispatch({
+      type: TYPES.LOADING
+    })
     const id = JSON.parse(await AsyncStorage.getItem('idUser'));
     const fetchMe = async () => {
       const params = {
@@ -30,6 +33,9 @@ const ControlStack = props => {
       }
     };
     fetchMe();
+    dispatch({
+      type: TYPES.LOADED
+    })
   }, []);
 
   return (

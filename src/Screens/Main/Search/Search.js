@@ -1,4 +1,3 @@
-
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -9,51 +8,70 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
-  Button
+  Button,
+  Image,
 } from 'react-native';
 
 import Feather from 'react-native-vector-icons/Feather';
 import SuggestSearch from '../../../Components/SuggestSearch';
 import FoodList6 from '../../../Components/FoodList6';
-import { GetListFoodApi } from '../../../api/GetListFoodApi';
-import { isFulfilled } from '@reduxjs/toolkit';
+import {GetListFoodApi} from '../../../api/GetListFoodApi';
+import {isFulfilled} from '@reduxjs/toolkit';
 import {useSelector, useDispatch} from 'react-redux';
+import { TYPES } from '../../../redux/actions/Action';
 const {height, wigth} = Dimensions.get('window');
 
-const DataSuggestFood = ['Cơm', 'Cháo', 'Phở', 'Bánh mì', 'Ốc xào', 'Trà sữa', 'Bít tết', 'Sushi']
-
+const DataSuggestFood = [
+  'Cơm',
+  'Cháo',
+  'Phở',
+  'Bánh mì',
+  'Ốc xào',
+  'Trà sữa',
+  'Bít tết',
+  'Sushi',
+];
 
 const Search = ({navigation}) => {
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState('');
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(false);
   const loading = useSelector(state => state.auth.loading);
   const dispatch = useDispatch();
 
   const fetchProductList = async () => {
-    console.log(key)
+    console.log(key);
     try {
-    const params = {
-      name_contains: key
-    }
-    console.log('start');
-    const response = await GetListFoodApi(params);
-    console.log('end');
-    setData(response)
-    // console.log('Fetch listfood successfully: ', response);
-    setData(response)
-    } catch (error) {
-    console.log('Failed to fetch listfood list: ', error);
-    }
-    }
+      dispatch({
+        type: TYPES.LOADING
+      })
+      const params = {
+        name_contains: key,
+      };
+      console.log('start');
+      const response = await GetListFoodApi(params);
 
-    useEffect(() => {
-      if (key == '') setSearch(false);
-    }, [key]);
+      setData(response);
+      setTimeout(() => {
+        dispatch({
+          type: TYPES.LOADED
+        })
+      }, 200);
+      
+    } catch (error) {
+      console.log('Failed to fetch listfood list: ', error);
+    }
+  };
 
   useEffect(() => {
     if (key == '') setSearch(false);
-      if(search) {fetchProductList()};
+  }, [key]);
+
+  useEffect(() => {
+    if (key == '') setSearch(false);
+    if (search) {
+      fetchProductList();
+    }
   }, [search]);
 
   const renderItem = ({item}) => {
@@ -69,18 +87,11 @@ const Search = ({navigation}) => {
     );
   };
 
+  const Search = () => {};
+
   return (
     <View style={styles.contrain}>
       <View style={styles.header}>
-      {/* <Button title="loading" onPress={() => {
-        dispatch({
-        type: 'LOADING',
-      }); */}
-      {/* setTimeout(()=>{
-        dispatch({
-          type: 'LOADED',
-      })}, 2000);
-      }}/> */}
         <Text
           style={{
             fontWeight: 'bold',
@@ -122,10 +133,10 @@ const Search = ({navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={()=>{
-              if(key != ''){
-              setSearch(true)
-              fetchProductList()
+            onPress={() => {
+              if (key != '') {
+                setSearch(true);
+                fetchProductList();
               }
             }}>
             <Feather
@@ -138,12 +149,30 @@ const Search = ({navigation}) => {
         </View>
       </View>
       {search ? (
-        <FoodList6
-          value={key}
-          data={data}
-          navigation={navigation}
-          screen="Search"
-        />
+        (data.length != 0) ? (
+          <FoodList6
+            value={key}
+            data={data}
+            navigation={navigation}
+            screen="Search"
+          />
+        ) : (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              width: '100%',
+            }}>
+            <Text
+              style={{marginLeft: 20, marginBottom: 50, fontWeight: 'bold'}}>
+              Không tìm thấy kết quả nào
+            </Text>
+            <Image
+              style={{width: 100, height: 100}}
+              source={require('../../../assets/image/icons8-nothing-found-64.png')}></Image>
+          </View>
+        )
       ) : (
         <View>
           <Text style={styles.title}>Món tìm kiếm phổ biến</Text>
@@ -190,7 +219,7 @@ const styles = StyleSheet.create({
     width: '92%',
     fontSize: 14,
     marginLeft: 8,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
     // marginVertical: 6,
   },
   clear: {

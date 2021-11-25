@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -17,19 +17,20 @@ import Swiper from 'react-native-swiper';
 import Reaction from '../../../Components/Reaction';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 import {useDispatch, useSelector} from 'react-redux';
 
 const {height, wigth} = Dimensions.get('window');
 
-import {User} from './Home';
+import {GetMeApi} from '../../../api/GetMeApi';
 import {BASE_URL} from '../../../api/Common';
 import {SaveFoodApi} from '../../../api/SaveFoodApi';
-import { DeleteFoodApi } from '../../../api/DeleteFoodApi';
-import { GetIdSaveApi } from '../../../api/GetIdSaveApi';
-import { DeleteFoodSaveApi } from '../../../api/DeleteFoodSaveApi';
+import {DeleteFoodApi} from '../../../api/DeleteFoodApi';
+import {GetIdSaveApi} from '../../../api/GetIdSaveApi';
+import {DeleteFoodSaveApi} from '../../../api/DeleteFoodSaveApi';
 import {TYPES} from '../../../redux/actions/ActionFetchList';
+import Comment from '../../../Components/Comment';
 
 const FoodDetails = ({route, navigation}) => {
   const {food} = route.params;
@@ -37,104 +38,132 @@ const FoodDetails = ({route, navigation}) => {
   const {type} = route.params;
   const [visible, setVisible] = React.useState(false);
   const [comment, setComment] = useState('');
+  const [userFood, setUserFood] = useState({
+    // email: "",
+    // username: "",
+    // avata: {
+    //   url: ""
+    // }
+  });
 
   const User = useSelector(state => state.auth.user.infor);
+
   const dispatch = useDispatch();
 
   const openMenu = () => setVisible(true);
 
   const closeMenu = () => setVisible(false);
-  const [option, setOption] = useState(0);
+
+  useEffect(async () => {
+    const params = {
+      id: food.idUser,
+    };
+    const response = await GetMeApi(params);
+    
+    console.log('resUserFood', food)
+   setUserFood(response[0]);
+  }, [food]);
+
   const renderMenu = () => {
     if (type == 'MyFood') {
       return (
-        <Menu.Item
-        onPress={async() => {
-          try{
-          const params = null
-          const res = await DeleteFoodApi(params, food.id)
-          navigation.navigate('Me')
-          const params1 = {
-            idUser: User.id,
-          }
-          dispatch({
-            type: TYPES.FETCH_MYFOODLIST_REQUEST,
-            params: params1
-          })
-          Alert.alert('Thông báo', 'Xóa thành công món ăn!');
-          closeMenu();
-          }catch(e){
-            Alert.alert('Lỗi', 'Xóa món ăn thất bại!');
-            console.log(`Delete Food faiteddd`, e)
-          }
-        }}
-          title="Xóa món"
-          titleStyle={{color: 'red', fontWeight: 'bold'}}
-          icon="cup-off"
-        />
+        <>
+          <Menu.Item
+            onPress={() => {
+              navigation.navigate('Add', {food: food});
+            }}
+            title="Chỉnh sửa"
+            titleStyle={{color: 'black', fontWeight: 'bold'}}
+            icon="file-edit"
+          />
+          <Menu.Item
+            onPress={async () => {
+              try {
+                const params = null;
+                const res = await DeleteFoodApi(params, food.id);
+                navigation.navigate('Me');
+                const params1 = {
+                  idUser: User.id,
+                };
+                dispatch({
+                  type: TYPES.FETCH_MYFOODLIST_REQUEST,
+                  params: params1,
+                });
+                Alert.alert('Thông báo', 'Xóa thành công món ăn!');
+                closeMenu();
+              } catch (e) {
+                Alert.alert('Lỗi', 'Xóa món ăn thất bại!');
+                console.log(`Delete Food faiteddd`, e);
+              }
+            }}
+            title="Xóa món"
+            titleStyle={{color: 'red', fontWeight: 'bold'}}
+            icon="cup-off"
+          />
+        </>
       );
-    } else if(type == 'FoodSave') {
+    } else if (type == 'FoodSave') {
       return (
         <Menu.Item
-        onPress={async() => {
-          try{
-
-          const params = {
-            idFoodsave: food.id,
-            idUser: User.id
-          }
-          const res = await GetIdSaveApi(params)
-          const res1 = await DeleteFoodSaveApi(null, res[0].id )
-          console.log('SaveFood', res)
-          navigation.navigate('Me')
-          const params1 = {
-            idUser: User.id,
-          }
-          dispatch({
-            type: TYPES.FETCH_FOODSAVELIST_REQUEST,
-            params: params1
-          })
-          Alert.alert('Thông báo', 'Bỏ lưu món ăn thành công!');
-          closeMenu();
-          }catch(e){
-            Alert.alert('Lỗi', 'Bỏ lưu món ăn thất bại!');
-            console.log(`Save Food faiteddd`, e)
-          }
-        }}
+          onPress={async () => {
+            try {
+              const params = {
+                idFoodsave: food.id,
+                idUser: User.id,
+              };
+              const res = await GetIdSaveApi(params);
+              const res1 = await DeleteFoodSaveApi(null, res[0].id);
+              console.log('SaveFood', res);
+              navigation.navigate('Me');
+              const params1 = {
+                idUser: User.id,
+              };
+              dispatch({
+                type: TYPES.FETCH_FOODSAVELIST_REQUEST,
+                params: params1,
+              });
+              Alert.alert('Thông báo', 'Bỏ lưu món ăn thành công!');
+              closeMenu();
+            } catch (e) {
+              Alert.alert('Lỗi', 'Bỏ lưu món ăn thất bại!');
+              console.log(`Save Food faiteddd`, e);
+            }
+          }}
           title="Bỏ lưu"
           titleStyle={{color: 'red', fontWeight: 'bold'}}
           icon="content-save"
         />
       );
-    } else return (
-      <Menu.Item
-           onPress={async() => {
-                  try{
-                  const params = {
-                      idFoodsave: food.id,
-                      idUser: User.id
-                    }
-                  const res = await SaveFoodApi(params)
-                  console.log('resSaveFood', res)
-                  const params1 = {
-                    idUser: User.id,
-                  }
-                  dispatch({
-                    type: TYPES.FETCH_FOODSAVELIST_REQUEST,
-                    params: params1
-                  })
-                  Alert.alert('Thông báo', 'Lưu thành công món ăn!');
-                  closeMenu();
-                  }catch(e){
-                    Alert.alert('Lỗi', 'Lưu món ăn thất bại!');
-                    console.log(`Save Food faiteddd`, e)
-                  }
-                }}
-        title="Lưu món"
-        titleStyle={styles.textMenu}
-        icon="content-save"
-      />
-    );
+    } else
+      return (
+        <Menu.Item
+          onPress={async () => {
+            try {
+              const params = {
+                idFoodsave: food.id,
+                idUser: User.id,
+              };
+              const res = await SaveFoodApi(params);
+              console.log('resSaveFood', res);
+              const params1 = {
+                idUser: User.id,
+              };
+              dispatch({
+                type: TYPES.FETCH_FOODSAVELIST_REQUEST,
+                params: params1,
+              });
+              Alert.alert('Thông báo', 'Lưu thành công món ăn!');
+              closeMenu();
+            } catch (e) {
+              Alert.alert('Lỗi', 'Lưu món ăn thất bại!');
+              console.log(`Save Food faiteddd`, e);
+            }
+          }}
+          title="Lưu món"
+          titleStyle={styles.textMenu}
+          icon="content-save"
+        />
+      );
   };
 
   return (
@@ -153,7 +182,7 @@ const FoodDetails = ({route, navigation}) => {
             />
           </TouchableOpacity>
           <Menu
-          style={{width: 150, marginTop: 36}}
+            style={{width: 180, marginTop: 36}}
             visible={visible}
             onDismiss={closeMenu}
             anchor={
@@ -167,7 +196,7 @@ const FoodDetails = ({route, navigation}) => {
               </TouchableOpacity>
             }>
             {renderMenu()}
-              <Divider />
+            <Divider />
             <Menu.Item
               onPress={() => {
                 closeMenu();
@@ -180,10 +209,10 @@ const FoodDetails = ({route, navigation}) => {
         </View>
         <ScrollView style={{flex: 0.9}}>
           <View style={styles.image}>
-            <Swiper showsButtons={true}>
+            <Swiper autoplay horizontal={false} activeDotColor={'#EC7E5D'}>
               {food.image.map((e, index) => {
                 return (
-                  <View>
+                  <View style={{borderRadius: 8}}>
                     <ImageBackground
                       style={styles.image}
                       source={{uri: BASE_URL + e}}></ImageBackground>
@@ -205,11 +234,11 @@ const FoodDetails = ({route, navigation}) => {
               <Image
                 style={styles.avata}
                 source={{
-                  uri: BASE_URL + User.avata?.url,
+                  uri: BASE_URL + userFood.avata?.url,
                 }}></Image>
               <View>
-                <Text style={styles.names}>{User.name}</Text>
-                <Text style={styles.mail}>{User.email}</Text>
+                <Text style={styles.names}>{userFood.username}</Text>
+                <Text style={styles.mail}>{userFood.email}</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -247,7 +276,7 @@ const FoodDetails = ({route, navigation}) => {
               );
             })}
           </View>
-          <View style={styles.reaction}>
+          {/* <View style={styles.reaction}>
             <Reaction reaction={food.reaction} />
             <Text style={styles.textReact}>
               {food.reaction?.heart.user[0]} và{' '}
@@ -256,71 +285,9 @@ const FoodDetails = ({route, navigation}) => {
                 food.reaction?.haha.num}{' '}
               người khác đã thả cảm xúc
             </Text>
-          </View>
-          <View style={styles.borderTitle}>
-            <Text style={styles.title}>Bình luận</Text>
-            <View style={{flexDirection: 'row'}}>
-              <Image
-                style={{width: 32, height: 32, borderRadius: 100}}
-                source={{
-                  uri: BASE_URL + User.avata?.url,
-                }}></Image>
-              <View style={styles.headerInput}>
-                <TextInput
-                  style={styles.textInput}
-                  onChangeText={setComment}
-                  value={comment}
-                  placeholder="Thêm bình luận"
-                  underlineColorAndroid="#00000000"
-                  onEndEditing={() => {}}
-                  numberOfLines={2}
-                />
-              </View>
-              <TouchableOpacity
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: 10,
-                }}>
-                <FontAwesome
-                  name="send"
-                  size={22}
-                  color={'#EC7E5D'}></FontAwesome>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                marginTop: 40,
-                borderTopWidth: 1,
-                borderTopColor: '#B7B7B7',
-                // alignItems: 'center',
-                justifyContent: 'center',
-                paddingTop: 20,
-              }}>
-              {food.comment.map((e, index) => {
-                return (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginTop: 10,
-                      borderBottomWidth: 0.3,
-                      paddingBottom: 10,
-                    }}>
-                    <Image
-                      style={{width: 32, height: 32, borderRadius: 100}}
-                      source={{
-                        uri: BASE_URL + User.avata?.url,
-                      }}></Image>
-                    <View style={{marginHorizontal: 10, marginRight: 20}}>
-                      <Text style={{fontSize: 14, fontWeight: 'bold'}}>
-                        {User.name}
-                      </Text>
-                      <Text style={{fontSize: 14}}>{e.content}</Text>
-                    </View>
-                  </View>
-                );
-              })}
-            </View>
+          </View> */}
+          <View>
+            <Comment food={food} User={User} comment = {comment} setComment = {setComment}/>
           </View>
         </ScrollView>
       </View>
@@ -336,6 +303,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   image: {
+    borderRadius: 8,
     height: 300,
     width: wigth,
     justifyContent: 'space-between',
@@ -415,25 +383,8 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#555555',
   },
-  textInput: {
-    height: 40,
-    width: '92%',
-    fontSize: 14,
-    marginLeft: 8,
-    fontWeight: '600',
-  },
-  headerInput: {
-    width: '82%',
-    height: 32,
-    borderRadius: 10,
-    flexDirection: 'row',
-    borderWidth: 0.3,
-    borderColor: '#707070',
-    alignItems: 'center',
-    marginLeft: 10,
-  },
   textMenu: {
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 export default FoodDetails;
