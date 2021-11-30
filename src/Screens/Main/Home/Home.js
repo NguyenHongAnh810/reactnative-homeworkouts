@@ -1,298 +1,141 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  Dimensions,
-  Button,
-  StyleSheet,
-  TouchableOpacityBase,
-  TouchableOpacity,
-} from 'react-native';
+import {View, RefreshControl, ScrollView, StyleSheet} from 'react-native';
 import FoodList from '../../../Components/FoodList';
 import FoodList3 from '../../../Components/FoodList3';
 import FoodList4 from '../../../Components/FoodList4';
 import FoodList5 from '../../../Components/FoodList5';
 
+import {TYPES} from '../../../redux/actions/Action';
+import {TYPES as TYPESGETLIST} from '../../../redux/actions/ActionFetchList';
+import {useDispatch, useSelector} from 'react-redux';
 
-export const Data = [
-  {
-    idFood: 1,
-    idUser: 1,
-    name: 'Chè Khoai Dẻo',
-    ingredients: ['đường', 'bột mì'],
-    repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: [
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-    ],
-    reaction: {
-      heart: {
-        num: 2,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      haha: {
-        num: 3,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      sad: {
-        num: 5,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-    },
-    comment: [
-      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
-      {
-        content:
-          'Món ăn chẳng ngon đi làm mệt còn nấu nướng gì!, cảm ơn tác giả',
-        userId: 2,
-      },
-    ],
-  },
-  {
-    idFood: 2,
-    idUser: 1,
-    name: 'Bánh tráng trộn',
-    ingredients: ['đường', 'bột mì'],
-    repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: [
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-    ],
-    reaction: {
-      heart: {
-        num: 2,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      haha: {
-        num: 3,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      sad: {
-        num: 5,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-    },
-    comment: [
-      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
-      {content: 'Món ăn rất ngon lắm nhé!, cảm ơn tác giả', userId: 2},
-    ],
-  },
-  {
-    idFood: 3,
-    idUser: 1,
-    name: 'Bít tết',
-    ingredients: ['đường', 'bột mì'],
-    repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: [
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-    ],
-    reaction: {
-      heart: {
-        num: 2,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      haha: {
-        num: 3,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      sad: {
-        num: 5,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-    },
-    comment: [
-      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
-      {content: 'Món ăn rất ngon lắm luôn!, cảm ơn tác giả', userId: 2},
-    ],
-  },
-  {
-    idFood: 4,
-    idUser: 1,
-    name: 'Xúc xích rán',
-    ingredients: ['đường', 'bột mì'],
-    repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: [
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-    ],
-    reaction: {
-      heart: {
-        num: 2,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      haha: {
-        num: 3,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      sad: {
-        num: 5,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-    },
-    comment: [
-      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
-      {content: 'Món ăn rất ngon ngon cực kì á!, cảm ơn tác giả', userId: 2},
-    ],
-  },
-  {
-    idFood: 5,
-    idUser: 1,
-    name: 'Cháo',
-    ingredients: ['đường', 'bột mì'],
-    repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: [
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-    ],
-    reaction: {
-      heart: {
-        num: 2,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      haha: {
-        num: 3,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      sad: {
-        num: 5,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-    },
-    comment: [
-      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
-      {content: 'Món ăn rất ngon mới là lạ!, cảm ơn tác giả', userId: 2},
-    ],
-  },
-  {
-    idFood: 6,
-    idUser: 1,
-    name: 'Bánh mì kẹp trứng',
-    ingredients: ['đường', 'bột mì'],
-    repice: ['nặn đường và bột mì rồi đun lên', 'Đun sôi thì vớt ra ăn'],
-    image: [
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-      require('../../../assets/image/backgroundLaunch.jpg'),
-    ],
-    reaction: {
-      heart: {
-        num: 2,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      haha: {
-        num: 3,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-      sad: {
-        num: 5,
-        user: ['Khoa Phạm', 'Hồng Ánh'],
-      },
-    },
-    comment: [
-      {content: 'Món ăn rất ngon!, cảm ơn tác giả', userId: 1},
-      {
-        content:
-          'Món ăn chẳng ngon gì mệt vch còn bắt nấu cơm!, cảm ơn tác giả',
-        userId: 2,
-      },
-    ],
-  },
-];
-
-export const User = [
-  {
-    id: 1,
-    name: 'Nguyễn Hồng Ánh',
-    gmail: 'honganh08102000@gmail.com',
-    pass: '12345',
-    status: true,
-    myFood: [1, 3],
-    foodSave: [2, 6],
-    avata:
-      'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo',
-  },
-  {
-    id: 2,
-    name: 'Nguyễn Văn Bắc',
-    gmail: 'Bacnv@gmail.com',
-    pass: '12346',
-    status: true,
-    myFood: [1, 3],
-    foodSave: [2, 6],
-    avata:
-      'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo',
-  },
-  {
-    id: 3,
-    name: 'Lương Ngọc Thuyết',
-    gmail: 'Thuyetln@gmail.com',
-    pass: '12347',
-    status: true,
-    myFood: [1, 3],
-    foodSave: [2, 6],
-    avata:
-      'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo',
-  },
-];
-
-import {TYPES} from '../../../redux/actions/Action'
-import {TYPES as TYPESGETLIST} from '../../../redux/actions/ActionFetchList'
-import { useDispatch, useSelector } from 'react-redux';
-
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
 
 const Home = ({navigation}) => {
-  const newFood = useSelector(state => state.product.newFood)
-  console.log(newFood)
-  const setFood = useSelector(state => state.product.setFood)
-  const specialFood = useSelector(state => state.product.specialFood)
-  const topFood = useSelector(state => state.product.topFood)
-  const dispatch = useDispatch()
+  const [isLoadMore, setIsLoadMore] = useState(false);
+  const [start, setStart] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const newFood = useSelector(state => state.product.newFood);
+  console.log(newFood);
+  const setFood = useSelector(state => state.product.setFood);
+  const specialFood = useSelector(state => state.product.specialFood);
+  const topFood = useSelector(state => state.product.topFood);
+  const dispatch = useDispatch();
+  const [isLoadMoreProcessing, setLoadMoreProcessing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => {
+      setStart(0);
+      setRefreshing(false)});
+  }, []);
+
+  const fetchNewFoodList = async () => {
+    const params = {
+      _start: start,
+      _limit: limit,
+      _sort: 'id:DESC',
+    };
+    dispatch({
+      type: TYPESGETLIST.FETCH_NEWFOODLIST_REQUEST,
+      params: params,
+    });
+  };
+
+  const fetchSetFoodList = async () => {
+    const params = {
+      name_contains: 'salat'
+    };
+    dispatch({
+      type: TYPESGETLIST.FETCH_SETFOODLIST_REQUEST,
+      params: params,
+    });
+  };
+
+  const fetchSpecialFoodList = async () => {
+    const params = null;
+    dispatch({
+      type: TYPESGETLIST.FETCH_SPECIALFOODLIST_REQUEST,
+      params: params,
+    });
+  };
+
+  const fetchTopFoodList = async () => {
+    const params = null;
+    dispatch({
+      type: TYPESGETLIST.FETCH_TOPFOODLIST_REQUEST,
+      params: params,
+    });
+  };
+
   useEffect(() => {
     const fetchProductList = async () => {
-      try {
       const params = null;
-     
+      try {
         dispatch({
-          type: TYPES.LOADING
-        })
-        dispatch({
-          type: TYPESGETLIST.FETCH_NEWFOODLIST_REQUEST,
-          params: params
-        })
-        dispatch({
-          type: TYPESGETLIST.FETCH_SETFOODLIST_REQUEST,
-          params: params
-        })
-        dispatch({
-          type: TYPESGETLIST.FETCH_SPECIALFOODLIST_REQUEST,
-          params: params
-        })
-        dispatch({
-          type: TYPESGETLIST.FETCH_TOPFOODLIST_REQUEST,
-          params: params
-        })
-        setTimeout(()=>{
+          type: TYPES.LOADING,
+        });
+        await fetchNewFoodList();
+        await fetchSetFoodList();
+        await fetchSpecialFoodList();
+        await fetchTopFoodList();
+        setTimeout(() => {
           dispatch({
-            type: TYPES.LOADED
-          })
-        }, 1000)
+            type: TYPES.LOADED,
+          });
+        }, 1000);
       } catch (error) {
-      console.log('Failed to fetch listfood list: ', error);
+        console.log('Failed to fetch listfood list: ', error);
       }
-      }
-      fetchProductList();
-  }, [])
+    };
+    fetchProductList();
+  }, [refreshing]);
+  const handerLoadMore = async () => {
+    if (isLoadMoreProcessing) {
+      return;
+    }
+    setLoadMoreProcessing(true);
+    setIsLoadMore(true);
+    console.log(`loadmore1`);
+    setStart(start + 10);
+    await fetchNewFoodList();
+    console.log('loadmore2');
+    setTimeout(() => {
+      setLoadMoreProcessing(false);
+      setIsLoadMore(false);
+    }, 500);
+  };
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 50;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
+  };
   return (
     <View style={styles.contrain}>
-      <ScrollView style={{flex: 0.9}} showsVerticalScrollIndicator={false}>
-        <FoodList title="Trổ tài với các món đặc sắc" data={specialFood} navigation={navigation} />
+      <ScrollView
+        style={{flex: 0.9}}
+        showsVerticalScrollIndicator={false}
+        onScroll={({nativeEvent}) => {
+          if (isCloseToBottom(nativeEvent)) {
+            handerLoadMore();
+          }
+        }}
+        scrollEventThrottle={400}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        >
+        <FoodList
+          title="Trổ tài với các món đặc sắc"
+          data={specialFood}
+          navigation={navigation}
+        />
         <FoodList3
           title="Khám phá xem thứ gì đang trong mùa nhé!"
           data={setFood}
@@ -303,11 +146,12 @@ const Home = ({navigation}) => {
           data={topFood}
           navigation={navigation}
         />
-
         <FoodList4
           title="Món mới nhất"
           data={newFood}
           navigation={navigation}
+          handerLoadMore={handerLoadMore}
+          isLoadingMore={isLoadMore}
         />
       </ScrollView>
     </View>

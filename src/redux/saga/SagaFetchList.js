@@ -45,6 +45,7 @@ function* fetchFoodSave(action) {
  function* fetchSetFood(action) {
     try {
        const response = yield GetListFoodApi(action.params)
+       
        yield put({type: TYPES.FETCH_SETFOODLIST_SUCCESS, response: response});
     } catch (e) {
        alert("Tải dữ liệu thất bại")

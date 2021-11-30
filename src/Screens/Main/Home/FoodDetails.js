@@ -225,12 +225,13 @@ const FoodDetails = ({route, navigation}) => {
           <View>
             <TouchableOpacity
               style={styles.infor}
-              onPress={() => {
-                navigation.navigate('ProfileScreen', {
-                  food: food,
-                  screen: screen,
-                });
-              }}>
+              // onPress={() => {
+              //   navigation.navigate('ProfileScreen', {
+              //     food: food,
+              //     screen: screen,
+              //   });
+              // }}
+              >
               <Image
                 style={styles.avata}
                 source={{

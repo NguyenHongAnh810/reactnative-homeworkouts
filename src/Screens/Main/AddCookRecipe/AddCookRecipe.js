@@ -167,7 +167,7 @@ const AddCookRecipe = ({navigation, route}) => {
             id: e,
           };
         });
-        let recipe = making.map((e, index) => {
+        let recipes = making.map((e, index) => {
           return {
             order: index,
             making: e,
@@ -183,7 +183,7 @@ const AddCookRecipe = ({navigation, route}) => {
           idUser: User.id,
           name: nameFood,
           image: images,
-          recipe: recipe,
+          repice: recipes,
           ingredients: ingredients,
         };
         if (isUpdate == false) {

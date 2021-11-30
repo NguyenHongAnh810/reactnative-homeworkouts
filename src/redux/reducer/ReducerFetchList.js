@@ -21,7 +21,10 @@ function myListReducer(state = initalState, action) {
       console.log("Myfoodreducer", state.myFood)
       return {...state};
     case TYPES.FETCH_NEWFOODLIST_SUCCESS:
-      state.newFood = action.response;
+      let arr = state.newFood;
+      arr = arr.concat(action.response)
+      state.newFood = arr;
+      // state.newFood = action.response
       return {...state};
     case TYPES.FETCH_SETFOODLIST_SUCCESS:
       state.setFood = action.response;

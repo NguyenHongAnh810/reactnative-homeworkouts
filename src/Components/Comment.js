@@ -105,23 +105,6 @@ export default function Comment({food, User, comment, setComment}) {
           paddingTop: 20,
         }}>
         {listComment.map(e => {
-
-          // const [user, setuser] = useState({
-          //   avata: {
-          //     url: ''
-          //   },
-          //   username: ''
-          // })
-          // const fetch = async () => {
-          //   let params = {
-          //     id: e.userId,
-          //   };
-          //   const UserComemt = await GetMeApi(params);
-          //   console.log(`usercomemt`, UserComemt)
-          //   setuser(UserComemt[0])
-          // };
-          //  if(e) fetch()
-          //  console.log('user', user)
           return (
             <View
               style={{
@@ -135,7 +118,7 @@ export default function Comment({food, User, comment, setComment}) {
                 source={{
                   uri: BASE_URL + e?.user?.avata?.url,
                 }}></Image>
-              <View style={{marginHorizontal: 10, marginRight: 20}}>
+              <View style={{marginHorizontal: 10, marginRight: 30}}>
                 <Text style={{fontSize: 14, fontWeight: 'bold'}}>
                   {e?.user?.username}
                 </Text>

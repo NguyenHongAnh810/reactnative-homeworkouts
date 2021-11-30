@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet, FlatList, TouchableOpacity, Image, Dimensions} from 'react-native';
+import {View, Text, ScrollView, StyleSheet, FlatList, TouchableOpacity, Image, Dimensions, ActivityIndicator} from 'react-native';
 
 import FoodHome from './FoodHome';
 import Reaction from './Reaction';
@@ -8,7 +8,7 @@ import { BASE_URL } from '../api/Common';
 const {height, wigth} = Dimensions.get('window');
 
 
-const FoodList = ({title, data, navigation}) => {
+const FoodList = ({title, data, navigation, handerLoadMore, isLoadingMore}) => {
     const renderItem = ({item}) => {
         return (
             <TouchableOpacity
@@ -23,6 +23,15 @@ const FoodList = ({title, data, navigation}) => {
           </TouchableOpacity>
         );
       };
+    const renderFooter = () => {
+      return(
+        isLoadingMore?
+        <View style = {{marginTop: 20, alignItems: 'center'}}>
+          <ActivityIndicator size = 'large'color = '#EC7E5D'></ActivityIndicator>
+        </View>
+        : null
+      )
+    }
   return (
     <View style = {styles.contrain}>
       <View style = {styles.viewTitle}>
@@ -34,7 +43,11 @@ const FoodList = ({title, data, navigation}) => {
               data={data}
               renderItem={renderItem}
               keyExtractor={item => item.idFood}
-              numColumns={2}></FlatList>
+              numColumns={2}
+              // onEndReached = {handerLoadMore}
+              ListFooterComponent = {renderFooter}
+              onEndReachedThreshold = {0.3}
+              ></FlatList>
     </View>
     </View>
   );
