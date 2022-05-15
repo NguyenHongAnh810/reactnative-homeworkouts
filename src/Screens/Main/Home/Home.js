@@ -8,6 +8,10 @@ import FoodList5 from '../../../Components/FoodList5';
 import {TYPES} from '../../../redux/actions/Action';
 import {TYPES as TYPESGETLIST} from '../../../redux/actions/ActionFetchList';
 import {useDispatch, useSelector} from 'react-redux';
+import Header from './Components/Header';
+import HeaderAddPost from './Components/HeaderAddPost';
+import ListPostHome from './Components/ListPostHome';
+import RenderTag from './Components/RenderTag';
 
 const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -79,9 +83,9 @@ const Home = ({navigation}) => {
           type: TYPES.LOADING,
         });
         await fetchNewFoodList();
-        await fetchSetFoodList();
-        await fetchSpecialFoodList();
-        await fetchTopFoodList();
+        // await fetchSetFoodList();
+        // await fetchSpecialFoodList();
+        // await fetchTopFoodList();
         setTimeout(() => {
           dispatch({
             type: TYPES.LOADED,
@@ -118,8 +122,9 @@ const Home = ({navigation}) => {
   };
   return (
     <View style={styles.contrain}>
+      <Header/>
       <ScrollView
-        style={{flex: 0.9}}
+        style={{flex: 1}}
         showsVerticalScrollIndicator={false}
         onScroll={({nativeEvent}) => {
           if (isCloseToBottom(nativeEvent)) {
@@ -131,7 +136,7 @@ const Home = ({navigation}) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         >
-        <FoodList
+        {/* <FoodList
           title="Trổ tài với các món đặc sắc"
           data={specialFood}
           navigation={navigation}
@@ -152,9 +157,12 @@ const Home = ({navigation}) => {
           navigation={navigation}
           handerLoadMore={handerLoadMore}
           isLoadingMore={isLoadMore}
-        />
+        /> */}
+        <HeaderAddPost/>
+        <RenderTag/>
+        <ListPostHome data={newFood}/>
       </ScrollView>
-    </View>
+     </View>
   );
 };
 
