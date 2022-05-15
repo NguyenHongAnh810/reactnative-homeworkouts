@@ -1,64 +1,104 @@
-import React, {useState, useEffect} from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/FontAwesome5';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+
+const ReactionData = [{}];
 
 const Reaction = ({reaction, idFood}) => {
-    const [heart, setHeart] = useState(reaction?.heart?.num || 0)
-    const [haha, setHaha] = useState(reaction?.haha?.num || 0)
-    const [sad, setSad] = useState(reaction?.sad?.num || 0)
+  const [heart, setHeart] = useState(reaction?.heart?.num || 0);
+  const [haha, setHaha] = useState(reaction?.haha?.num || 0);
+  const [sad, setSad] = useState(reaction?.sad?.num || 0);
 
-    const dispatch = useDispatch()
-    
-    useEffect(() => {
-       
-    }, [heart, haha, sad])
+  const dispatch = useDispatch();
 
-    return (
-        <View style = {{flexDirection : 'row'}}>
-            <TouchableOpacity style = {styles.button} onPress={()=>{
-                setHeart(heart+1)
-            }}>
-                <Icon name="heart" color = 'red' size = {10}></Icon>
-                <Text style={styles.text}> {heart}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {styles.button} onPress={()=>{
-                setHaha(haha+1)
-            }}>
-                <Icon1 name="smile-beam" color = '#EC870E' size = {10}></Icon1>
-                <Text style={styles.text}> {haha}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {styles.button} onPress={()=>{
-                setSad(sad+1)
-            }}>
-                <Icon1 name="sad-tear" color = '#38044B' size = {10}></Icon1>
-                <Text style={styles.text}> {sad}</Text>
-            </TouchableOpacity>
-        </View>
-    )
-}
+  useEffect(() => {}, [heart, haha, sad]);
+
+  return (
+    <View style={styles.constainer}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setHeart(heart + 1);
+        }}>
+        <Image
+          source={require('../assets/image/hand_clap.png')}
+          style={styles.icon}
+        />
+        <Text style={styles.text}> {heart}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setHeart(heart + 1);
+        }}>
+        <Image
+          source={require('../assets/image/flower.png')}
+          style={styles.icon}
+        />
+        <Text style={styles.text}> {heart}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setHeart(heart + 1);
+        }}>
+        <Image
+          source={require('../assets/image/angry.png')}
+          style={styles.icon}
+        />
+        <Text style={styles.text}> {heart}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setHaha(haha + 1);
+        }}>
+        <Icon name="heart" color="red" size={16} />
+        <Text style={styles.text}> {haha}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button, {borderRightWidth: 0}]}
+        onPress={() => {
+          setSad(sad + 1);
+        }}>
+        <AntDesign name="message1" color="blue" size={16} />
+        <Text style={styles.text}> {sad}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    constrainer: {
-        
-    },
-    button: {
-        height: 20 ,
-        width: 32,
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 4,
-        flexDirection: 'row',
-        margin: 5,
-        backgroundColor: '#D7D7D7',
-        borderRadius: 15
-    },
-    text: {
-        fontSize: 12
-    }
-
-})
+  constainer: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: 'silver',
+    flex: 1,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    flex: 1,
+    borderRightWidth: 1,
+    borderColor: 'silver',
+  },
+  text: {
+    fontSize: 13,
+    color: 'darkred',
+    fontWeight: '600',
+  },
+  icon: {
+    height: 16,
+    width: 16,
+  },
+});
 export default Reaction;

@@ -12,6 +12,7 @@ import Header from './Components/Header';
 import HeaderAddPost from './Components/HeaderAddPost';
 import ListPostHome from './Components/ListPostHome';
 import RenderTag from './Components/RenderTag';
+import ListUserSuggest from './Components/ListUserSuggest';
 
 const wait = timeout => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -160,7 +161,8 @@ const Home = ({navigation}) => {
         /> */}
         <HeaderAddPost/>
         <RenderTag/>
-        <ListPostHome data={newFood}/>
+        <ListUserSuggest/>
+        <ListPostHome data={newFood} navigation = {navigation}/>
       </ScrollView>
      </View>
   );
