@@ -13,5 +13,5 @@ export default function* rootSaga() {
 }
 
 function* getInfoAction(action) {
-  console.log('**action: ', JSON.stringify(action));
+  // console.log('**action: ', JSON.stringify(action));
 }

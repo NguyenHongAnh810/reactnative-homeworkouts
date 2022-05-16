@@ -4,10 +4,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {BASE_URL} from '../../../../api/Common';
 
-export default function HeaderAddPost() {
+export default function HeaderAddPost({onPressAddPost}) {
   const user = useSelector(state => state.auth.user.infor);
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress = {onPressAddPost}>
       <View style = {styles.viewAvata}>
         <Image
           style={styles.avata}

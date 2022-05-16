@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Color } from '../../../../assets/color';
 
 const dataTag = [
   {
@@ -39,40 +40,50 @@ const dataTag = [
   },
 ];
 
-const renderIcon = item => {
+const renderIcon = (item, color = 'black') => {
   switch (item.name) {
     case 'Tất cả':
-      return <Entypo name="news" size={16} color={'black'} />;
+      return <Entypo name="news" size={16} color={color} />;
     case 'Đặc sắc':
-      return <Entypo name="hand" size={16} color={'black'} />;
+      return <Entypo name="hand" size={16} color={color} />;
     case 'Nấu ăn':
       return (
-        <MaterialCommunityIcons name="pot-mix" size={16} color={'black'} />
+        <MaterialCommunityIcons name="pot-mix" size={16} color={color} />
       );
     case 'Quán ngon':
-      return <Entypo name="location-pin" size={16} color={'black'} />;
+      return <Entypo name="location-pin" size={16} color={color} />;
     case 'Khác':
-      return <AntDesign name="videocamera" size={16} color={'black'} />;
+      return <AntDesign name="videocamera" size={16} color={color} />;
   }
 };
 
-const RenderItemTag = ({item}) => {
-  return (
-    <TouchableOpacity style={styles.viewTag}>
-      {renderIcon(item)}
-      <Text style={styles.titleTag}>{item.name}</Text>
-    </TouchableOpacity>
-  );
-};
-
 export default function RenderTag() {
+  const [idChoose, setIdChoose] = useState(0);
+  const RenderItemTag = ({item, index}) => {
+    const [active, setActive] = useState(false);
+    const [color, setColor] = useState('black');
+    useEffect(() => {
+      if (idChoose == index) {
+        setActive(true);
+        setColor('peru')
+      }
+    }, [idChoose]);
+    return (
+      <TouchableOpacity style={styles.viewTag} onPress = {()=>{
+        setIdChoose(index)
+      }}>
+        {renderIcon(item, color)}
+        <Text style={[styles.titleTag, {color: active? 'peru' : 'black'}]}>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
   return (
     <ScrollView
       horizontal
       style={styles.container}
       showsHorizontalScrollIndicator={false}>
-      {dataTag.map(el => {
-        return <RenderItemTag item={el} />;
+      {dataTag.map((el, index) => {
+        return <RenderItemTag item={el} index={index} />;
       })}
     </ScrollView>
   );

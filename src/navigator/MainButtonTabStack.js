@@ -15,7 +15,6 @@ import Chat from '../Screens/Main/Chat/Chat';
 const Tab = createBottomTabNavigator();
 
 const MainButtonTabStack = () => {
-
   return (
     <Tab.Navigator
       initialRouteName="HomeTab"
@@ -31,7 +30,6 @@ const MainButtonTabStack = () => {
       <Tab.Screen
         name="Home"
         options={{
-          // title: "Classic",
           tabBarIcon: ({color, size}) => (
             <Icon2 name="house" color={color} size={size} />
           ),
@@ -41,43 +39,21 @@ const MainButtonTabStack = () => {
       <Tab.Screen
         name="Search"
         options={{
-          // title: "Search",
           tabBarIcon: ({color, size}) => (
             <Icon1 name="magnifying-glass" color={color} size={size} />
           ),
         }}
         component={Search}
       />
-       {/* <Tab.Screen
-        name="Chat"
-        options={{
-          // title: "Search",
-          tabBarIcon: ({color, size}) => (
-            <Icon1 name="message" color={color} size={size} />
-          ),
-        }}
-        component={Chat}
-      /> */}
       <Tab.Screen
         name="Add"
         options={{
-          // title: 'Add',
           tabBarIcon: ({color, size}) => (
             <Icon1 name="squared-plus" color={color} size={size} />
           ),
         }}
         component={AddCookRecipe}
       />
-      {/* <Tab.Screen
-        name="Chat"
-        options={{
-          title: 'Chat',
-          tabBarIcon: ({color, size}) => (
-            <Icon1 name="message" color={color} size={size} />
-          ),
-        }}
-        component={Chat}
-      /> */}
       <Tab.Screen
         name="Me"
         options={{

@@ -4,7 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Color} from '../../../../assets/color';
 
-export default function Header() {
+export default function Header({}) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cookie</Text>

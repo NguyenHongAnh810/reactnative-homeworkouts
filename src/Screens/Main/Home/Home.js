@@ -35,7 +35,8 @@ const Home = ({navigation}) => {
     setRefreshing(true);
     wait(2000).then(() => {
       setStart(0);
-      setRefreshing(false)});
+      setRefreshing(false);
+    });
   }, []);
 
   const fetchNewFoodList = async () => {
@@ -52,7 +53,7 @@ const Home = ({navigation}) => {
 
   const fetchSetFoodList = async () => {
     const params = {
-      name_contains: 'salat'
+      name_contains: 'salat',
     };
     dispatch({
       type: TYPESGETLIST.FETCH_SETFOODLIST_REQUEST,
@@ -121,9 +122,13 @@ const Home = ({navigation}) => {
       contentSize.height - paddingToBottom
     );
   };
+
+  const onPressAddPost = () => {
+    navigation.navigate('Add');
+  };
   return (
     <View style={styles.contrain}>
-      <Header/>
+      <Header />
       <ScrollView
         style={{flex: 1}}
         showsVerticalScrollIndicator={false}
@@ -135,36 +140,13 @@ const Home = ({navigation}) => {
         scrollEventThrottle={400}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        >
-        {/* <FoodList
-          title="Trổ tài với các món đặc sắc"
-          data={specialFood}
-          navigation={navigation}
-        />
-        <FoodList3
-          title="Khám phá xem thứ gì đang trong mùa nhé!"
-          data={setFood}
-          navigation={navigation}
-        />
-        <FoodList5
-          title="Chúc mừng top các món ăn"
-          data={topFood}
-          navigation={navigation}
-        />
-        <FoodList4
-          title="Món mới nhất"
-          data={newFood}
-          navigation={navigation}
-          handerLoadMore={handerLoadMore}
-          isLoadingMore={isLoadMore}
-        /> */}
-        <HeaderAddPost/>
-        <RenderTag/>
-        <ListUserSuggest/>
-        <ListPostHome data={newFood} navigation = {navigation}/>
+        }>
+        <HeaderAddPost onPressAddPost={onPressAddPost} />
+        <RenderTag />
+        <ListUserSuggest />
+        <ListPostHome data={newFood} navigation={navigation} />
       </ScrollView>
-     </View>
+    </View>
   );
 };
 

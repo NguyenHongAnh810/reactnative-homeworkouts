@@ -14,11 +14,11 @@ import {GetMeApi} from '../../../../api/GetMeApi';
 import Reaction from '../../../../Components/Reaction';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SuggestFood from './SuggestFood';
 
 const {height, width} = Dimensions.get('screen');
 
 const RenderItemPost = ({item, navigation}) => {
-  console.log('itemmmmmmmmmmmmmmmmmm', item);
   const [userFood, setUserFood] = useState({});
   useEffect(async () => {
     const params = {
@@ -94,11 +94,14 @@ export default function ListPostHome({data = [], navigation}) {
       <ScrollView showsHorizontalScrollIndicator={false}>
         {data.map((e, index) => {
           return (
-            <RenderItemPost
-              item={e}
-              navigation={navigation}
-              key={`food-item-${index}`}
-            />
+            <View>
+              {index == 2 && <SuggestFood />}
+              <RenderItemPost
+                item={e}
+                navigation={navigation}
+                key={`food-item-${index}`}
+              />
+            </View>
           );
         })}
       </ScrollView>
@@ -108,7 +111,7 @@ export default function ListPostHome({data = [], navigation}) {
 
 const styles = StyleSheet.create({
   contrain: {
-    flex: 1,
+    // flex: 1,
     // backgroundColor: 'white',
   },
   button: {
