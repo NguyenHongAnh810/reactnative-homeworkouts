@@ -143,7 +143,7 @@ const Home = ({navigation}) => {
         }>
         <HeaderAddPost onPressAddPost={onPressAddPost} />
         <RenderTag />
-        <ListUserSuggest />
+        <ListUserSuggest navigation={navigation}/>
         <ListPostHome data={newFood} navigation={navigation} />
       </ScrollView>
     </View>

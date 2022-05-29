@@ -18,7 +18,8 @@ import FoodList6 from '../../../Components/FoodList6';
 import {GetListFoodApi} from '../../../api/GetListFoodApi';
 import {isFulfilled} from '@reduxjs/toolkit';
 import {useSelector, useDispatch} from 'react-redux';
-import { TYPES } from '../../../redux/actions/Action';
+import {TYPES} from '../../../redux/actions/Action';
+import RenderTagSearch from './components/RenderTagSearch';
 const {height, wigth} = Dimensions.get('window');
 
 const DataSuggestFood = [
@@ -43,8 +44,8 @@ const Search = ({navigation}) => {
     console.log(key);
     try {
       dispatch({
-        type: TYPES.LOADING
-      })
+        type: TYPES.LOADING,
+      });
       const params = {
         name_contains: key,
       };
@@ -54,10 +55,9 @@ const Search = ({navigation}) => {
       setData(response);
       setTimeout(() => {
         dispatch({
-          type: TYPES.LOADED
-        })
+          type: TYPES.LOADED,
+        });
       }, 200);
-      
     } catch (error) {
       console.log('Failed to fetch listfood list: ', error);
     }
@@ -92,7 +92,7 @@ const Search = ({navigation}) => {
   return (
     <View style={styles.contrain}>
       <View style={styles.header}>
-        <Text
+        {/* <Text
           style={{
             fontWeight: 'bold',
             fontSize: 36,
@@ -100,14 +100,14 @@ const Search = ({navigation}) => {
             marginVertical: 20,
           }}>
           Search
-        </Text>
-        <View style={{flexDirection: 'row'}}>
+        </Text> */}
+        <View style={{flexDirection: 'row', marginTop: 28}}>
           <View style={styles.headerInput}>
             <TextInput
               style={styles.textInput}
               onChangeText={setKey}
               value={key}
-              placeholder="Tìm tên món, nguyên liệu"
+              placeholder="Nhập từ khóa bạn cần tìm"
               underlineColorAndroid="#00000000"
               onEndEditing={() => {
                 if (key != '') setSearch(true);
@@ -147,9 +147,10 @@ const Search = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
+        <RenderTagSearch />
       </View>
       {search ? (
-        (data.length != 0) ? (
+        data.length != 0 ? (
           <FoodList6
             value={key}
             data={data}
@@ -175,7 +176,7 @@ const Search = ({navigation}) => {
         )
       ) : (
         <View>
-          <Text style={styles.title}>Món tìm kiếm phổ biến</Text>
+          {/* <Text style={styles.title}>Món tìm kiếm phổ biến</Text>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <FlatList
               key={2}
@@ -183,7 +184,7 @@ const Search = ({navigation}) => {
               renderItem={renderItem}
               keyExtractor={item => item.idFood}
               numColumns={4}></FlatList>
-          </View>
+          </View> */}
         </View>
       )}
     </View>
@@ -197,7 +198,6 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: 'white',
-    height: 150,
     width: wigth,
   },
   headerInput: {
@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     borderColor: '#707070',
     alignItems: 'center',
     marginLeft: 20,
+    marginBottom: 12,
   },
   icon: {
     marginBottom: 5,
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
     width: '92%',
     fontSize: 14,
     marginLeft: 8,
-    fontWeight: 'bold',
+    // fontWeight: '500',
     // marginVertical: 6,
   },
   clear: {
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     marginLeft: 20,
-    marginVertical: 20,
+    marginBottom: 20,
   },
 });
 

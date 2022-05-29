@@ -18,57 +18,56 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const {height, width} = Dimensions.get('window')
 
-const RenderUser = ({item}) => {
-  console.log('itemmmmmmmmmmmmmmmmmmmm', item);
-  return (
-    <TouchableOpacity style={styles.itemUser}>
-      <Image source={{uri: BASE_URL + item.avata?.url}} style={styles.avatar} />
-      <Text style={styles.nameUser}>{item.username}</Text>
-      <View style={{flexDirection: 'row', marginBottom: 4}}>
-        <Entypo name="hand" size={14} color="gray" />
-        <Text style={styles.textTypeUser}>Người mới</Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: 150,
-          paddingHorizontal: 16,
-        }}>
-        <Text style={styles.friendUser}>0 bạn chung</Text>
-        <View
-          style={{flexDirection: 'row', alignItems: 'center', marginBottom: 6}}>
-          <Text style={{color: 'red', fontSize: 12}}>29 </Text>
-          <MaterialCommunityIcons
-            name="fruit-watermelon"
-            color={'red'}
-            size={12}
-          />
-        </View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          width: 150,
-          justifyContent: 'space-between',
-          paddingHorizontal: 16,
-          alignItems: 'center',
-        }}>
-        <TouchableOpacity style={styles.buttonAddFriend}>
-          <FontAwesome5 name="user-plus" color={'navy'} size={14} />
-          <Text style={{color: 'navy', marginLeft: 6}}>Thêm</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonX}>
-          <Feather name="x" color={'gray'} size={14} />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
-export default function ListUserSuggest() {
+export default function ListUserSuggest({navigation}) {
   const [dataUser, setDataUser] = useState([]);
-  console.log('dataUser', dataUser);
+  const RenderUser = ({item}) => {
+    return (
+      <TouchableOpacity style={styles.itemUser} onPress = {()=>{
+        navigation.navigate('PersonalPage', {user: item})
+      }}>
+        <Image source={{uri: BASE_URL + item.avata?.url}} style={styles.avatar} />
+        <Text style={styles.nameUser}>{item.username}</Text>
+        <View style={{flexDirection: 'row', marginBottom: 4}}>
+          <Entypo name="hand" size={14} color="gray" />
+          <Text style={styles.textTypeUser}>Người mới</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: 150,
+            paddingHorizontal: 16,
+          }}>
+          <Text style={styles.friendUser}>0 bạn chung</Text>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', marginBottom: 6}}>
+            <Text style={{color: 'red', fontSize: 12}}>29 </Text>
+            <MaterialCommunityIcons
+              name="fruit-watermelon"
+              color={'red'}
+              size={12}
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: 150,
+            justifyContent: 'space-between',
+            paddingHorizontal: 16,
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity style={styles.buttonAddFriend}>
+            <FontAwesome5 name="user-plus" color={'navy'} size={14} />
+            <Text style={{color: 'navy', marginLeft: 6}}>Thêm</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonX}>
+            <Feather name="x" color={'gray'} size={14} />
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   const getData = async () => {
     try {
       const res = await getSuggestUser();
