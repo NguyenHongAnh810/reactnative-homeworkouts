@@ -6,10 +6,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import {TYPES} from '../../../redux/actions/ActionFetchList';
 import FoodList6 from '../../../Components/FoodList6';
 
-const MyFood = ({navigation}) => {
+const MyFood = ({navigation, dataFood}) => {
   const User = useSelector(state => state.auth.user.infor);
   const Data = useSelector(state => state.product.myFood);
-  console.log('myfoodlistdata', Data);
+
   const dispatch = useDispatch();
   useEffect(() => {
     const params = {
@@ -22,7 +22,12 @@ const MyFood = ({navigation}) => {
   }, []);
   return (
     <View style={{flex: 1}}>
-      <FoodList6 data={Data} navigation={navigation} screen="Me" type="MyFood"/>
+      <FoodList6
+        data={dataFood ?? Data}
+        navigation={navigation}
+        screen="Me"
+        type={dataFood ? null : "MyFood"}
+      />
     </View>
   );
 };

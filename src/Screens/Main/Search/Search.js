@@ -41,7 +41,6 @@ const Search = ({navigation}) => {
   const dispatch = useDispatch();
 
   const fetchProductList = async () => {
-    console.log(key);
     try {
       dispatch({
         type: TYPES.LOADING,
@@ -49,7 +48,6 @@ const Search = ({navigation}) => {
       const params = {
         name_contains: key,
       };
-      console.log('start');
       const response = await GetListFoodApi(params);
 
       setData(response);
@@ -176,7 +174,7 @@ const Search = ({navigation}) => {
         )
       ) : (
         <View>
-          {/* <Text style={styles.title}>Món tìm kiếm phổ biến</Text>
+          <Text style={styles.title}>Món tìm kiếm phổ biến</Text>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <FlatList
               key={2}
@@ -184,7 +182,7 @@ const Search = ({navigation}) => {
               renderItem={renderItem}
               keyExtractor={item => item.idFood}
               numColumns={4}></FlatList>
-          </View> */}
+          </View>
         </View>
       )}
     </View>

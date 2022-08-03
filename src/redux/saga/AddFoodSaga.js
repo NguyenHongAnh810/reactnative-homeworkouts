@@ -13,7 +13,6 @@ function* addFood(action) {
       formData.append('files', imagefile);
     })
     const res = yield uploadImages(formData)
-    console.log(res)
     // yield put({type: TYPES.UPLOAD_IMAGE_REQUEST, formData: formData});
   } catch (e) {
     alert(e);

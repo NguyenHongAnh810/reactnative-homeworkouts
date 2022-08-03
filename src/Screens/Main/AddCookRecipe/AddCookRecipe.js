@@ -29,10 +29,10 @@ import {BASE_URL} from '../../../api/Common';
 
 const AddCookRecipe = ({navigation, route}) => {
   const food = route?.params?.food || '';
-  console.log('food', food);
   const User = useSelector(state => state.auth.user.infor);
 
   const [nameFood, setNameFood] = useState('');
+  const [desFood, setDesFood] = useState('');
   const [content, setContent] = useState(['', '']);
   const [making, setMaking] = useState(['', '']);
   const [isValid, setIsValid] = useState(false);
@@ -62,15 +62,9 @@ const AddCookRecipe = ({navigation, route}) => {
       setContent([...contents]);
       setMaking([...makings]);
       setImage([...images]);
-      console.log(`nameFood`, nameFood);
-      console.log(`making`, making);
     }
   }, [food]);
-
-  console.log(User.id);
   const dispatch = useDispatch();
-
-  console.log('images', image);
 
   const checkContent = () => {
     var check = false;
@@ -134,6 +128,7 @@ const AddCookRecipe = ({navigation, route}) => {
     let content = ['', ''];
     let making = ['', ''];
     setNameFood(nameF);
+    setDesFood("")
     setContent([...content]);
     setMaking([...making]);
     setImage([...images]);
@@ -147,7 +142,6 @@ const AddCookRecipe = ({navigation, route}) => {
         dispatch({
           type: TYPES1.LOADING,
         });
-        console.log(image);
         const formData = new FormData();
         image.forEach(element => {
           formData.append('files', {
@@ -157,11 +151,9 @@ const AddCookRecipe = ({navigation, route}) => {
           });
         });
         const res = await UploadImageApi(formData);
-        console.log(res);
         let ids = res.data.map(e => {
           return e.id;
         });
-        console.log(ids);
         let images = ids.map(e => {
           return {
             id: e,
@@ -185,14 +177,13 @@ const AddCookRecipe = ({navigation, route}) => {
           image: images,
           repice: recipes,
           ingredients: ingredients,
+          des: desFood
         };
         if (isUpdate == false) {
           const response = await AddFoodApi(params);
-          console.log('AddFood', response);
           navigation.navigate('AddCookSuccess', {food: response});
         } else {
           const response = await UpdateFoodApi(params, food.id);
-          console.log('UpdateFood', response);
           navigation.navigate('AddCookSuccess', {food: response});
         }
 
@@ -293,6 +284,18 @@ const AddCookRecipe = ({navigation, route}) => {
               onEndEditing={() => {}}
             />
           </View>
+          <View style={{backgroundColor: 'white', alignItems: 'center', marginTop: 8}}>
+            <TextInput
+              style={styles.textInputDes}
+              onChangeText={setDesFood}
+              value={desFood}
+              placeholder="Mô tả: Món ăn được lấy cảm hứng từ lúa mì"
+              placeholderTextColor="#C2C2C2"
+              underlineColorAndroid="white"
+              onEndEditing={() => {}}
+              multiline={true}
+            />
+          </View>
           <ListContents
             name="Nguyên liệu"
             array={content}
@@ -345,6 +348,13 @@ const styles = StyleSheet.create({
     height: 50,
     width: '92%',
     fontSize: 20,
+    padding: 5,
+    fontWeight: '700',
+  },
+  textInputDes: {
+    height: 50,
+    width: '92%',
+    fontSize: 16,
     padding: 5,
     fontWeight: '700',
   },

@@ -38,13 +38,11 @@ export default function BottomSheetUpdateImage({
     ImagePicker.openPicker({
       multiple: true,
     }).then(images => {
-      console.log(images);
       let image = [];
       images.map(e => {
         image.push(e.path);
       });
       setImage([...image])
-      console.log('image', image)
       bs.current.snapTo(1);
     });
   };

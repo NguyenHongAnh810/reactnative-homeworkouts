@@ -4,21 +4,23 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Color} from '../../../../assets/color';
 
-export default function Header({}) {
+export default function Header({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cookie</Text>
       <View style={styles.viewIcon}>
-        <TouchableOpacity style={styles.viewOneIcon}>
+        <TouchableOpacity style={styles.viewOneIcon} onPress={()=>{
+          navigation.navigate("Chat")
+        }}>
           <MaterialCommunityIcons
             name="message-text-outline"
             size={20}
             color="black"
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.viewOneIcon}>
+        {/* <TouchableOpacity style={styles.viewOneIcon}>
           <FontAwesome name="bell" size={20} color="black" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

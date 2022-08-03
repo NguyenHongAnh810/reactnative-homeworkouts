@@ -19,7 +19,8 @@ const FoodList = ({title, data, navigation, handerLoadMore, isLoadingMore}) => {
             }}>
             <Image style={styles.image} source={{uri: BASE_URL + item.image[0]}}></Image>
             <Text style={styles.textName}>{item.name}</Text>
-            <Reaction reaction={item.reaction} style={{margin: 10}} />
+            <Text>{food.des}</Text>
+            {/* <Reaction reaction={item.reaction} style={{margin: 10}} /> */}
           </TouchableOpacity>
         );
       };

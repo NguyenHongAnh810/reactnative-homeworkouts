@@ -10,64 +10,71 @@ import {useDispatch, useSelector} from 'react-redux';
 const ReactionData = [{}];
 
 const Reaction = ({reaction, idFood}) => {
-  const [heart, setHeart] = useState(reaction?.heart?.num || 0);
-  const [haha, setHaha] = useState(reaction?.haha?.num || 0);
-  const [sad, setSad] = useState(reaction?.sad?.num || 0);
+  const [heart, setHeart] = useState(0);
+  const [crab, setCrab] = useState(0);
+  const [flower, setFlower] = useState(0);
+  const [angry, setAngry] = useState(0);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {}, [heart, haha, sad]);
+  useEffect(() => {
+
+  }, [heart, crab, flower, angry]);
+
+  useEffect(()=>{
+
+  }, [])
 
   return (
     <View style={styles.constainer}>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          setHeart(heart + 1);
+          setCrab(crab + 1);
         }}>
         <Image
           source={require('../assets/image/hand_clap.png')}
           style={styles.icon}
         />
-        <Text style={styles.text}> {heart}</Text>
+        <Text style={styles.text}> {crab}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          setHeart(heart + 1);
+          setFlower(flower + 1);
         }}>
         <Image
           source={require('../assets/image/flower.png')}
           style={styles.icon}
         />
-        <Text style={styles.text}> {heart}</Text>
+        <Text style={styles.text}> {flower}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setAngry(angry + 1);
+        }}>
+        <Image
+          source={require('../assets/image/angry.png')}
+          style={styles.icon}
+        />
+        <Text style={styles.text}> {angry}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
           setHeart(heart + 1);
         }}>
-        <Image
-          source={require('../assets/image/angry.png')}
-          style={styles.icon}
-        />
-        <Text style={styles.text}> {heart}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          setHaha(haha + 1);
-        }}>
         <Icon name="heart" color="red" size={16} />
-        <Text style={styles.text}> {haha}</Text>
+        <Text style={styles.text}> {heart}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, {borderRightWidth: 0}]}
         onPress={() => {
-          setSad(sad + 1);
+          // setSad(sad + 1);
         }}>
         <AntDesign name="message1" color="blue" size={16} />
-        <Text style={styles.text}> {sad}</Text>
+        <Text style={styles.text}> 0</Text>
       </TouchableOpacity>
     </View>
   );

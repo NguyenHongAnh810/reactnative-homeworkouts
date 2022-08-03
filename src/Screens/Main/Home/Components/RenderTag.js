@@ -23,21 +23,21 @@ const dataTag = [
     icon: '',
     content: <Text>Quán ngon</Text>,
   },
-  {
-    name: 'Nấu ăn',
-    icon: '',
-    content: <Text>Nấu ăn</Text>,
-  },
-  {
-    name: 'Quán ngon',
-    icon: '',
-    content: <Text>Quán ngon</Text>,
-  },
-  {
-    name: 'Khác',
-    icon: '',
-    content: <Text>Khác</Text>,
-  },
+  // {
+  //   name: 'Nấu ăn',
+  //   icon: '',
+  //   content: <Text>Nấu ăn</Text>,
+  // },
+  // {
+  //   name: 'Quán ngon',
+  //   icon: '',
+  //   content: <Text>Quán ngon</Text>,
+  // },
+  // {
+  //   name: 'Khác',
+  //   icon: '',
+  //   content: <Text>Khác</Text>,
+  // },
 ];
 
 const renderIcon = (item, color = 'black') => {

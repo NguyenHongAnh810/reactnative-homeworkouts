@@ -45,6 +45,16 @@ const MainButtonTabStack = () => {
         }}
         component={Search}
       />
+      {/* <Tab.Screen
+        name="Chat"
+        options={{
+          title: 'Chat',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="message" color={color} size={size} />
+          ),
+        }}
+        component={Chat}
+      /> */}
       <Tab.Screen
         name="Add"
         options={{

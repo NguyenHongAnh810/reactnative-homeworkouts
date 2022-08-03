@@ -24,8 +24,9 @@ import {Color} from '../../../assets/color';
 import {BASE_URL} from '../../../api/Common'
 // import {User} from '../Home/Home';
 
-const InforScreen = ({navigation}) => {
-  const User = useSelector(state => state.auth.user.infor)
+const InforScreen = ({navigation, route}) => {
+  const user = route.params.user
+  const User = user ?? useSelector(state => state.auth.user.infor)
   const dispatch = useDispatch();
   const [image, setImage] = useState(
     'https://api.adorable.io/avatars/80/abott@adorable.png',
@@ -43,17 +44,17 @@ const InforScreen = ({navigation}) => {
         <TouchableOpacity
           style={{marginLeft: 10, marginVertical: 10}}
           onPress={() => {
-            navigation.navigate('Me');
+            navigation.goBack()
           }}>
           <Ionicons name="arrow-back" color={'white'} size={28} />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{marginRight: 10, marginVertical: 10}}
           onPress={() => {
             navigation.navigate('EditProfileScreen');
           }}>
           <AntDesign name="edit" color={'white'} size={28} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={{margin: 20}}>
         <View style={{alignItems: 'center', marginBottom: 80}}>
@@ -105,7 +106,7 @@ const InforScreen = ({navigation}) => {
               {User.email}
             </Text>
           </View>
-          <View style={styles.action}>
+          {/* <View style={styles.action}>
             <Feather name="lock" color={'black'} size={20} />
             <Text
               style={[
@@ -116,9 +117,9 @@ const InforScreen = ({navigation}) => {
               ]}>
               ...........
             </Text>
-          </View>
+          </View> */}
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.logout}
           onPress={async () => {
             dispatch({
@@ -127,7 +128,7 @@ const InforScreen = ({navigation}) => {
             await AsyncStorage.setItem('idUser', JSON.stringify(0))
           }}>
           <Text style={styles.textLogout}>Đăng xuất</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       </ImageBackground>
     </View>

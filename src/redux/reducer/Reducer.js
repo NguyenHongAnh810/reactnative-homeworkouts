@@ -12,7 +12,6 @@ export const initalState = {
 function myReducer(state = initalState, action) {
   switch (action.type) {
     case TYPES.LOGIN_SUCCESS:
-      console.log("reducer login success", action.response)
       state.user.isLogin = true;
       state.user.infor = action.response;
       return {...state};
@@ -26,7 +25,6 @@ function myReducer(state = initalState, action) {
       state.loading = false;
       return {...state};
     case TYPES.REGISTER_SUCCESS:
-      console.log('register successfully: ', action.response);
       Alert.alert("Thông báo", "Đăng kí tài khoản thành công",[
         {
           text: "Đăng nhập",

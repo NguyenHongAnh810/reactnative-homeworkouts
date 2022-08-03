@@ -10,7 +10,6 @@ import FoodList2 from '../../../Components/FoodList2';
 const ProfileScreen = ({route, navigation}) => {
   const {food} = route.params;
   const {screen} = route.params;
-  console.log(screen)
   return (
     <View style={{flex: 1}}>
       <TouchableOpacity

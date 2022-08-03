@@ -59,8 +59,6 @@ const FoodDetails = ({route, navigation}) => {
       id: food.idUser,
     };
     const response = await GetMeApi(params);
-    
-    console.log('resUserFood', food)
    setUserFood(response[0]);
   }, []);
 
@@ -113,7 +111,6 @@ const FoodDetails = ({route, navigation}) => {
               };
               const res = await GetIdSaveApi(params);
               const res1 = await DeleteFoodSaveApi(null, res[0].id);
-              console.log('SaveFood', res);
               navigation.navigate('Me');
               const params1 = {
                 idUser: User.id,
@@ -144,7 +141,6 @@ const FoodDetails = ({route, navigation}) => {
                 idUser: User.id,
               };
               const res = await SaveFoodApi(params);
-              console.log('resSaveFood', res);
               const params1 = {
                 idUser: User.id,
               };
@@ -172,7 +168,7 @@ const FoodDetails = ({route, navigation}) => {
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate(screen, {food: food});
+              navigation.goBack();
             }}>
             <Ionicons
               name="md-return-up-back"
@@ -222,15 +218,13 @@ const FoodDetails = ({route, navigation}) => {
             </Swiper>
           </View>
           <Text style={styles.name}>{food.name}</Text>
+          <Text style={styles.des}>{food.des?? "Món ăn nhà làm ngon như nhà làm."}</Text>
           <View>
             <TouchableOpacity
               style={styles.infor}
-              // onPress={() => {
-              //   navigation.navigate('ProfileScreen', {
-              //     food: food,
-              //     screen: screen,
-              //   });
-              // }}
+              onPress={() => {
+                navigation.navigate('PersonalPage', {user: userFood})
+              }}
               >
               <Image
                 style={styles.avata}
@@ -300,8 +294,10 @@ const styles = StyleSheet.create({
   contrain: {},
   name: {
     fontSize: 20,
-    margin: 24,
+    marginLeft: 24,
     fontWeight: 'bold',
+    marginTop: 24,
+    marginBottom: 10
   },
   image: {
     borderRadius: 8,
@@ -387,5 +383,11 @@ const styles = StyleSheet.create({
   textMenu: {
     fontWeight: 'bold',
   },
+  des: {
+    fontSize: 15,
+    marginLeft: 24,
+    fontWeight: '500',
+    marginBottom: 10
+  }
 });
 export default FoodDetails;

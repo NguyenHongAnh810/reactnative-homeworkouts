@@ -6,7 +6,6 @@ import { BASE_URL } from '../../../api/Common';
 
 export default function AddCookSuccess({route, navigation}) {
     const {food} = route.params;
-    console.log(food)
   return (
       <ImageBackground style={{flex: 1}} source = {require('../../../assets/image/bg8.jpg')}>
     <View style={styles.contrain}>

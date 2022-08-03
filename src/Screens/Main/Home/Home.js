@@ -23,10 +23,6 @@ const Home = ({navigation}) => {
   const [start, setStart] = useState(0);
   const [limit, setLimit] = useState(10);
   const newFood = useSelector(state => state.product.newFood);
-  console.log(newFood);
-  const setFood = useSelector(state => state.product.setFood);
-  const specialFood = useSelector(state => state.product.specialFood);
-  const topFood = useSelector(state => state.product.topFood);
   const dispatch = useDispatch();
   const [isLoadMoreProcessing, setLoadMoreProcessing] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -50,44 +46,13 @@ const Home = ({navigation}) => {
       params: params,
     });
   };
-
-  const fetchSetFoodList = async () => {
-    const params = {
-      name_contains: 'salat',
-    };
-    dispatch({
-      type: TYPESGETLIST.FETCH_SETFOODLIST_REQUEST,
-      params: params,
-    });
-  };
-
-  const fetchSpecialFoodList = async () => {
-    const params = null;
-    dispatch({
-      type: TYPESGETLIST.FETCH_SPECIALFOODLIST_REQUEST,
-      params: params,
-    });
-  };
-
-  const fetchTopFoodList = async () => {
-    const params = null;
-    dispatch({
-      type: TYPESGETLIST.FETCH_TOPFOODLIST_REQUEST,
-      params: params,
-    });
-  };
-
   useEffect(() => {
     const fetchProductList = async () => {
-      const params = null;
       try {
         dispatch({
           type: TYPES.LOADING,
         });
         await fetchNewFoodList();
-        // await fetchSetFoodList();
-        // await fetchSpecialFoodList();
-        // await fetchTopFoodList();
         setTimeout(() => {
           dispatch({
             type: TYPES.LOADED,
@@ -105,10 +70,8 @@ const Home = ({navigation}) => {
     }
     setLoadMoreProcessing(true);
     setIsLoadMore(true);
-    console.log(`loadmore1`);
     setStart(start + 10);
     await fetchNewFoodList();
-    console.log('loadmore2');
     setTimeout(() => {
       setLoadMoreProcessing(false);
       setIsLoadMore(false);
@@ -128,7 +91,7 @@ const Home = ({navigation}) => {
   };
   return (
     <View style={styles.contrain}>
-      <Header />
+      <Header navigation={navigation}/>
       <ScrollView
         style={{flex: 1}}
         showsVerticalScrollIndicator={false}

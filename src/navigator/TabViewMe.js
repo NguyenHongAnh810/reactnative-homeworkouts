@@ -10,7 +10,8 @@ const TabViewMe = ({navigation}) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    {key: 'MyFood', title: 'Món của tôi'},
+    {key: 'All', title: 'Tất cả'},
+    {key: 'Featured', title: 'Đặc sắc'},
     {key: 'FoodSave', title: 'Món đã lưu'},
   ]);
 
@@ -19,7 +20,6 @@ const TabViewMe = ({navigation}) => {
       <View>
         <TabBar
           {...props}
-          // indicatorStyle={styles.indicator}
           style={{backgroundColor: 'white'}}
           renderLabel={renderLabel}
           activeColor={'black'}
@@ -29,7 +29,6 @@ const TabViewMe = ({navigation}) => {
   };
 
   const renderLabel = (route, focused) => {
-    console.log(focused)
     return(
     <Text style={focused? styles.activeLable : styles.inactiveLable }>{route.route.title}</Text>
     );
@@ -37,7 +36,9 @@ const TabViewMe = ({navigation}) => {
 
   const renderScene = route => {
     switch (route.route.key) {
-      case 'MyFood':
+      case 'All':
+        return <MyFood navigation={navigation}/>;
+      case 'Featured':
         return <MyFood navigation={navigation}/>;
       case 'FoodSave':
         return <FoodSave navigation={navigation}/>;

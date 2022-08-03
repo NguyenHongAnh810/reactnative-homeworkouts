@@ -31,7 +31,7 @@ export default function ListUserSuggest({navigation}) {
           <Entypo name="hand" size={14} color="gray" />
           <Text style={styles.textTypeUser}>Người mới</Text>
         </View>
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -48,7 +48,7 @@ export default function ListUserSuggest({navigation}) {
               size={12}
             />
           </View>
-        </View>
+        </View> */}
         <View
           style={{
             flexDirection: 'row',
@@ -92,7 +92,9 @@ export default function ListUserSuggest({navigation}) {
           <FontAwesome5 name="handshake" color={Color.orange} size={16} />
           <Text style={styles.title}>Tiến cử làm quen</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{
+          navigation.navigate("ListUser", {listUser: dataUser})
+        }}>
           <Text style={{color: 'darkblue'}}>Xem tất cả</Text>
         </TouchableOpacity>
       </View>

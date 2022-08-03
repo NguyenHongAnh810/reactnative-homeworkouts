@@ -11,6 +11,9 @@ import ProfileScreen from '../Screens/Main/Home/ProfileScreen';
 import AddCookSuccess from '../Screens/Main/AddCookRecipe/AddCookSuccess';
 import EditFood from '../Screens/Main/Home/EditFood';
 import PersonalPage from '../Screens/Main/Me/PersonalPage';
+import Chat from '../Screens/Main/Chat/Chat';
+import EditProfile from '../Screens/Main/Me/EditProfile';
+import ListUser from '../Screens/Main/Home/ListUser';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +33,9 @@ const MainStack = () => {
         <Stack.Screen name="AddCookSuccess" component={AddCookSuccess} />
         <Stack.Screen name="EditFood" component={EditFood} />
         <Stack.Screen name="PersonalPage" component={PersonalPage} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="ListUser" component={ListUser} />
       </Stack.Navigator>
     </NavigationContainer>
   );

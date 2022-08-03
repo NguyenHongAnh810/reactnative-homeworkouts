@@ -25,7 +25,8 @@ const FoodList = ({title, data, navigation}) => {
             }}>
             <Image style={styles.image} source={{uri: BASE_URL + e.image[0]}}></Image>
             <Text style={styles.textName}>{e.name}</Text>
-            <Reaction reaction={e.reaction} style={{margin: 10}} />
+            <Text>{food.des}</Text>
+            {/* <Reaction reaction={e.reaction} style={{margin: 10}} /> */}
           </TouchableOpacity>
         // <FoodItem1 food={e} navigation={navigation}/>
           );

@@ -25,7 +25,8 @@ const FoodHome = ({food, navigation}) => {
       
       <Text style={styles.textName}>{food.name}</Text>
       <View style={{height: 20}}>
-      <Reaction reaction={food.reaction} />
+      <Text>{food.des}</Text>
+      {/* <Reaction reaction={food.reaction} /> */}
       </View>
     </TouchableOpacity>
   );

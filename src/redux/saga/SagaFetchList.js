@@ -18,7 +18,6 @@ function* fetchFoodSave(action) {
     try {
 
       const response = yield GetIdFoodSaveApi(action.params)
-      console.log(`idFoodSave`, response)
       if(response[0]) {
       const subParams = response.map(element => {
          return `id_in=${element.idFoodsave}`

@@ -44,15 +44,12 @@ export default function Comment({food, User, comment, setComment}) {
         userId: User.id,
         content: comment
       }
-      console.log(aComment)
       let listComments = food.comment;
       listComments.push(aComment)
       const params = {
         "comment" : listComments
       }
-      console.log('params fetch cmt', listComments)
       const response = await UpdateFoodApi(params, food.id)
-      console.log(`add comment success`, response)
       
       let listCommentConvert = listComment;
       listCommentConvert.push({

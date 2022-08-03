@@ -56,17 +56,17 @@ const RenderItemPost = ({item, navigation}) => {
               </View>
             </View>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{color: 'red'}}>29 </Text>
             <MaterialCommunityIcons
               name="fruit-watermelon"
               color={'red'}
               size={14}
             />
-          </View>
+          </View> */}
         </View>
         <Text style={styles.textName}>{item.name}</Text>
-        <Text style={{fontSize: 14}}>Món ăn nhà làm ngon như nhà làm.</Text>
+        <Text style={{fontSize: 14}}>{item?.des ?? "Món ăn nhà làm ngon như nhà làm."}</Text>
         <View
           style={{
             justifyContent: 'space-between',
@@ -80,9 +80,9 @@ const RenderItemPost = ({item, navigation}) => {
             </Text>
             <Entypo name="globe" size={12} color="black" />
           </View>
-          <Text style={{color: 'gray', fontSize: 12}}>2 lượt xem</Text>
+          {/* <Text style={{color: 'gray', fontSize: 12}}>2 lượt xem</Text> */}
         </View>
-        <Reaction />
+        {/* <Reaction /> */}
       </View>
     </TouchableOpacity>
   );

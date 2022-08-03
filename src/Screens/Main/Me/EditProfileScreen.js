@@ -66,7 +66,7 @@ const EditProfileScreen = ({navigation}) => {
           <TouchableOpacity
             style={{marginLeft: 10, marginVertical: 10}}
             onPress={() => {
-              navigation.navigate('Infor');
+              navigation.goBack()
             }}>
             <Ionicons name="arrow-back" color={'white'} size={28} />
           </TouchableOpacity>

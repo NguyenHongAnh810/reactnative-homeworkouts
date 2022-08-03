@@ -16,7 +16,8 @@ export default function FoodItem({food, navigation, screen}) {
         <View>
         <Text style={styles.textName}>{food.name}</Text>
         <View style={{marginLeft: 11}}>
-        <Reaction reaction={food.reaction} />
+        <Text>{food.des}</Text>
+        {/* <Reaction reaction={food.reaction} /> */}
         </View>
         </View>
       </TouchableOpacity>
