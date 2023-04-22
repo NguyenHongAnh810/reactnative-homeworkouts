@@ -14,12 +14,8 @@ export const TYPES = {
   LOADED: 'LOADED',
 };
 
-export function loginSuccess () {
-  return{
-    type: TYPES.LOGIN_REQUEST
-  }
-};
-
-export const logoutSuccess = (params) =>{
-  type: TYPES.LOGOUT_SUCCESS
-};
+// export function loginSuccess () {
+//   return{
+//     type: TYPES.LOGIN_REQUEST
+//   }
+// };

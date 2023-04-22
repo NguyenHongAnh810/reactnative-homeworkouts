@@ -6,3 +6,9 @@ export const GetMeApi = params => {
     , {params:params}
   );
 };
+
+export const UpdateUserApi = (formData, id)=> {
+  const url = '/users/' + id;
+  return axiosClient.put(url, formData);
+}
+

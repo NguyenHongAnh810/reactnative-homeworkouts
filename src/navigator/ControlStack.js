@@ -1,6 +1,5 @@
 import React, {useState, useEffect, createContext} from 'react';
 import {View} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -10,6 +9,8 @@ import {GetMeApi} from '../api/GetMeApi';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import Loading from '../Components/Loading';
+
+import {useSelector, useDispatch} from 'react-redux';
 
 const ControlStack = props => {
   const isLogin = useSelector(state => state.auth.user.isLogin);

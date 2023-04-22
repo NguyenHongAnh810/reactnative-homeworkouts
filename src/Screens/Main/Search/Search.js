@@ -20,6 +20,7 @@ import {isFulfilled} from '@reduxjs/toolkit';
 import {useSelector, useDispatch} from 'react-redux';
 import {TYPES} from '../../../redux/actions/Action';
 import RenderTagSearch from './components/RenderTagSearch';
+import { getListRateApi } from '../../../api/Rate';
 const {height, wigth} = Dimensions.get('window');
 
 const DataSuggestFood = [
@@ -33,12 +34,49 @@ const DataSuggestFood = [
   'Sushi',
 ];
 
+const tagTitle = [
+  "Tất cả",
+  1,
+  2,
+  3,
+  4,
+  5
+]
+
 const Search = ({navigation}) => {
   const [key, setKey] = useState('');
   const [data, setData] = useState([]);
   const [search, setSearch] = useState(false);
   const loading = useSelector(state => state.auth.loading);
+  const [tag, setTag] = useState(tagTitle[0])
+  console.log('tag', tag)
   const dispatch = useDispatch();
+
+  const countRate = async(data) => {
+    let dataShow = []
+    // const dataAddRate = data
+    data.map(async(item, index)=>{
+      const params = {
+        idFood: item.id,
+      };
+      const res = await getListRateApi(params);
+      let sum = 0;
+      if (res.length > 0) {
+        res.map(item => {
+          sum = sum + item.rate;
+        });
+      const count = sum / res.length;
+      console.log('count', count)
+      console.log('tag', tag)
+      if(count >= tag && (count < tag + 1)) {
+        dataShow.push(item)
+      }
+      // dataAddRate = [...dataAddRate, dataAddRate[index] = {...dataAddRate[index], rate: count.toFixed(1)}]
+      // setRate(count.toFixed(1));
+      }
+    })
+    setData(dataShow)
+  }
 
   const fetchProductList = async () => {
     try {
@@ -49,8 +87,11 @@ const Search = ({navigation}) => {
         name_contains: key,
       };
       const response = await GetListFoodApi(params);
-
-      setData(response);
+      if(tag == "Tất cả"){
+        setData(response)
+      } else {
+      countRate(response)
+      }
       setTimeout(() => {
         dispatch({
           type: TYPES.LOADED,
@@ -72,6 +113,10 @@ const Search = ({navigation}) => {
     }
   }, [search]);
 
+  useEffect(()=>{
+    fetchProductList()
+  }, [tag])
+
   const renderItem = ({item}) => {
     return (
       <SuggestSearch
@@ -90,7 +135,7 @@ const Search = ({navigation}) => {
   return (
     <View style={styles.contrain}>
       <View style={styles.header}>
-        {/* <Text
+        <Text
           style={{
             fontWeight: 'bold',
             fontSize: 36,
@@ -98,9 +143,29 @@ const Search = ({navigation}) => {
             marginVertical: 20,
           }}>
           Search
-        </Text> */}
-        <View style={{flexDirection: 'row', marginTop: 28}}>
+        </Text>
+        <View style={{flexDirection: 'row', marginVertical: 10}}>
           <View style={styles.headerInput}>
+            <TouchableOpacity
+              style={{
+                height: '100%',
+                width: '10%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onPress={() => {
+                if (key != '') {
+                  setSearch(true);
+                  fetchProductList();
+                }
+              }}>
+              <Feather
+                name="search"
+                size={20}
+                style={styles.icon}
+                color="#363636"
+              />
+            </TouchableOpacity>
             <TextInput
               style={styles.textInput}
               onChangeText={setKey}
@@ -124,31 +189,11 @@ const Search = ({navigation}) => {
               <View />
             )}
           </View>
-          <TouchableOpacity
-            style={{
-              height: 32,
-              width: '10%',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            onPress={() => {
-              if (key != '') {
-                setSearch(true);
-                fetchProductList();
-              }
-            }}>
-            <Feather
-              name="search"
-              size={20}
-              style={styles.icon}
-              color="#363636"
-            />
-          </TouchableOpacity>
         </View>
-        <RenderTagSearch />
+        <RenderTagSearch tag = {tag} setTag = {setTag}/>
       </View>
       {search ? (
-        data.length != 0 ? (
+        data?.length != 0 ? (
           <FoodList6
             value={key}
             data={data}
@@ -199,14 +244,14 @@ const styles = StyleSheet.create({
     width: wigth,
   },
   headerInput: {
-    width: '86%',
+    width: '92%',
     height: 32,
     borderRadius: 10,
     flexDirection: 'row',
     borderWidth: 0.3,
     borderColor: '#707070',
     alignItems: 'center',
-    marginLeft: 20,
+    marginLeft: '4%',
     marginBottom: 12,
   },
   icon: {
@@ -215,7 +260,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    width: '92%',
+    width: '82%',
     fontSize: 14,
     marginLeft: 8,
     // fontWeight: '500',

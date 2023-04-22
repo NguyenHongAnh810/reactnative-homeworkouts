@@ -10,7 +10,9 @@ import React, {useState, useEffect} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { Color } from '../../../../assets/color';
+import {Color} from '../../../../assets/color';
+import {TYPES} from '../../../../redux/actions/Action';
+import {useDispatch} from 'react-redux';
 
 const dataTag = [
   {
@@ -47,9 +49,7 @@ const renderIcon = (item, color = 'black') => {
     case 'Đặc sắc':
       return <Entypo name="hand" size={16} color={color} />;
     case 'Nấu ăn':
-      return (
-        <MaterialCommunityIcons name="pot-mix" size={16} color={color} />
-      );
+      return <MaterialCommunityIcons name="pot-mix" size={16} color={color} />;
     case 'Quán ngon':
       return <Entypo name="location-pin" size={16} color={color} />;
     case 'Khác':
@@ -57,23 +57,39 @@ const renderIcon = (item, color = 'black') => {
   }
 };
 
-export default function RenderTag() {
-  const [idChoose, setIdChoose] = useState(0);
+export default function RenderTag({tagId = 0, setTagId = () => {}}) {
+  const dispatch = useDispatch();
+  const [idChoose, setIdChoose] = useState(tagId);
+
   const RenderItemTag = ({item, index}) => {
     const [active, setActive] = useState(false);
     const [color, setColor] = useState('black');
     useEffect(() => {
       if (idChoose == index) {
         setActive(true);
-        setColor('peru')
+        setColor('peru');
       }
     }, [idChoose]);
     return (
-      <TouchableOpacity style={styles.viewTag} onPress = {()=>{
-        setIdChoose(index)
-      }}>
+      <TouchableOpacity
+        style={styles.viewTag}
+        onPress={() => {
+          dispatch({
+            type: TYPES.LOADING,
+          });
+          console.log('index', index)
+          setIdChoose(index);
+          setTagId(index);
+          setTimeout(() => {
+            dispatch({
+              type: TYPES.LOADED,
+            });
+          }, 1000);
+        }}>
         {renderIcon(item, color)}
-        <Text style={[styles.titleTag, {color: active? 'peru' : 'black'}]}>{item.name}</Text>
+        <Text style={[styles.titleTag, {color: active ? 'peru' : 'black'}]}>
+          {item.name}
+        </Text>
       </TouchableOpacity>
     );
   };

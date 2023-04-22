@@ -35,9 +35,7 @@ const listItem = [
 
 export default function PersonalPage({navigation, route}) {
   const {user} = route.params;
-  console.log('user.username', user.username);
   const User = useSelector(state => state.auth.user.infor);
-  console.log('user.username', User.username);
   return (
     <View style={{flex: 1}}>
       <CustomHeader navigation={navigation} />

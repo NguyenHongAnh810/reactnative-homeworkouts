@@ -16,11 +16,11 @@ function myListReducer(state = initalState, action) {
       state.foodSave = action.response;
       return {...state};
     case TYPES.FETCH_MYFOODLIST_SUCCESS:
-      state.myFood = action.response
+      state.myFood = action.response;
       return {...state};
     case TYPES.FETCH_NEWFOODLIST_SUCCESS:
       let arr = state.newFood;
-      arr = arr.concat(action.response)
+      arr = arr.concat(action.response);
       state.newFood = arr;
       // state.newFood = action.response
       return {...state};
@@ -32,6 +32,12 @@ function myListReducer(state = initalState, action) {
       return {...state};
     case TYPES.FETCH_TOPFOODLIST_SUCCESS:
       state.topFood = action.response;
+      return {...state};
+    case TYPES.ADD_RATE_LIST_FOOD:
+      state.newFood[action.params.index] = {
+        ...state.newFood[action.params.index],
+        rate: action.params.rate,
+      };
       return {...state};
     default:
       return {...state};

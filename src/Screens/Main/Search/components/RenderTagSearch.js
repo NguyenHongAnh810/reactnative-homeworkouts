@@ -11,33 +11,39 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Color} from '../../../../assets/color';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const dataTag = [
   {
     name: 'Tất cả',
-    icon: '',
+    icon: <Text/>,
     content: <Text>Tất cả</Text>,
   },
   {
-    name: 'Ẩm thực',
-    icon: '',
-    content: <Text>Quán ngon</Text>,
+    name: 1,
+    icon: <FontAwesome name="star" color={'darkorange'} size={14} />,
+    content: <Text>1</Text>,
   },
-  // {
-  //   name: 'Địa điểm',
-  //   icon: '',
-  //   content: <Text>Nấu ăn</Text>,
-  // },
   {
-    name: 'Người cookie',
-    icon: '',
-    content: <Text>Quán ngon</Text>,
+    name: 2,
+    icon: <FontAwesome name="star" color={'darkorange'} size={14} />,
+    content: <Text>2</Text>,
   },
-  // {
-  //   name: 'Khác',
-  //   icon: '',
-  //   content: <Text>Khác</Text>,
-  // },
+  {
+    name: 3,
+    icon: <FontAwesome name="star" color={'darkorange'} size={14} />,
+    content: <Text>3</Text>,
+  },
+  {
+    name: 4,
+    icon: <FontAwesome name="star" color={'darkorange'} size={14} />,
+    content: <Text>4</Text>,
+  },
+  {
+    name: 5,
+    icon: <FontAwesome name="star" color={'darkorange'} size={14} />,
+    content: <Text>5</Text>,
+  },
 ];
 
 const renderIcon = (item, color = 'black') => {
@@ -55,7 +61,8 @@ const renderIcon = (item, color = 'black') => {
   }
 };
 
-export default function RenderTagSearch() {
+export default function RenderTagSearch({tag, setTag}) {
+  console.log('tag', tag)
   const [idChoose, setIdChoose] = useState(0);
   const RenderItemTag = ({item, index}) => {
     const [active, setActive] = useState(false);
@@ -71,11 +78,13 @@ export default function RenderTagSearch() {
         style={[styles.viewTag, {backgroundColor: active ? 'crimson' : '#dcdcdc'}]}
         onPress={() => {
           setIdChoose(index);
+          setTag(dataTag[index].name)
         }}>
-        {/* {renderIcon(item, color)} */}
         <Text style={[styles.titleTag, {color: active ? 'white' : 'gray'}]}>
-          {item.name}
+          {item.name}  
         </Text>
+        <Text>  </Text>
+        {item.icon}
       </TouchableOpacity>
     );
   };

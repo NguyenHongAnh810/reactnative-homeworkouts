@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, RefreshControl, ScrollView, StyleSheet} from 'react-native';
+import {
+  View,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import FoodList from '../../../Components/FoodList';
 import FoodList3 from '../../../Components/FoodList3';
 import FoodList4 from '../../../Components/FoodList4';
@@ -23,6 +29,9 @@ const Home = ({navigation}) => {
   const [start, setStart] = useState(0);
   const [limit, setLimit] = useState(10);
   const newFood = useSelector(state => state.product.newFood);
+  const [listFeatured, setListFeatured] = useState([]);
+  const [tagId, setTagId] = useState(0);
+  // const [newFood, setNewFood] = useState()
   const dispatch = useDispatch();
   const [isLoadMoreProcessing, setLoadMoreProcessing] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -35,9 +44,9 @@ const Home = ({navigation}) => {
     });
   }, []);
 
-  const fetchNewFoodList = async () => {
+  const fetchNewFoodList = async _start => {
     const params = {
-      _start: start,
+      _start: _start ?? start,
       _limit: limit,
       _sort: 'id:DESC',
     };
@@ -46,22 +55,24 @@ const Home = ({navigation}) => {
       params: params,
     });
   };
-  useEffect(() => {
-    const fetchProductList = async () => {
-      try {
+
+  const fetchProductList = async () => {
+    try {
+      dispatch({
+        type: TYPES.LOADING,
+      });
+      await fetchNewFoodList();
+      setTimeout(() => {
         dispatch({
-          type: TYPES.LOADING,
+          type: TYPES.LOADED,
         });
-        await fetchNewFoodList();
-        setTimeout(() => {
-          dispatch({
-            type: TYPES.LOADED,
-          });
-        }, 1000);
-      } catch (error) {
-        console.log('Failed to fetch listfood list: ', error);
-      }
-    };
+      }, 500);
+    } catch (error) {
+      console.log('Failed to fetch listfood list: ', error);
+    }
+  };
+
+  useEffect(() => {
     fetchProductList();
   }, [refreshing]);
   const handerLoadMore = async () => {
@@ -71,7 +82,7 @@ const Home = ({navigation}) => {
     setLoadMoreProcessing(true);
     setIsLoadMore(true);
     setStart(start + 10);
-    await fetchNewFoodList();
+    await fetchNewFoodList(start + 10);
     setTimeout(() => {
       setLoadMoreProcessing(false);
       setIsLoadMore(false);
@@ -89,9 +100,22 @@ const Home = ({navigation}) => {
   const onPressAddPost = () => {
     navigation.navigate('Add');
   };
+
+  useEffect(() => {
+    if (!listFeatured.length) {
+      let listFeatureNew = [];
+      newFood.map(item => {
+        if (item.rate >= 4) {
+          listFeatureNew.push(item);
+        }
+      });
+      setListFeatured(listFeatureNew);
+    }
+  }, [newFood[0]?.rate]);
+
   return (
     <View style={styles.contrain}>
-      <Header navigation={navigation}/>
+      <Header navigation={navigation} />
       <ScrollView
         style={{flex: 1}}
         showsVerticalScrollIndicator={false}
@@ -105,9 +129,13 @@ const Home = ({navigation}) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
         <HeaderAddPost onPressAddPost={onPressAddPost} />
-        <RenderTag />
-        <ListUserSuggest navigation={navigation}/>
-        <ListPostHome data={newFood} navigation={navigation} />
+        <RenderTag tagId={tagId} setTagId={setTagId} />
+        {tagId == 0 && <ListUserSuggest navigation={navigation} />}
+        <ListPostHome
+          data={tagId == 0 ? newFood : listFeatured}
+          navigation={navigation}
+        />
+        {isLoadMoreProcessing && <ActivityIndicator size={'small'} />}
       </ScrollView>
     </View>
   );

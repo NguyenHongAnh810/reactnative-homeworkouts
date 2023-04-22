@@ -17,7 +17,6 @@ const {height, width} = Dimensions.get('window');
 export default function ListUser({navigation, route}) {
   const listUser = route.params.listUser;
   const renderItem = ({item}) => {
-    console.log('item', item);
     return (
       <TouchableOpacity
         style={styles.button}

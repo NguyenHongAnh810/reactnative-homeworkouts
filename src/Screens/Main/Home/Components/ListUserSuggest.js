@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {getSuggestUser} from '../../../../api/Home/HomeApi';
@@ -16,16 +16,21 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
 
-const {height, width} = Dimensions.get('window')
+const {height, width} = Dimensions.get('window');
 
 export default function ListUserSuggest({navigation}) {
   const [dataUser, setDataUser] = useState([]);
   const RenderUser = ({item}) => {
     return (
-      <TouchableOpacity style={styles.itemUser} onPress = {()=>{
-        navigation.navigate('PersonalPage', {user: item})
-      }}>
-        <Image source={{uri: BASE_URL + item.avata?.url}} style={styles.avatar} />
+      <TouchableOpacity
+        style={styles.itemUser}
+        onPress={() => {
+          navigation.navigate('PersonalPage', {user: item});
+        }}>
+        <Image
+          source={{uri: BASE_URL + item.avata?.url}}
+          style={styles.avatar}
+        />
         <Text style={styles.nameUser}>{item.username}</Text>
         <View style={{flexDirection: 'row', marginBottom: 4}}>
           <Entypo name="hand" size={14} color="gray" />
@@ -53,17 +58,22 @@ export default function ListUserSuggest({navigation}) {
           style={{
             flexDirection: 'row',
             width: 150,
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             paddingHorizontal: 16,
             alignItems: 'center',
+            marginTop: 10
           }}>
-          <TouchableOpacity style={styles.buttonAddFriend}>
+          <TouchableOpacity
+            style={styles.buttonAddFriend}
+            onPress={() => {
+              navigation.navigate('PersonalPage', {user: item});
+            }}>
             <FontAwesome5 name="user-plus" color={'navy'} size={14} />
-            <Text style={{color: 'navy', marginLeft: 6}}>Thêm</Text>
+            <Text style={{color: 'navy', marginLeft: 6}}>Xem</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonX}>
+          {/* <TouchableOpacity style={styles.buttonX}>
             <Feather name="x" color={'gray'} size={14} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </TouchableOpacity>
     );
@@ -92,9 +102,10 @@ export default function ListUserSuggest({navigation}) {
           <FontAwesome5 name="handshake" color={Color.orange} size={16} />
           <Text style={styles.title}>Tiến cử làm quen</Text>
         </View>
-        <TouchableOpacity onPress={()=>{
-          navigation.navigate("ListUser", {listUser: dataUser})
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('ListUser', {listUser: dataUser});
+          }}>
           <Text style={{color: 'darkblue'}}>Xem tất cả</Text>
         </TouchableOpacity>
       </View>

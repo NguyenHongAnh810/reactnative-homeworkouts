@@ -14,36 +14,105 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Animated from 'react-native-reanimated';
+import {TYPES as TYPES1} from '../../../redux/actions/Action';
+import {TYPES} from '../../../redux/actions/ActionFetchList';
 
-import {BASE_URL} from '../../../api/Common'
+import {BASE_URL} from '../../../api/Common';
 import {useDispatch, useSelector} from 'react-redux';
 import {Color} from '../../../assets/color';
 import BottomSheetUpdateImage from '../../../Components/BottomSheetUpdateImage';
+import {validateName, validatePassword, validateEmail} from '../../../Utils/Validate';
+import { UpdateUserApi } from '../../../api/GetMeApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EditProfileScreen = ({navigation}) => {
-  const User = useSelector(state => state.auth.user.infor)
-  const [image, setImage] = useState([BASE_URL + User.avata?.url || 'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo']);
+  const User = useSelector(state => state.auth.user.infor);
+  const [image, setImage] = useState([
+    BASE_URL + User.avata?.url ||
+      'https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo',
+  ]);
   const [name, setName] = useState('');
   const [mail, setMail] = useState('');
   const [pass, setPass] = useState('');
   const [newPass, setNewpass] = useState('');
+  // const [checkPassword, setCheckPassword] = useState('');
+  const [checkEmail, setCheckEmail] = useState(true);
+  const [checkUsername, setCheckUsername] = useState(true);
+  const [checkNewpass, setCheckNewpass] = useState(true);
+  const dispatch = useDispatch()
 
   const bs = React.createRef();
   const fall = new Animated.Value(1);
 
-  const EditProfileProcess = () =>{
+  const logout = async () => {
+    dispatch({
+      type: TYPES1.LOGOUT_SUCCESS,
+    });
+    await AsyncStorage.setItem('idUser', JSON.stringify(0));
+  };
+
+  const EditProfileProcess = async() => {
     try {
-      const data = {
-       
-      };
-      // const response = await RegisterApi(data);
-      Alert.alert("Thông báo", "Lưu thông tin thành công")
+      dispatch({
+        type: TYPES1.LOADING,
+      });
+      const formData = new FormData();
+      if (image.length) {
+        formData.append('file', {
+          uri: image[0],
+          name: 'file',
+          type: 'image/jpg',
+        });
+      }
+      if (name) {
+        formData.append('username', name);
+      }
+      if (mail) {
+        formData.append('email', mail);
+      }
+      if (newPass) {
+        formData.append('password', newPass);
+      }
+      console.log('formData', formData)
+      const response = await UpdateUserApi(formData, User.id);
+      console.log('response', response);
+      Alert.alert('Thông báo', 'Lưu thông tin thành công');
+      // await logout();
     } catch (error) {
-      alert("Lưu thông tin không thành công")
+      alert('Lưu thông tin không thành công');
       console.log('register failted: ', error);
-      
+    } finally {
+      dispatch({
+        type: TYPES1.LOADED,
+      });
     }
-    Alert.alert('Thông báo', 'Lưu thông tin thành công');
+  };
+
+  const checkValidate = () => {
+    if(name){
+      if(!validateName(name)) {
+        setCheckUsername(false)
+        return false
+      } else {
+        setCheckUsername(true)
+      } } else {setCheckUsername(true)}
+
+    if(mail){
+      if(!validateEmail(mail)) {
+        setCheckEmail(false)
+        return false
+      } else {
+        setCheckEmail(true)
+      } } else {setCheckEmail(true)}
+
+    if(newPass){
+      if(!validatePassword(newPass)) {
+        setCheckNewpass(false)
+        return false
+      } else {
+        setCheckNewpass(true)
+      } } else {setCheckNewpass(true)}
+    return true
   }
   return (
     <View style={styles.container}>
@@ -54,7 +123,7 @@ const EditProfileScreen = ({navigation}) => {
         fall={fall}
         setImage={setImage}
         multiple={false}
-        ></BottomSheetUpdateImage>
+      />
       <ImageBackground
         source={require('../../../assets/image/bg5.jpg')}
         style={{flex: 1}}>
@@ -66,7 +135,7 @@ const EditProfileScreen = ({navigation}) => {
           <TouchableOpacity
             style={{marginLeft: 10, marginVertical: 10}}
             onPress={() => {
-              navigation.goBack()
+              navigation.goBack();
             }}>
             <Ionicons name="arrow-back" color={'white'} size={28} />
           </TouchableOpacity>
@@ -110,7 +179,7 @@ const EditProfileScreen = ({navigation}) => {
               placeholderTextColor="#666666"
               autoCorrect={false}
               value={name}
-              onChange={setName}
+              onChangeText={setName}
               style={[
                 styles.textInput,
                 {
@@ -119,6 +188,7 @@ const EditProfileScreen = ({navigation}) => {
               ]}
             />
           </View>
+          {!checkUsername && <Text style = {{marginLeft: 10, color: "red", fontSize: 12}}>Tên không hợp lệ</Text>}
           <View style={styles.action}>
             <FontAwesome name="envelope-o" color={'black'} size={20} />
             <TextInput
@@ -127,7 +197,7 @@ const EditProfileScreen = ({navigation}) => {
               keyboardType="email-address"
               autoCorrect={false}
               value={mail}
-              onChange={setMail}
+              onChangeText={setMail}
               style={[
                 styles.textInput,
                 {
@@ -136,7 +206,8 @@ const EditProfileScreen = ({navigation}) => {
               ]}
             />
           </View>
-          <View style={styles.action}>
+          {!checkEmail && <Text style = {{marginLeft: 10, color: "red", fontSize: 12}}>Email không hợp lệ</Text>}
+          {/* <View style={styles.action}>
             <Feather name="lock" color={'black'} size={20} />
             <TextInput
               placeholder="Mật khẩu"
@@ -152,7 +223,7 @@ const EditProfileScreen = ({navigation}) => {
                 },
               ]}
             />
-          </View>
+          </View> */}
           <View style={styles.action}>
             <Feather name="lock" color={'black'} size={20} />
             <TextInput
@@ -161,7 +232,7 @@ const EditProfileScreen = ({navigation}) => {
               autoCorrect={false}
               secureTextEntry={true}
               value={newPass}
-              onChange={setNewpass}
+              onChangeText={setNewpass}
               style={[
                 styles.textInput,
                 {
@@ -170,9 +241,14 @@ const EditProfileScreen = ({navigation}) => {
               ]}
             />
           </View>
+          {!checkNewpass && <Text style = {{marginLeft: 10, color: "red", fontSize: 12}}>Mật khẩu không hợp lệ</Text>}
           <TouchableOpacity
             style={styles.commandButton}
-            onPress={EditProfileProcess}>
+            onPress={()=>{
+              if(checkValidate()) {
+              EditProfileProcess()
+              }
+              }}>
             <Text style={styles.panelButtonTitle}>Lưu</Text>
           </TouchableOpacity>
         </Animated.View>

@@ -30,7 +30,6 @@ const Login = ({navigation}) => {
   const [isValid, setIsVaid] = useState(false);
   const [check, setCheck] = useState(false);
   const loading = useSelector(state => state.auth.loading);
-  console.log('loading', loading)
   const dispatch = useDispatch();
 
   useEffect(() => {

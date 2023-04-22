@@ -7,9 +7,9 @@ import {Color} from '../../../../assets/color';
 export default function Header({navigation}) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cookie</Text>
+      <Text style={styles.title}>Cook</Text>
       <View style={styles.viewIcon}>
-        <TouchableOpacity style={styles.viewOneIcon} onPress={()=>{
+        {/* <TouchableOpacity style={styles.viewOneIcon} onPress={()=>{
           navigation.navigate("Chat")
         }}>
           <MaterialCommunityIcons
@@ -17,7 +17,7 @@ export default function Header({navigation}) {
             size={20}
             color="black"
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {/* <TouchableOpacity style={styles.viewOneIcon}>
           <FontAwesome name="bell" size={20} color="black" />
         </TouchableOpacity> */}

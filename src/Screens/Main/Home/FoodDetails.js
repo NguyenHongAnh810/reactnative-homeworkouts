@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Alert,
   TextInput,
+  Animated,
 } from 'react-native';
 import {Menu, Divider, Provider} from 'react-native-paper';
 import Swiper from 'react-native-swiper';
@@ -17,7 +18,6 @@ import Swiper from 'react-native-swiper';
 import Reaction from '../../../Components/Reaction';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-
 
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -31,20 +31,19 @@ import {GetIdSaveApi} from '../../../api/GetIdSaveApi';
 import {DeleteFoodSaveApi} from '../../../api/DeleteFoodSaveApi';
 import {TYPES} from '../../../redux/actions/ActionFetchList';
 import Comment from '../../../Components/Comment';
+import Evaluates from './Components/Evaluates';
+import BottomSheetRate from './Components/BottomSheetRate';
 
 const FoodDetails = ({route, navigation}) => {
   const {food} = route.params;
   const {screen} = route.params;
   const {type} = route.params;
+  const changeRate = route.params.changeRate;
   const [visible, setVisible] = React.useState(false);
   const [comment, setComment] = useState('');
-  const [userFood, setUserFood] = useState({
-    // email: "",
-    // username: "",
-    // avata: {
-    //   url: ""
-    // }
-  });
+  const [userFood, setUserFood] = useState({});
+  const sheetRef = React.useRef(null);
+  const fall = new Animated.Value(1);
 
   const User = useSelector(state => state.auth.user.infor);
 
@@ -59,7 +58,7 @@ const FoodDetails = ({route, navigation}) => {
       id: food.idUser,
     };
     const response = await GetMeApi(params);
-   setUserFood(response[0]);
+    setUserFood(response[0]);
   }, []);
 
   const renderMenu = () => {
@@ -218,14 +217,27 @@ const FoodDetails = ({route, navigation}) => {
             </Swiper>
           </View>
           <Text style={styles.name}>{food.name}</Text>
-          <Text style={styles.des}>{food.des?? "Món ăn nhà làm ngon như nhà làm."}</Text>
+          <Text style={styles.des}>
+            {food.des ?? 'Món ăn nhà làm ngon như nhà làm.'}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginLeft: 20,
+            }}>
+            <Entypo name="clock" size={12} color="gray" />
+            <Text style={{color: 'gray', marginHorizontal: 6, fontSize: 12}}>
+              {food.created_at}
+            </Text>
+            <Entypo name="globe" size={12} color="black" />
+          </View>
           <View>
             <TouchableOpacity
               style={styles.infor}
               onPress={() => {
-                navigation.navigate('PersonalPage', {user: userFood})
-              }}
-              >
+                navigation.navigate('PersonalPage', {user: userFood});
+              }}>
               <Image
                 style={styles.avata}
                 source={{
@@ -236,6 +248,11 @@ const FoodDetails = ({route, navigation}) => {
                 <Text style={styles.mail}>{userFood.email}</Text>
               </View>
             </TouchableOpacity>
+            <Evaluates
+              food={food}
+              changeRate={changeRate}
+              sheetRef={sheetRef}
+            />
           </View>
           <View style={styles.borderTitle}>
             <Text style={styles.title}>Nguyên Liệu</Text>
@@ -282,10 +299,19 @@ const FoodDetails = ({route, navigation}) => {
             </Text>
           </View> */}
           <View>
-            <Comment food={food} User={User} comment = {comment} setComment = {setComment}/>
+            <Comment
+              food={food}
+              User={User}
+              comment={comment}
+              setComment={setComment}
+            />
           </View>
         </ScrollView>
       </View>
+      <BottomSheetRate
+        bs={sheetRef}
+        food={food}
+      />
     </Provider>
   );
 };
@@ -297,7 +323,7 @@ const styles = StyleSheet.create({
     marginLeft: 24,
     fontWeight: 'bold',
     marginTop: 24,
-    marginBottom: 10
+    marginBottom: 10,
   },
   image: {
     borderRadius: 8,
@@ -387,7 +413,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 24,
     fontWeight: '500',
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  },
 });
 export default FoodDetails;

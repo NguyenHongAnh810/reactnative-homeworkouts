@@ -13,25 +13,76 @@ import {BASE_URL} from '../../../../api/Common';
 import {GetMeApi} from '../../../../api/GetMeApi';
 import Reaction from '../../../../Components/Reaction';
 import Entypo from 'react-native-vector-icons/Entypo';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SuggestFood from './SuggestFood';
+import {getListRateApi} from '../../../../api/Rate';
+import {useDispatch, useSelector} from 'react-redux';
+import {TYPES} from '../../../../redux/actions/ActionFetchList';
 
 const {height, width} = Dimensions.get('screen');
 
-const RenderItemPost = ({item, navigation}) => {
+const RenderItemPost = ({item, index, navigation}) => {
+  const dispatch = useDispatch();
   const [userFood, setUserFood] = useState({});
-  useEffect(async () => {
+  const [listRate, setListRate] = useState([]);
+  const [rate, setRate] = useState(null);
+
+  const getUser = async () => {
     const params = {
       id: item.idUser,
     };
     const response = await GetMeApi(params);
     setUserFood(response[0]);
-  }, [item]);
+  };
+
+  const getListRate = async () => {
+    const params = {
+      idFood: item.id,
+    };
+    const response = await getListRateApi(params);
+    setListRate(response);
+  };
+
+  const getData = async () => {
+    await getUser();
+    await getListRate();
+  };
+
+  const countRate = () => {
+    let sum = 0;
+    if (listRate.length > 0) {
+      listRate.map(item => {
+        sum = sum + item.rate;
+      });
+      const count = sum / listRate.length;
+      setRate(count.toFixed(1));
+      dispatch({
+        type: TYPES.ADD_RATE_LIST_FOOD,
+        params: {
+          index: index,
+          rate: count,
+        },
+      });
+    }
+  };
+
+  useEffect(async () => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    countRate();
+  }, [listRate]);
+
   return (
     <TouchableOpacity
       style={styles.button}
       onPress={() => {
-        navigation.navigate('FoodDetails', {food: item, screen: 'Home'});
+        navigation.navigate('FoodDetails', {
+          food: item,
+          screen: 'Home',
+          changeRate: setRate,
+        });
       }}>
       <Image style={styles.image} source={{uri: BASE_URL + item.image[0]}} />
       <View style={styles.viewContent}>
@@ -56,17 +107,15 @@ const RenderItemPost = ({item, navigation}) => {
               </View>
             </View>
           </View>
-          {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{color: 'red'}}>29 </Text>
-            <MaterialCommunityIcons
-              name="fruit-watermelon"
-              color={'red'}
-              size={14}
-            />
-          </View> */}
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={{color: 'darkorange'}}>{rate ?? '__'} </Text>
+            <FontAwesome name="star" color={'darkorange'} size={14} />
+          </View>
         </View>
         <Text style={styles.textName}>{item.name}</Text>
-        <Text style={{fontSize: 14}}>{item?.des ?? "Món ăn nhà làm ngon như nhà làm."}</Text>
+        <Text style={{fontSize: 14}}>
+          {item?.des ?? 'Món ăn nhà làm ngon như nhà làm.'}
+        </Text>
         <View
           style={{
             justifyContent: 'space-between',
@@ -98,6 +147,7 @@ export default function ListPostHome({data = [], navigation}) {
               {index == 2 && <SuggestFood />}
               <RenderItemPost
                 item={e}
+                index={index}
                 navigation={navigation}
                 key={`food-item-${index}`}
               />

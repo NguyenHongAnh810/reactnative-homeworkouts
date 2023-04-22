@@ -19,7 +19,7 @@ export default function FoodItem1({food, navigation, screen, type}) {
         <View>
         <Text style={styles.textName}>{food.name}</Text>
         <View style={{marginLeft: 11}}>
-        <Text>{food.des}</Text>
+        <Text style = {{marginLeft: 5, width: "55%"}}>{food.des}</Text>
         {/* <Reaction reaction={food.reaction} /> */}
         </View> 
         </View>
